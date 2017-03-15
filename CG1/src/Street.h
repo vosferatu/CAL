@@ -8,7 +8,7 @@
 #ifndef STREET_H_
 #define STREET_H_
 
-#include <string.h>
+#include <string>
 
 class Street{
 	/*

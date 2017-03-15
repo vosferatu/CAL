@@ -5,7 +5,9 @@
  *      Author: bmsp2
  */
 
-#include <Geography.h>
+#include "Geography.h"
+
+GeoCoordinate::GeoCoordinate(){}
 
 GeoCoordinate::GeoCoordinate(long latitude, long longitude){
 	lat=latitude;

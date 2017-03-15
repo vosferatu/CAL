@@ -5,7 +5,8 @@
  *      Author: bmsp2
  */
 
-#include <Street.h>
+#include "Street.h"
+#include <string>
 
 Street::Street(int number_ID, std::string street_name, bool two_way_street){
 	id=number_ID;

@@ -8,7 +8,8 @@
 #ifndef NODE_H_
 #define NODE_H_
 
-#include <Geography.h>
+#include "Geography.h"
+#include <string>
 
 class Node{
 	/*
@@ -43,7 +44,7 @@ public:
 	/*
 	 * @brief Gets the Node's geographic coordinates
 	 */
-	const GeoCoordinate& getCoords();
+	const GeoCoordinate getCoords();
 	/*
 	 * @brief Gets the Node's ID
 	 */

@@ -19,6 +19,10 @@ class GeoCoordinate{
 	long lon;	//Longitude
 public:
 	/*
+	 * @brief GeoCoordinate default constructor
+	 */
+	GeoCoordinate();
+	/*
 	 * @brief Creates a GeoCoordinate
 	 */
 	GeoCoordinate(long latitude, long longitude);

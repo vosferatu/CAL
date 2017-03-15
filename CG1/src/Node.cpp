@@ -5,7 +5,9 @@
  *      Author: bmsp2
  */
 
-#include <Node.h>
+#include "Node.h"
+#include "Geography.h"
+#include <string>
 
 Node::Node(int node_id, std::string node_name, GeoCoordinate node_coords, int node_bikes, int node_places)
 {
@@ -24,7 +26,7 @@ int Node::getBikes() const {
 	return bikes;
 }
 
-const GeoCoordinate& Node::getCoords(){
+const GeoCoordinate Node::getCoords(){
 	return coords;
 }
 

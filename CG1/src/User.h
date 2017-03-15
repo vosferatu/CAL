@@ -13,7 +13,7 @@
 #define PAYPAL 0
 #define CREDIT 1
 
-class Client{
+class User{
 	/*
 	 * @brief Client's name
 	 */
@@ -27,13 +27,13 @@ class Client{
 	 */
 	int pay_no;
 public:
-	Client() {
+	User() {
 	}
 
 	/*
 	 * @brief Client constructor
 	 */
-	Client(std::string cli_name, int cli_pay_method,int cli_pay_no);
+	User(std::string cli_name, int cli_pay_method,int cli_pay_no);
 
 	/*
 	 * @brief Gets Client's name

@@ -5,22 +5,22 @@
  *      Author: bmsp2
  */
 
-#include "Client.h"
+#include "User.h"
 
-Client::Client(std::string cli_name,int cli_pay_method,int cli_pay_no){
+User::User(std::string cli_name,int cli_pay_method,int cli_pay_no){
 	name=cli_name;
 	pay_method=cli_pay_method;
 	pay_no=cli_pay_no;
 }
 
-const std::string& Client::getName() const {
+const std::string& User::getName() const {
 	return name;
 }
 
-const int Client::getPayMethod() const {
+const int User::getPayMethod() const {
 	return pay_method;
 }
 
-int Client::getPayNo() const {
+int User::getPayNo() const {
 	return pay_no;
 }

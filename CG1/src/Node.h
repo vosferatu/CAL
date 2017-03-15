@@ -57,7 +57,7 @@ public:
 	 * @brief Gets the number of available parking places
 	 */
 	int getPlaces() const;
-}
+};
 
 
 #endif /* NODE_H_ */

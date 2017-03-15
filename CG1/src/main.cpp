@@ -7,14 +7,17 @@
 
 #include <iostream>
 #include <fstream>
-#include "Client.h"
+
+#include "User.h"
 using namespace std;
 
 void clientInit(){
 	int ans=0;
 	string name;
+	string password;
 	fstream file;
 	bool exists=false;
+	bool valid=false;
 
 	while(ans<1 || ans>2){
 		cout << "\n1 - Login\n2 - Register\n";
@@ -30,30 +33,36 @@ void clientInit(){
 			string line;
 			getline(file,line,';');
 			if(line==name)
-				{
-				/*int pay_met, pay_no;
-				file >> pay_met;
-				getline(file,line,';');
-				file >> pay_no;*/
+			{
 				exists=true;
-
-				//user=Client(name,pay_met,pay_no);
+				while(!valid){
+					cout << "Password: ";
+					cin >> password;
+					getline(file,line,';');
+					if(line==password)
+						return;
 				}
+			}
 		}
 	}
+
 	if(!exists || ans==2)
 	{
 		int pay_met, pay_no;
 		cout << "\nREGISTRATION";
-		cout << "Username: ";
-		cin >> name;
+		cout << "\nUsername: ";
+		cin.ignore();
+		getline(cin,name);
+		cout << "Password: ";
+		cin >> password;
 		cout << "Payment method?\n1 - Paypal\n2 - Credit Card\n";
 		cin >> pay_met;
-		cout << "Payment method number: \n";
+		cout << "Payment method number: ";
 		cin >> pay_no;
 		file.open("Users.txt");
 		file.seekg(0, file.end);
-		file << name << ";" << pay_met << ";" << pay_no;
+		file << name << ";" << password << ";" << pay_met << ";" << pay_no;
+		file.close();
 	}
 }
 
@@ -67,6 +76,8 @@ void interface(){
 }
 
 int main(){
+
+	interface();
 	//TODO: Listagem de locais possíveis?
 	//TODO: Carregar grafo
 	//TODO: Mostrar ponto de partilha mais

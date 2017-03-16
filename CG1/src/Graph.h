@@ -130,8 +130,8 @@ bool Graph<T>::removeVertex(const T &in) {
 			for (; it1!=it1e; it1++) {
 				(*it1)->removeEdgeTo(v);
 			}
-			typename vector<Edge<T>>::iterator it2= v->adj.begin();
-			typename vector<Edge<T>>::iterator it2e= v->adj.end();
+			typename vector<Edge<T> >::iterator it2= v->adj.begin();
+			typename vector<Edge<T> >::iterator it2e= v->adj.end();
 			for (; it2!=it2e; it2++) {
 				it2->dest->indegree--;
 			}
@@ -317,8 +317,8 @@ template<class T>
 bool Graph<T>::dsfVisit(Vertex<T>* v){
 	v->visited=true;
 	v->processed=true;
-	typename vector<Edge<T>>::iterator it=v->adj.begin();
-	typename vector<Edge<T>>::iterator itr=v->adj.end();
+	typename vector<Edge<T> >::iterator it=v->adj.begin();
+	typename vector<Edge<T> >::iterator itr=v->adj.end();
 	for(;it!=itr; it++)
 	{
 		if((*it).dest->processed==true)
@@ -344,8 +344,8 @@ vector<T> Graph<T>::topologicalOrder(){
 		Vertex<T> *v=fila.front();
 		fila.pop();
 		ret.push_back(v->info);
-		typename vector<Edge<T>>::iterator it=v->adj.begin();
-		typename vector<Edge<T>>::iterator itr=v->adj.end();
+		typename vector<Edge<T> >::iterator it=v->adj.begin();
+		typename vector<Edge<T> >::iterator itr=v->adj.end();
 		for(;it!=itr; it++){
 			(*it).dest->indegree--;
 			if((*it).dest->indegree==0)
@@ -377,8 +377,8 @@ void Graph<T>::unweightedShortestPath(const T &v){
 	{
 		vert=fila.front();
 		fila.pop();
-		typename vector<Edge<T>>::iterator it=vert->adj.begin();
-		typename vector<Edge<T>>::iterator itr=vert->adj.end();
+		typename vector<Edge<T> >::iterator it=vert->adj.begin();
+		typename vector<Edge<T> >::iterator itr=vert->adj.end();
 		for(;it!=itr; it++){
 			Vertex<T> * vertD=(*it).dest;
 			if(vertD->dist==-1){

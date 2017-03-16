@@ -17,30 +17,38 @@ class Node{
 	 */
 	int ID;
 	/*
-	 * @brief Node's geographic coordinates
+	 * @brief Node's degrees geographic coordinates
 	 */
-	GeoCoordinate coords;
+	GeoCoordinate deg_coords;
+	/*
+	 * @brief Node's radians geographic coordinates
+	 */
+	GeoCoordinate rad_coords;
 	/*
 	 * @brief Node's available bikes
 	 */
-	int bikes;
+	//int bikes;
 	/*
 	 * @brief Node's available parking places
 	 */
-	int places;
+	//int places;
 public:
 	/*
 	 * @brief Constructs a Node
 	 */
-	Node(int node_id, GeoCoordinate node_coords, int node_bikes, int node_places);
+	Node(int node_id, GeoCoordinate node_deg_coords, GeoCoordinate node_rad_coords/*, int node_bikes, int node_places*/);
 	/*
 	 * @brief Gets the number of available bikes
 	 */
 	int getBikes() const;
 	/*
-	 * @brief Gets the Node's geographic coordinates
+	 * @brief Gets the Node's geographic degrees coordinates
 	 */
-	const GeoCoordinate getCoords();
+	const GeoCoordinate getDegCoords();
+	/*
+	 * @brief Gets the Node's geographic radians coordinates
+	 */
+	const GeoCoordinate getRadCoords();
 	/*
 	 * @brief Gets the Node's ID
 	 */
@@ -49,6 +57,10 @@ public:
 	 * @brief Gets the number of available parking places
 	 */
 	int getPlaces() const;
+
+	bool operator==(const Node& n1) const{
+		return ID==n1.getId();
+	}
 };
 
 

@@ -7,14 +7,36 @@
 
 #include <iostream>
 #include <fstream>
-
+#include <stdlib.h>
+#include "Graph.h"
+#include "Geography.h"
+#include "Node.h"
 #include "User.h"
 using namespace std;
 
-Graph<Node*> grafo;
+Graph<Node> grafo;
 
 void readGrafo(){
-
+	ifstream ifs("London_nodes.txt");
+	if(ifs.is_open()){
+		string line;
+		while(!ifs.eof()){
+			getline(ifs,line,';');
+			int id=atoi(line.c_str());
+			getline(ifs,line,';');
+			long lat=atol(line.c_str());
+			getline(ifs,line,';');
+			long lon=atol(line.c_str());
+			GeoCoordinate degrees(lat,lon);
+			getline(ifs,line,';');
+			lat=atol(line.c_str());
+			getline(ifs,line,'\n');
+			lon=atol(line.c_str());
+			GeoCoordinate radians(lat,lon);
+			Node node(id,degrees,radians);
+			grafo.addVertex(node);
+		}
+	}
 }
 
 void clientInit(){
@@ -87,6 +109,7 @@ void interface(){
 
 int main(){
 
+	cout << "Loading...\n";
 	readGrafo();
 	interface();
 	//TODO: Listagem de locais possíveis?

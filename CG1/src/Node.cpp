@@ -9,24 +9,29 @@
 #include "Geography.h"
 #include <string>
 
-Node::Node(int node_id, GeoCoordinate node_coords, int node_bikes, int node_places)
+Node::Node(int node_id, GeoCoordinate node_deg_coords, GeoCoordinate node_rad_coords/*, int node_bikes, int node_places*/)
 {
 	ID=node_id;
-	coords=node_coords;
-	bikes=node_bikes;
-	places=node_places;
+	deg_coords=node_deg_coords;
+	rad_coords=node_rad_coords;
+	/*bikes=node_bikes;
+	places=node_places;*/
 }
 
-int Node::getPlaces() const {
+/*int Node::getPlaces() const {
 	return places;
 }
 
 int Node::getBikes() const {
 	return bikes;
+}*/
+
+const GeoCoordinate Node::getDegCoords(){
+	return deg_coords;
 }
 
-const GeoCoordinate Node::getCoords(){
-	return coords;
+const GeoCoordinate Node::getRadCoords(){
+	return rad_coords;
 }
 
 int Node::getId() const {

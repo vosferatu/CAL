@@ -9,10 +9,9 @@
 #include "Geography.h"
 #include <string>
 
-Node::Node(int node_id, std::string node_name, GeoCoordinate node_coords, int node_bikes, int node_places)
+Node::Node(int node_id, GeoCoordinate node_coords, int node_bikes, int node_places)
 {
 	ID=node_id;
-	name=node_name;
 	coords=node_coords;
 	bikes=node_bikes;
 	places=node_places;
@@ -32,8 +31,4 @@ const GeoCoordinate Node::getCoords(){
 
 int Node::getId() const {
 	return ID;
-}
-
-const std::string& Node::getName() const {
-	return name;
 }

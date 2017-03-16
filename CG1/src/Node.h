@@ -17,10 +17,6 @@ class Node{
 	 */
 	int ID;
 	/*
-	 * @brief Node's name
-	 */
-	std::string name;
-	/*
 	 * @brief Node's geographic coordinates
 	 */
 	GeoCoordinate coords;
@@ -36,7 +32,7 @@ public:
 	/*
 	 * @brief Constructs a Node
 	 */
-	Node(int node_id, std::string node_name, GeoCoordinate node_coords, int node_bikes, int node_places);
+	Node(int node_id, GeoCoordinate node_coords, int node_bikes, int node_places);
 	/*
 	 * @brief Gets the number of available bikes
 	 */
@@ -49,10 +45,6 @@ public:
 	 * @brief Gets the Node's ID
 	 */
 	int getId() const;
-	/*
-	 * @brief Gets the Node's name
-	 */
-	const std::string& getName() const;
 	/*
 	 * @brief Gets the number of available parking places
 	 */

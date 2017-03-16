@@ -11,6 +11,12 @@
 #include "User.h"
 using namespace std;
 
+Graph<Node*> grafo;
+
+void readGrafo(){
+
+}
+
 void clientInit(){
 	int ans=0;
 	string name;
@@ -30,18 +36,24 @@ void clientInit(){
 		cin >> name;
 		file.open("Users.txt");
 		while(!file.eof() || !exists){
-			string line;
-			getline(file,line,';');
-			if(line==name)
+			string read_name, read_password, line;
+			getline(file,read_name,';');
+			getline(file,read_password,';');
+			getline(file,line,'\n');
+			if(read_name==name)
 			{
 				exists=true;
 				while(!valid){
-					cout << "Password: ";
+					cout << "PASSWORD: ";
 					cin >> password;
-					getline(file,line,';');
-					if(line==password)
-						return;
+					if(read_password==password)
+						valid=true;
 				}
+			}
+			if(exists==true)
+			{
+				file.close();
+				break;
 			}
 		}
 	}
@@ -61,7 +73,7 @@ void clientInit(){
 		cin >> pay_no;
 		file.open("Users.txt");
 		file.seekg(0, file.end);
-		file << name << ";" << password << ";" << pay_met << ";" << pay_no;
+		file << name << ";" << password << ";" << pay_met << ";" << pay_no << '\n';
 		file.close();
 	}
 }
@@ -71,12 +83,11 @@ void interface(){
 	cout << "	BIKE SHARING	\n" << endl;
 
 	clientInit();
-
-	cout << "Em que local se encontra?\n";
 }
 
 int main(){
 
+	readGrafo();
 	interface();
 	//TODO: Listagem de locais possíveis?
 	//TODO: Carregar grafo

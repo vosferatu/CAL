@@ -17,8 +17,6 @@ class Vertex {
 	T info;
 	vector<Edge<T>  > adj;
 	bool visited;
-	void addEdge(Vertex<T> *dest, double w);
-	bool removeEdgeTo(Vertex<T> *d);
 	int indegree;
 	bool processed;
 	int dist;
@@ -28,6 +26,8 @@ public:
 	friend class Graph<T>;
 	int getIndegree() const;
 	T getInfo() const;
+	void addEdge(Vertex<T> *dest, double w);
+	bool removeEdgeTo(Vertex<T> *d);
 };
 
 

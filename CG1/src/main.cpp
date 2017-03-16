@@ -12,11 +12,79 @@
 #include "Geography.h"
 #include "Node.h"
 #include "User.h"
+#include "Road.h"
 using namespace std;
 
 Graph<Node> grafo;
+vector<Road*> estradas;
 
-void readGrafo(){
+Road* searchRoad(int id){
+	for(size_t i=0; i<estradas.size(); i++){
+		if(estradas[i]->getId()==id)
+			return estradas[i];
+	}
+
+	return NULL;
+}
+
+void loadRoads(){
+	ifstream ifs("London_roads.txt");
+	if(ifs.is_open()){
+		string line;
+		while(!ifs.eof()){
+			getline(ifs,line,';');
+			int id=atoi(line.c_str());
+			getline(ifs,line,';');
+			string name=line;
+			getline(ifs,line,'\n');
+			string two_way=line;
+			Road *road=new Road(id,name,two_way=="true");
+			estradas.push_back(road);
+		}
+	}
+	ifs.close();
+}
+
+void loadEdges(){
+	ifstream ifs("London_subroads.txt");
+	if(ifs.is_open()){
+		string line;
+		while(!ifs.eof()){
+			getline(ifs,line,';');
+			int id=atoi(line.c_str());
+
+			Road *road=searchRoad(id);
+
+			if(road==NULL)
+				continue;
+			else
+			{
+				getline(ifs,line,';');
+				int sour=atoi(line.c_str());
+				getline(ifs,line,'\n');
+				int dest=atoi(line.c_str());
+
+				Node source, destination;
+
+				for(size_t i=0; i<grafo.getVertexSet().size(); i++){
+					if(grafo.getVertexSet()[i]->getInfo().getId()==sour)
+						source=grafo.getVertexSet()[i]->getInfo();
+					if(grafo.getVertexSet()[i]->getInfo().getId()==dest)
+						destination=grafo.getVertexSet()[i]->getInfo();
+
+				if(road->isTwoWay())
+				{
+					//TODO: Decidir estrutura do grafo a ser usada
+				}
+				}
+
+			}
+		}
+	}
+
+}
+
+void loadNodes(){
 	ifstream ifs("London_nodes.txt");
 	if(ifs.is_open()){
 		string line;
@@ -37,6 +105,7 @@ void readGrafo(){
 			grafo.addVertex(node);
 		}
 	}
+	ifs.close();
 }
 
 void clientInit(){
@@ -110,7 +179,8 @@ void interface(){
 int main(){
 
 	cout << "Loading...\n";
-	readGrafo();
+	loadNodes();
+	loadRoads();
 	interface();
 	//TODO: Listagem de locais possíveis?
 	//TODO: Carregar grafo

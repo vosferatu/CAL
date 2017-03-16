@@ -34,6 +34,10 @@ class Node{
 	//int places;
 public:
 	/*
+	* @brief Node default constructor
+	*/
+	Node();
+	/*
 	 * @brief Constructs a Node
 	 */
 	Node(int node_id, GeoCoordinate node_deg_coords, GeoCoordinate node_rad_coords/*, int node_bikes, int node_places*/);

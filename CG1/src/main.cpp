@@ -45,6 +45,7 @@ void loadRoads(){
 	ifs.close();
 }
 
+template<class T>
 void loadEdges(){
 	ifstream ifs("London_subroads.txt");
 	if(ifs.is_open()){
@@ -64,18 +65,23 @@ void loadEdges(){
 				getline(ifs,line,'\n');
 				int dest=atoi(line.c_str());
 
-				Node source, destination;
+				Vertex<T>* source, destination;
 
 				for(size_t i=0; i<grafo.getVertexSet().size(); i++){
 					if(grafo.getVertexSet()[i]->getInfo().getId()==sour)
-						source=grafo.getVertexSet()[i]->getInfo();
+						source=grafo.getVertexSet()[i];
 					if(grafo.getVertexSet()[i]->getInfo().getId()==dest)
-						destination=grafo.getVertexSet()[i]->getInfo();
-
-				if(road->isTwoWay())
-				{
-					//TODO: Decidir estrutura do grafo a ser usada
-				}
+						destination=grafo.getVertexSet()[i];
+					if(source!=NULL && destination!=NULL)
+					{
+						if(road->isTwoWay())
+						{
+							source->addEdge(destination, 1/* distancia */);
+							destination->addEdge(source, 1/* distancia */);
+						}
+						else
+							source->addEdge(destination, 1/* distancia */);
+					}
 				}
 
 			}

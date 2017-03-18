@@ -7,7 +7,7 @@
 
 #include "Geography.h"
 
-GeoCoordinate::GeoCoordinate(){}
+GeoCoordinate::GeoCoordinate() : lat {0}, lon {0} {};
 
 GeoCoordinate::GeoCoordinate(long latitude, long longitude){
 	lat=latitude;
@@ -26,4 +26,5 @@ long GeoCoordinate::getDistance(GeoCoordinate gc1){
 	/*
 	 * TODO: Introduzir fórmula que permita calcular distância entre duas coordenadas geográficas
 	 */
+	return gc1.lat;//for now
 }

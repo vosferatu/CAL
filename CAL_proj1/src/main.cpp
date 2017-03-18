@@ -25,11 +25,11 @@ Road* searchRoad(int id){
 			return estradas[i];
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 void loadRoads(){
-	ifstream ifs("porto_roads.txt");
+	ifstream ifs("/porto_roads.txt");
 	if(ifs.is_open()){
 		string line;
 		while(!ifs.eof()){
@@ -39,7 +39,7 @@ void loadRoads(){
 			string name=line;
 			getline(ifs,line,'\n');
 			string two_way=line;
-			Road *road=new Road(id,name,two_way=="true");
+			Road *road = new Road { id, name, two_way == "true" };
 			estradas.push_back(road);
 		}
 	}
@@ -48,7 +48,7 @@ void loadRoads(){
 
 template<class T>
 void loadEdges(){
-	ifstream ifs("porto_subroads.txt");
+	ifstream ifs("/porto_subroads.txt");
 	if(ifs.is_open()){
 		string line;
 		while(!ifs.eof()){
@@ -57,7 +57,7 @@ void loadEdges(){
 
 			Road *road=searchRoad(id);
 
-			if(road==NULL)
+			if(road==nullptr)
 				continue;
 			else
 			{
@@ -66,14 +66,14 @@ void loadEdges(){
 				getline(ifs,line,'\n');
 				int dest=atoi(line.c_str());
 
-				Vertex<T>* source, destination;
+				Vertex<T>*source { }, destination { };
 
 				for(size_t i=0; i<grafo.getVertexSet().size(); i++){
 					if(grafo.getVertexSet()[i]->getInfo().getId()==sour)
 						source=grafo.getVertexSet()[i];
 					if(grafo.getVertexSet()[i]->getInfo().getId()==dest)
 						destination=grafo.getVertexSet()[i];
-					if(source!=NULL && destination!=NULL)
+					if(source!=nullptr && destination!=nullptr)
 					{
 						if(road->isTwoWay())
 						{
@@ -92,7 +92,7 @@ void loadEdges(){
 }
 
 void loadNodes(){
-	ifstream ifs("porto_nodes.txt");
+	ifstream ifs("/porto_nodes.txt");
 	if(ifs.is_open()){
 		string line;
 		while(!ifs.eof()){
@@ -116,12 +116,12 @@ void loadNodes(){
 }
 
 void clientInit(){
-	int ans=0;
+	int ans { 0 };
 	string name;
 	string password;
-	fstream file;
-	bool exists=false;
-	bool valid=false;
+	fstream file { };
+	bool exists { false };
+	bool valid { false };
 
 	while(ans<1 || ans>2){
 		cout << "\n1 - Login\n2 - Register\n";
@@ -158,7 +158,7 @@ void clientInit(){
 
 	if(!exists || ans==2)
 	{
-		int pay_met, pay_no;
+		int pay_met { }, pay_no { };
 		cout << "\nREGISTRATION";
 		cout << "\nUsername: ";
 		cin.ignore();
@@ -171,7 +171,7 @@ void clientInit(){
 		cin >> pay_no;
 		file.open("Users.txt");
 		file.seekg(0, file.end);
-		file << name << ";" << password << ";" << pay_met << ";" << pay_no << '\n';
+		file << '\n' << name << ";" << password << ";" << pay_met << ";" << pay_no << '\n';
 		file.close();
 	}
 }

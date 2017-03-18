@@ -16,7 +16,7 @@
 
 using namespace std;
 
-Graph<Node> grafo;
+Graph<Node> grafo { };
 vector<Road*> estradas;
 
 Road* searchRoad(int id){

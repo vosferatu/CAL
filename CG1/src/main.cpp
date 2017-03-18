@@ -13,6 +13,7 @@
 #include "Node.h"
 #include "User.h"
 #include "Road.h"
+
 using namespace std;
 
 Graph<Node> grafo;
@@ -28,7 +29,7 @@ Road* searchRoad(int id){
 }
 
 void loadRoads(){
-	ifstream ifs("London_roads.txt");
+	ifstream ifs("porto_roads.txt");
 	if(ifs.is_open()){
 		string line;
 		while(!ifs.eof()){
@@ -47,7 +48,7 @@ void loadRoads(){
 
 template<class T>
 void loadEdges(){
-	ifstream ifs("London_subroads.txt");
+	ifstream ifs("porto_subroads.txt");
 	if(ifs.is_open()){
 		string line;
 		while(!ifs.eof()){
@@ -91,7 +92,7 @@ void loadEdges(){
 }
 
 void loadNodes(){
-	ifstream ifs("London_nodes.txt");
+	ifstream ifs("porto_nodes.txt");
 	if(ifs.is_open()){
 		string line;
 		while(!ifs.eof()){

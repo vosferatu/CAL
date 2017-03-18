@@ -45,7 +45,6 @@ void loadRoads(){
 	ifs.close();
 }
 
-template<class T>
 void loadEdges(){
 	ifstream ifs("London_subroads.txt");
 	if(ifs.is_open()){
@@ -65,7 +64,7 @@ void loadEdges(){
 				getline(ifs,line,'\n');
 				int dest=atoi(line.c_str());
 
-				Vertex<T>* source, destination;
+				Vertex<Node>* source, *destination;
 
 				for(size_t i=0; i<grafo.getVertexSet().size(); i++){
 					if(grafo.getVertexSet()[i]->getInfo().getId()==sour)
@@ -73,7 +72,9 @@ void loadEdges(){
 					if(grafo.getVertexSet()[i]->getInfo().getId()==dest)
 						destination=grafo.getVertexSet()[i];
 					if(source!=NULL && destination!=NULL)
-					{
+					break;
+				}
+				if(source!=NULL && destination!=NULL)
 						if(road->isTwoWay())
 						{
 							source->addEdge(destination, 1/* distancia */);
@@ -81,8 +82,6 @@ void loadEdges(){
 						}
 						else
 							source->addEdge(destination, 1/* distancia */);
-					}
-				}
 
 			}
 		}
@@ -187,6 +186,7 @@ int main(){
 	cout << "Loading...\n";
 	loadNodes();
 	loadRoads();
+	loadEdges();
 	interface();
 	//TODO: Listagem de locais possíveis?
 	//TODO: Carregar grafo

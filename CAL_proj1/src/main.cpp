@@ -8,6 +8,7 @@
 #include <iostream>
 #include <fstream>
 #include <stdlib.h>
+#include <time.h>
 #include "Graph.h"
 #include "Geography.h"
 #include "Node.h"
@@ -90,6 +91,8 @@ void loadEdges(){
 }
 
 void loadNodes(){
+	srand (time(NULL));
+	int index = rand() % 10 + 1;
 	ifstream ifs("porto_nodes.txt");
 	if(ifs.is_open()){
 		string line;
@@ -106,8 +109,18 @@ void loadNodes(){
 			getline(ifs,line,'\n');
 			lon=atol(line.c_str());
 			GeoCoordinate radians(lat,lon);
-			Node node(id,degrees,radians);
-			grafo.addVertex(node);
+			if(index==0)
+				{
+				Node node(id,degrees,radians, true);
+				grafo.addVertex(node);
+				index = rand() % 10 + 1;
+				}
+			else
+			{
+				Node node(id,degrees,radians, false);
+				grafo.addVertex(node);
+				index--;
+			}
 		}
 	}
 	ifs.close();

@@ -25,6 +25,10 @@ class Node{
 	 */
 	GeoCoordinate rad_coords;
 	/*
+	 * @brief If node's is collection point
+	 */
+	bool collection_point;
+	/*
 	 * @brief Node's available bikes
 	 */
 	//int bikes;
@@ -40,7 +44,7 @@ public:
 	/*
 	 * @brief Constructs a Node
 	 */
-	Node(int node_id, GeoCoordinate node_deg_coords, GeoCoordinate node_rad_coords/*, int node_bikes, int node_places*/);
+	Node(int node_id, GeoCoordinate node_deg_coords, GeoCoordinate node_rad_coords, bool node_collection_point/*, int node_bikes, int node_places*/);
 	/*
 	 * @brief Gets the number of available bikes
 	 */
@@ -65,6 +69,8 @@ public:
 	bool operator==(const Node& n1) const{
 		return ID==n1.getId();
 	}
+
+	bool isCollectionPoint() const;
 };
 
 

@@ -181,6 +181,8 @@ void interface(){
 	cout << "	BIKE SHARING	\n" << endl;
 
 	clientInit();
+
+	cout << endl << grafo.getNumVertex();
 }
 
 int main(){

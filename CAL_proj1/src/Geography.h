@@ -16,7 +16,11 @@ class GeoCoordinate{
 	/*
 	 * @brief Longitude
 	 */
-	long lon;	//Longitude
+	long lon;
+	/*
+	 * @brief Altitude
+	 */
+	//long alt;
 public:
 	/*
 	 * @brief GeoCoordinate default constructor

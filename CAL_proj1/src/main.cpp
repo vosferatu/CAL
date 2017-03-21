@@ -76,6 +76,7 @@ void loadEdges(){
 					break;
 				}
 				if(source!=NULL && destination!=NULL)
+				{
 						if(road->isTwoWay())
 						{
 							source->addEdge(destination, 1/* distancia */);
@@ -83,6 +84,7 @@ void loadEdges(){
 						}
 						else
 							source->addEdge(destination, 1/* distancia */);
+				}
 
 			}
 		}
@@ -212,6 +214,17 @@ int main(){
 	//TODO: Mostrar ponto de partilha mais
 	//barato de onde se encontra, com lugar
 	//disponível para a devolução da bicicleta
+
+	//XXX: Todos os nós são pontos de recolha?
+	//XXX: Interação utilizador/sistema fica-se
+	//pelo registo e verificação do mesmo?
+	//XXX: Nó inicial é dado numa macro ou
+	//perguntado ao utilizador?
+	//XXX: Altitudes variam em que amplitude?
+	//XXX: Qual a fórmula de cálculo do custo?
+	//XXX: Como calcular a distância entre nós a
+	//partir da latitude e longitude?
+	// http://stackoverflow.com/questions/27928/calculate-distance-between-two-latitude-longitude-points-haversine-formula
 }
 
 

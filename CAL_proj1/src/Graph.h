@@ -46,7 +46,7 @@ bool Vertex<T>::removeEdgeTo(Vertex<T> *d) {
 }
 
 template <class T>
-Vertex<T>::Vertex(T in): info(in), visited(false), indegree(0), processed(false), path(NULL){}
+Vertex<T>::Vertex(T in): info(in), visited(false), indegree(0), processed(false), path(NULL), dist(0){}
 
 template <class T>
 T Vertex<T>::getInfo() const {

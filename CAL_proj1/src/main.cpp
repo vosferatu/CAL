@@ -18,6 +18,7 @@ using namespace std;
 
 Graph<Node> grafo;
 vector<Road*> estradas;
+vector<CPoint> pontos;
 
 Road* searchRoad(int id){
 	for(size_t i=0; i<estradas.size(); i++){
@@ -73,17 +74,17 @@ void loadEdges(){
 					if(grafo.getVertexSet()[i]->getInfo().getId()==dest)
 						destination=grafo.getVertexSet()[i];
 					if(source!=NULL && destination!=NULL)
-					break;
+						break;
 				}
 				if(source!=NULL && destination!=NULL)
 				{
-						if(road->isTwoWay())
-						{
-							source->addEdge(destination, 1/* distancia */);
-							destination->addEdge(source, 1/* distancia */);
-						}
-						else
-							source->addEdge(destination, 1/* distancia */);
+					if(road->isTwoWay())
+					{
+						source->addEdge(destination, 1/* distancia */);
+						destination->addEdge(source, 1/* distancia */);
+					}
+					else
+						source->addEdge(destination, 1/* distancia */);
 				}
 
 			}
@@ -111,18 +112,9 @@ void loadNodes(){
 			getline(ifs,line,'\n');
 			lon=atol(line.c_str());
 			GeoCoordinate radians(lat,lon);
-			if(index==0)
-				{
-				Node node(id,degrees,radians, true);
-				grafo.addVertex(node);
-				index = rand() % 10 + 1;
-				}
-			else
-			{
-				Node node(id,degrees,radians, false);
-				grafo.addVertex(node);
-				index--;
-			}
+			Node node(id,degrees,radians);
+			grafo.addVertex(node);
+			index--;
 		}
 	}
 	ifs.close();
@@ -202,12 +194,11 @@ int main(){
 	loadNodes();
 	loadRoads();
 	loadEdges();
-	interface();
-	//TODO: Listagem de locais possíveis?
-	//TODO: Carregar grafo
-	//TODO: Mostrar ponto de partilha mais
-	//próximo de onde se encontra, com lugar
-	//disponível para a devolução da bicicleta
+	//interface();
+	cout << grafo.getNumVertex() << endl;
+	cout << estradas.size() << endl;
+	//TODO: Listagem de locais possíveis	-	SIM!
+
 	//TODO: Mostrar ponto de partilha mais
 	//próximo de onde se encontra, com lugar
 	//disponível para a devolução da bicicleta
@@ -215,11 +206,6 @@ int main(){
 	//barato de onde se encontra, com lugar
 	//disponível para a devolução da bicicleta
 
-	//XXX: Todos os nós são pontos de recolha?
-	//XXX: Interação utilizador/sistema fica-se
-	//pelo registo e verificação do mesmo?
-	//XXX: Nó inicial é dado numa macro ou
-	//perguntado ao utilizador?
 	//XXX: Altitudes variam em que amplitude?
 	//XXX: Qual a fórmula de cálculo do custo?
 	//XXX: Como calcular a distância entre nós a

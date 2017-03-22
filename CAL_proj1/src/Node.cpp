@@ -11,27 +11,12 @@
 
 Node::Node(){}
 
-Node::Node(int node_id, GeoCoordinate node_deg_coords, GeoCoordinate node_rad_coords, bool node_collection_point/*, int node_bikes, int node_places*/)
+Node::Node(int node_id, GeoCoordinate node_deg_coords, GeoCoordinate node_rad_coords)
 {
 	ID=node_id;
 	deg_coords=node_deg_coords;
 	rad_coords=node_rad_coords;
-	collection_point=node_collection_point;
-	/*bikes=node_bikes;
-	places=node_places;*/
 }
-
-bool Node::isCollectionPoint() const {
-	return collection_point;
-}
-
-/*int Node::getPlaces() const {
-	return places;
-}
-
-int Node::getBikes() const {
-	return bikes;
-}*/
 
 const GeoCoordinate Node::getDegCoords(){
 	return deg_coords;

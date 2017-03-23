@@ -12,16 +12,19 @@
 #include "Graph.h"
 #include "Geography.h"
 #include "Node.h"
-#include "User.h"
 #include "CPoint.h"
 #include "Road.h"
 #include <math.h>
+
 using namespace std;
 
 Graph<Node> grafo;
 vector<Road*> estradas;
 vector<CPoint> pontos;
 
+/*
+ * @brief Returns the distance between two points
+ */
 int getDistanceFromLatLonInKm(GeoCoordinate place1, GeoCoordinate place2) {
   int R = 6371; // Radius of the earth in km
   float a = sin((place2.getLat()-place1.getLat())/2) * sin((place2.getLat()-place1.getLat())/2) + cos(place1.getLat()) * cos(place2.getLat()) * sin((place2.getLon()-place1.getLon())/2) * sin((place2.getLon()-place1.getLon())/2);
@@ -113,15 +116,17 @@ void loadEdges(){
 				}
 				if(source!=NULL && destination!=NULL)
 				{
-					int distance=getDistanceFromLatLonInKm(source->getInfo().getRadCoords(), destination->getInfo().getRadCoords());
+					GeoCoordinate src_coords=source->getInfo().getRadCoords();
+					GeoCoordinate dest_coords=destination->getInfo().getRadCoords();
+					int distance=getDistanceFromLatLonInKm(src_coords, dest_coords);
 
 					if(road->isTwoWay())
 					{
-						source->addEdge(destination, distance/* distancia */);
-						destination->addEdge(source, distance/* distancia */);
+						source->addEdge(destination, distance);
+						destination->addEdge(source, distance);
 					}
 					else
-						source->addEdge(destination, distance/* distancia */);
+						source->addEdge(destination, distance);
 				}
 
 			}
@@ -219,15 +224,17 @@ void clientInit(){
 }
 
 void showCPoints(){
-	int ans;
+	size_t ans;
 
 	do{
 		cout << "Which collection point are you in?\n";
-		for(auto i=0; i<pontos.size(); i++)
+		for(size_t i=0; i<pontos.size(); i++)
 		{
 			cout << endl;
 			cout << i << " - " << pontos[i].getName();
 		}
+		cout << endl;
+		cin >> ans;
 	}while(ans<0 || ans>=pontos.size());
 
 
@@ -253,9 +260,6 @@ int main(){
 	loadEdges();
 	loadCPoints();
 	//interface();
-	cout << grafo.getNumVertex() << endl;
-	cout << estradas.size() << endl;
-	//TODO: Listagem de locais possíveis	-	SIM!
 
 	//TODO: Mostrar ponto de partilha mais
 	//próximo de onde se encontra, com lugar
@@ -264,11 +268,11 @@ int main(){
 	//barato de onde se encontra, com lugar
 	//disponível para a devolução da bicicleta
 
-	//XXX: Altitudes variam em que amplitude?
+	//XXX: Cada vértice guarda um T e não um pointer para T,
+	//daí que não seja recomendável guardar no CPoint um pointer
+	//para o Node. O quê que sugerem?
+	//XXX: Altitudes variam em que amplitude? Só os CPoint têm altitude?
 	//XXX: Qual a fórmula de cálculo do custo?
-	//XXX: Como calcular a distância entre nós a
-	//partir da latitude e longitude?
-	// http://stackoverflow.com/questions/27928/calculate-distance-between-two-latitude-longitude-points-haversine-formula
 }
 
 

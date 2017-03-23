@@ -8,6 +8,8 @@
 #ifndef GEOGRAPHY_H_
 #define GEOGRAPHY_H_
 
+#include <math.h>
+
 class GeoCoordinate{
 	/*
 	 * @brief Latitude
@@ -40,11 +42,6 @@ public:
 	 * @brief Returns the longitude
 	 */
 	long getLon() const;
-
-	/*
-	 * @brief Returns the distance between two points
-	 */
-	long getDistance(GeoCoordinate gc1);
 };
 
 #endif /* GEOGRAPHY_H_ */

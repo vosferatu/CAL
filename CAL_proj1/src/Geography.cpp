@@ -21,10 +21,3 @@ long GeoCoordinate::getLon() const {
 long GeoCoordinate::getLat() const {
 	return lat;
 }
-
-long GeoCoordinate::getDistance(GeoCoordinate gc1){
-	/*
-	 * TODO: Introduzir fórmula que permita calcular distância entre duas coordenadas geográficas
-	 */
-	return gc1.lat;//for now
-}

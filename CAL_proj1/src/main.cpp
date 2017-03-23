@@ -1,5 +1,5 @@
 /*
- * Interface.cpp
+ * main.cpp
  *
  *  Created on: 15/03/2017
  *      Author: bmsp2
@@ -13,12 +13,22 @@
 #include "Geography.h"
 #include "Node.h"
 #include "User.h"
+#include "CPoint.h"
 #include "Road.h"
+#include <math.h>
 using namespace std;
 
 Graph<Node> grafo;
 vector<Road*> estradas;
 vector<CPoint> pontos;
+
+int getDistanceFromLatLonInKm(GeoCoordinate place1, GeoCoordinate place2) {
+  int R = 6371; // Radius of the earth in km
+  float a = sin((place2.getLat()-place1.getLat())/2) * sin((place2.getLat()-place1.getLat())/2) + cos(place1.getLat()) * cos(place2.getLat()) * sin((place2.getLon()-place1.getLon())/2) * sin((place2.getLon()-place1.getLon())/2);
+  float c = 2 * atan2(sqrt(a), sqrt(1-a));
+  float d = R * c; // Distance in km
+  return d;
+}
 
 Road* searchRoad(int id){
 	for(size_t i=0; i<estradas.size(); i++){
@@ -27,6 +37,31 @@ Road* searchRoad(int id){
 	}
 
 	return NULL;
+}
+
+void loadCPoints(){
+	ifstream ifs("porto_cpoints.txt");
+	if(ifs.is_open()){
+		string line;
+		Node* node = NULL;
+		while(!ifs.eof()){
+			getline(ifs,line,';');
+			string name=line;
+			getline(ifs,line,';');
+			int id_node=atoi(line.c_str());
+			getline(ifs,line,';');
+			int no_bikes=atoi(line.c_str());
+			getline(ifs,line,';');
+			int no_vagas=atoi(line.c_str());
+			/*for(int i=0; i<grafo.getVertexSet().size(); i++)
+			{
+				if(grafo.getVertexSet()[i]->getInfo().getId()==id_node)
+					node=grafo.getVertexSet()[i]->getInfo();
+			}*/
+			pontos.push_back(CPoint(name,no_bikes,no_vagas,node));
+		}
+	}
+	ifs.close();
 }
 
 void loadRoads(){
@@ -78,13 +113,15 @@ void loadEdges(){
 				}
 				if(source!=NULL && destination!=NULL)
 				{
+					int distance=getDistanceFromLatLonInKm(source->getInfo().getRadCoords(), destination->getInfo().getRadCoords());
+
 					if(road->isTwoWay())
 					{
-						source->addEdge(destination, 1/* distancia */);
-						destination->addEdge(source, 1/* distancia */);
+						source->addEdge(destination, distance/* distancia */);
+						destination->addEdge(source, distance/* distancia */);
 					}
 					else
-						source->addEdge(destination, 1/* distancia */);
+						source->addEdge(destination, distance/* distancia */);
 				}
 
 			}
@@ -181,6 +218,21 @@ void clientInit(){
 	}
 }
 
+void showCPoints(){
+	int ans;
+
+	do{
+		cout << "Which collection point are you in?\n";
+		for(auto i=0; i<pontos.size(); i++)
+		{
+			cout << endl;
+			cout << i << " - " << pontos[i].getName();
+		}
+	}while(ans<0 || ans>=pontos.size());
+
+
+}
+
 void interface(){
 
 	cout << "	BIKE SHARING	\n" << endl;
@@ -188,15 +240,18 @@ void interface(){
 	grafo.getNumVertex();
 
 	clientInit();
+	showCPoints();
 
 }
 
 int main(){
 
-	cout << "Loading...\n";
+	cout << "Loading...";
+	cout << endl;
 	loadNodes();
 	loadRoads();
 	loadEdges();
+	loadCPoints();
 	//interface();
 	cout << grafo.getNumVertex() << endl;
 	cout << estradas.size() << endl;

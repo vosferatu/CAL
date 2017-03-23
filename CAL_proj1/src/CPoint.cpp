@@ -7,6 +7,14 @@
 
 #include "CPoint.h"
 
+CPoint::CPoint(std::string name_cpoint, int bikes_cpoint, int places_cpoint, Node* col_node_cpoint)
+{
+	name=name_cpoint;
+	bikes=bikes_cpoint;
+	places=places_cpoint;
+	col_node=col_node_cpoint;
+}
+
 int CPoint::getPlaces() const {
 	return places;
 }
@@ -17,4 +25,8 @@ int CPoint::getBikes() const {
 
 Node* CPoint::getColNode() const {
 	return col_node;
+}
+
+const std::string& CPoint::getName() const {
+	return name;
 }

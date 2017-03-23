@@ -13,11 +13,15 @@
 
 class CPoint{
 	/*
-	 * @brief Node's available bikes
+	 * @brief CPoint's name
+	 */
+	std::string name;
+	/*
+	 * @brief CPoint's available bikes
 	 */
 	int bikes;
 	/*
-	 * @brief Node's available parking places
+	 * @brief CPoint's available parking places
 	 */
 	int places;
 	/*
@@ -25,6 +29,10 @@ class CPoint{
 	 */
 	Node* col_node;
 public:
+	/*
+	* @brief CPoint constructor;
+	*/
+	CPoint(std::string name_cpoint, int bikes_cpoint, int places_cpoint, Node* col_node_cpoint);
 	/*
 	 * @brief Gets the number of available bikes
 	 */
@@ -39,6 +47,11 @@ public:
 	 * @brief Gets the Collection Node
 	 */
 	Node* getColNode() const;
+
+	/*
+	 * @brief Gets CPoint's name
+	 */
+	const std::string& getName() const;
 };
 
 #endif

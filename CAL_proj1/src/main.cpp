@@ -261,13 +261,13 @@ void interface(){
 
 int main(){
 
-	/*cout << "Loading...";
+	cout << "Loading...";
 	cout << endl;
 	loadNodes();
+	loadCPoints();
 	loadRoads();
 	loadEdges();
-	loadCPoints();
-	cout << "END\n";*/
+	cout << "END\n";
 	interface();
 
 	//TODO: Mostrar ponto de partilha mais

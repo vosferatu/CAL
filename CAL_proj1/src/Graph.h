@@ -25,7 +25,7 @@ public:
 	Vertex(T in);
 	friend class Graph<T>;
 	int getIndegree() const;
-	T getInfo() const;
+	T* getInfo();
 	void addEdge(Vertex<T> *dest, double w);
 	bool removeEdgeTo(Vertex<T> *d);
 };
@@ -49,8 +49,8 @@ template <class T>
 Vertex<T>::Vertex(T in): info(in), visited(false), indegree(0), processed(false), path(NULL), dist(0){}
 
 template <class T>
-T Vertex<T>::getInfo() const {
-	return this->info;
+T* Vertex<T>::getInfo() {
+	return &(this->info);
 }
 
 
@@ -178,9 +178,6 @@ bool Graph<T>::removeEdge(const T &sourc, const T &dest) {
 	vD->indegree--;
 	return vS->removeEdgeTo(vD);
 }
-
-
-
 
 template <class T>
 vector<T> Graph<T>::dfs() const {

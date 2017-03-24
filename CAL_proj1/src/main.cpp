@@ -23,7 +23,9 @@ vector<Road*> estradas;
 vector<CPoint> pontos;
 
 /*
- * @brief Returns the distance between two points
+ * @brief Returns the distance between two places
+ * @param place1 First place to compare
+ * @param place2 Second place to compare
  */
 int getDistanceFromLatLonInKm(GeoCoordinate place1, GeoCoordinate place2) {
   int R = 6371; // Radius of the earth in km
@@ -46,7 +48,7 @@ void loadCPoints(){
 	ifstream ifs("porto_cpoints.txt");
 	if(ifs.is_open()){
 		string line;
-		Node* node = NULL;
+		//Node* node = NULL;
 		while(!ifs.eof()){
 			getline(ifs,line,';');
 			string name=line;
@@ -54,14 +56,14 @@ void loadCPoints(){
 			int id_node=atoi(line.c_str());
 			getline(ifs,line,';');
 			int no_bikes=atoi(line.c_str());
-			getline(ifs,line,';');
+			getline(ifs,line,'\n');
 			int no_vagas=atoi(line.c_str());
-			/*for(int i=0; i<grafo.getVertexSet().size(); i++)
+			for(int i=0; i<grafo.getVertexSet().size(); i++)
 			{
-				if(grafo.getVertexSet()[i]->getInfo().getId()==id_node)
-					node=grafo.getVertexSet()[i]->getInfo();
-			}*/
-			pontos.push_back(CPoint(name,no_bikes,no_vagas,node));
+				if(grafo.getVertexSet()[i]->getInfo()->getId()==id_node){
+					CPoint aux(name,no_bikes,no_vagas,grafo.getVertexSet()[i]->getInfo());
+					pontos.push_back(aux);}
+			}
 		}
 	}
 	ifs.close();
@@ -107,26 +109,26 @@ void loadEdges(){
 				Vertex<Node>* source, *destination;
 
 				for(size_t i=0; i<grafo.getVertexSet().size(); i++){
-					if(grafo.getVertexSet()[i]->getInfo().getId()==sour)
+					if(grafo.getVertexSet()[i]->getInfo()->getId()==sour)
 						source=grafo.getVertexSet()[i];
-					if(grafo.getVertexSet()[i]->getInfo().getId()==dest)
+					if(grafo.getVertexSet()[i]->getInfo()->getId()==dest)
 						destination=grafo.getVertexSet()[i];
 					if(source!=NULL && destination!=NULL)
 						break;
 				}
 				if(source!=NULL && destination!=NULL)
 				{
-					GeoCoordinate src_coords=source->getInfo().getRadCoords();
-					GeoCoordinate dest_coords=destination->getInfo().getRadCoords();
-					int distance=getDistanceFromLatLonInKm(src_coords, dest_coords);
+					//GeoCoordinate src_coords=source->getInfo()->getRadCoords();
+					//GeoCoordinate dest_coords=destination->getInfo()->getRadCoords();
+					//int distance=getDistanceFromLatLonInKm(src_coords, dest_coords);
 
 					if(road->isTwoWay())
 					{
-						source->addEdge(destination, distance);
-						destination->addEdge(source, distance);
+						source->addEdge(destination, 1/*distance*/);
+						destination->addEdge(source, 1/*distance*/);
 					}
 					else
-						source->addEdge(destination, distance);
+						source->addEdge(destination, 1/*distance*/);
 				}
 
 			}
@@ -259,6 +261,7 @@ int main(){
 	loadRoads();
 	loadEdges();
 	loadCPoints();
+	cout << "END\n";
 	//interface();
 
 	//TODO: Mostrar ponto de partilha mais

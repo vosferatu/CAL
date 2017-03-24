@@ -24,18 +24,6 @@ class Node{
 	 * @brief Node's radians geographic coordinates
 	 */
 	GeoCoordinate rad_coords;
-	/*
-	 * @brief If node's is collection point
-	 */
-	bool collection_point;
-	/*
-	 * @brief Node's available bikes
-	 */
-	//int bikes;
-	/*
-	 * @brief Node's available parking places
-	 */
-	//int places;
 public:
 	/*
 	* @brief Node default constructor
@@ -44,11 +32,7 @@ public:
 	/*
 	 * @brief Constructs a Node
 	 */
-	Node(int node_id, GeoCoordinate node_deg_coords, GeoCoordinate node_rad_coords, bool node_collection_point/*, int node_bikes, int node_places*/);
-	/*
-	 * @brief Gets the number of available bikes
-	 */
-	int getBikes() const;
+	Node(int node_id, GeoCoordinate node_deg_coords, GeoCoordinate node_rad_coords);
 	/*
 	 * @brief Gets the Node's geographic degrees coordinates
 	 */
@@ -61,16 +45,10 @@ public:
 	 * @brief Gets the Node's ID
 	 */
 	int getId() const;
-	/*
-	 * @brief Gets the number of available parking places
-	 */
-	int getPlaces() const;
 
 	bool operator==(const Node& n1) const{
 		return ID==n1.getId();
 	}
-
-	bool isCollectionPoint() const;
 };
 
 

@@ -1,5 +1,5 @@
 /*
- * Interface.cpp
+ * main.cpp
  *
  *  Created on: 15/03/2017
  *      Author: bmsp2
@@ -12,12 +12,26 @@
 #include "Graph.h"
 #include "Geography.h"
 #include "Node.h"
-#include "User.h"
+#include "CPoint.h"
 #include "Road.h"
+#include <math.h>
+
 using namespace std;
 
 Graph<Node> grafo;
 vector<Road*> estradas;
+vector<CPoint> pontos;
+
+/*
+ * @brief Returns the distance between two points
+ */
+int getDistanceFromLatLonInKm(GeoCoordinate place1, GeoCoordinate place2) {
+  int R = 6371; // Radius of the earth in km
+  float a = sin((place2.getLat()-place1.getLat())/2) * sin((place2.getLat()-place1.getLat())/2) + cos(place1.getLat()) * cos(place2.getLat()) * sin((place2.getLon()-place1.getLon())/2) * sin((place2.getLon()-place1.getLon())/2);
+  float c = 2 * atan2(sqrt(a), sqrt(1-a));
+  float d = R * c; // Distance in km
+  return d;
+}
 
 Road* searchRoad(int id){
 	for(size_t i=0; i<estradas.size(); i++){
@@ -26,6 +40,31 @@ Road* searchRoad(int id){
 	}
 
 	return NULL;
+}
+
+void loadCPoints(){
+	ifstream ifs("porto_cpoints.txt");
+	if(ifs.is_open()){
+		string line;
+		Node* node = NULL;
+		while(!ifs.eof()){
+			getline(ifs,line,';');
+			string name=line;
+			getline(ifs,line,';');
+			int id_node=atoi(line.c_str());
+			getline(ifs,line,';');
+			int no_bikes=atoi(line.c_str());
+			getline(ifs,line,';');
+			int no_vagas=atoi(line.c_str());
+			/*for(int i=0; i<grafo.getVertexSet().size(); i++)
+			{
+				if(grafo.getVertexSet()[i]->getInfo().getId()==id_node)
+					node=grafo.getVertexSet()[i]->getInfo();
+			}*/
+			pontos.push_back(CPoint(name,no_bikes,no_vagas,node));
+		}
+	}
+	ifs.close();
 }
 
 void loadRoads(){
@@ -73,17 +112,21 @@ void loadEdges(){
 					if(grafo.getVertexSet()[i]->getInfo().getId()==dest)
 						destination=grafo.getVertexSet()[i];
 					if(source!=NULL && destination!=NULL)
-					break;
+						break;
 				}
 				if(source!=NULL && destination!=NULL)
 				{
-						if(road->isTwoWay())
-						{
-							source->addEdge(destination, 1/* distancia */);
-							destination->addEdge(source, 1/* distancia */);
-						}
-						else
-							source->addEdge(destination, 1/* distancia */);
+					GeoCoordinate src_coords=source->getInfo().getRadCoords();
+					GeoCoordinate dest_coords=destination->getInfo().getRadCoords();
+					int distance=getDistanceFromLatLonInKm(src_coords, dest_coords);
+
+					if(road->isTwoWay())
+					{
+						source->addEdge(destination, distance);
+						destination->addEdge(source, distance);
+					}
+					else
+						source->addEdge(destination, distance);
 				}
 
 			}
@@ -111,18 +154,9 @@ void loadNodes(){
 			getline(ifs,line,'\n');
 			lon=atol(line.c_str());
 			GeoCoordinate radians(lat,lon);
-			if(index==0)
-				{
-				Node node(id,degrees,radians, true);
-				grafo.addVertex(node);
-				index = rand() % 10 + 1;
-				}
-			else
-			{
-				Node node(id,degrees,radians, false);
-				grafo.addVertex(node);
-				index--;
-			}
+			Node node(id,degrees,radians);
+			grafo.addVertex(node);
+			index--;
 		}
 	}
 	ifs.close();
@@ -189,25 +223,44 @@ void clientInit(){
 	}
 }
 
+void showCPoints(){
+	size_t ans;
+
+	do{
+		cout << "Which collection point are you in?\n";
+		for(size_t i=0; i<pontos.size(); i++)
+		{
+			cout << endl;
+			cout << i << " - " << pontos[i].getName();
+		}
+		cout << endl;
+		cin >> ans;
+	}while(ans<0 || ans>=pontos.size());
+
+
+}
+
 void interface(){
 
 	cout << "	BIKE SHARING	\n" << endl;
 
+	grafo.getNumVertex();
+
 	clientInit();
+	showCPoints();
+
 }
 
 int main(){
 
-	cout << "Loading...\n";
+	cout << "Loading...";
+	cout << endl;
 	loadNodes();
 	loadRoads();
 	loadEdges();
-	interface();
-	//TODO: Listagem de locais possíveis?
-	//TODO: Carregar grafo
-	//TODO: Mostrar ponto de partilha mais
-	//próximo de onde se encontra, com lugar
-	//disponível para a devolução da bicicleta
+	loadCPoints();
+	//interface();
+
 	//TODO: Mostrar ponto de partilha mais
 	//próximo de onde se encontra, com lugar
 	//disponível para a devolução da bicicleta
@@ -215,16 +268,11 @@ int main(){
 	//barato de onde se encontra, com lugar
 	//disponível para a devolução da bicicleta
 
-	//XXX: Todos os nós são pontos de recolha?
-	//XXX: Interação utilizador/sistema fica-se
-	//pelo registo e verificação do mesmo?
-	//XXX: Nó inicial é dado numa macro ou
-	//perguntado ao utilizador?
-	//XXX: Altitudes variam em que amplitude?
+	//XXX: Cada vértice guarda um T e não um pointer para T,
+	//daí que não seja recomendável guardar no CPoint um pointer
+	//para o Node. O quê que sugerem?
+	//XXX: Altitudes variam em que amplitude? Só os CPoint têm altitude?
 	//XXX: Qual a fórmula de cálculo do custo?
-	//XXX: Como calcular a distância entre nós a
-	//partir da latitude e longitude?
-	// http://stackoverflow.com/questions/27928/calculate-distance-between-two-latitude-longitude-points-haversine-formula
 }
 
 

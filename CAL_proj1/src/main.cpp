@@ -202,6 +202,12 @@ void clientInit(){
 				file.close();
 				break;
 			}
+			else
+			{
+				file.close();
+				cout << "Username not found!\n";
+				break;
+			}
 		}
 	}
 
@@ -255,14 +261,14 @@ void interface(){
 
 int main(){
 
-	cout << "Loading...";
+	/*cout << "Loading...";
 	cout << endl;
 	loadNodes();
 	loadRoads();
 	loadEdges();
 	loadCPoints();
-	cout << "END\n";
-	//interface();
+	cout << "END\n";*/
+	interface();
 
 	//TODO: Mostrar ponto de partilha mais
 	//próximo de onde se encontra, com lugar

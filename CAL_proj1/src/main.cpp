@@ -58,7 +58,7 @@ void loadCPoints(){
 			int no_bikes=atoi(line.c_str());
 			getline(ifs,line,'\n');
 			int no_vagas=atoi(line.c_str());
-			for(int i=0; i<grafo.getVertexSet().size(); i++)
+			for(size_t i=0; i<grafo.getVertexSet().size(); i++)
 			{
 				if(grafo.getVertexSet()[i]->getInfo()->getId()==id_node){
 					CPoint aux(name,no_bikes,no_vagas,grafo.getVertexSet()[i]->getInfo());
@@ -80,7 +80,7 @@ void loadRoads(){
 			string name=line;
 			getline(ifs,line,'\n');
 			string two_way=line;
-			Road *road=new Road(id,name,two_way=="true");
+			Road *road=new Road(id,name,two_way=="True");
 			estradas.push_back(road);
 		}
 	}
@@ -90,23 +90,29 @@ void loadRoads(){
 void loadEdges(){
 	ifstream ifs("porto_subroads.txt");
 	if(ifs.is_open()){
+		int ind=0;
+		int id_ant, id;
+		Road *road=estradas[ind];
 		string line;
 		while(!ifs.eof()){
 			getline(ifs,line,';');
+			id_ant=id;
 			int id=atoi(line.c_str());
-
-			Road *road=searchRoad(id);
-
-			if(road==NULL)
+			if(id!=id_ant)
+			{
+				ind++;
+				road=estradas[ind];
+			}
+			/*if(road==NULL)
 				continue;
 			else
-			{
+			{*/
 				getline(ifs,line,';');
 				int sour=atoi(line.c_str());
 				getline(ifs,line,'\n');
 				int dest=atoi(line.c_str());
 
-				Vertex<Node>* source, *destination;
+				Vertex<Node>* source=NULL, *destination=NULL;
 
 				for(size_t i=0; i<grafo.getVertexSet().size(); i++){
 					if(grafo.getVertexSet()[i]->getInfo()->getId()==sour)
@@ -131,7 +137,7 @@ void loadEdges(){
 						source->addEdge(destination, 1/*distance*/);
 				}
 
-			}
+			//}
 		}
 	}
 
@@ -264,7 +270,7 @@ int main(){
 	cout << "Loading...";
 	cout << endl;
 	loadNodes();
-	loadCPoints();
+	//loadCPoints();
 	loadRoads();
 	loadEdges();
 	cout << "END\n";

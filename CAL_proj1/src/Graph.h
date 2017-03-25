@@ -132,8 +132,8 @@ template<class T>
 class Graph {
 	vector<Vertex<T> *> vertexSet;
 	void dfs(Vertex<T> *v, vector<T> &res) const;
-	vector<vector<int>> M;
-	vector<vector<Vertex<T>*>> P;
+//	vector<vector<int>> M;
+//	vector<vector<Vertex<T>*>> P;
 
 	//exercicio 5
 	int numCycles;
@@ -567,28 +567,28 @@ void Graph<T>::dijkstraShortestPath(const T &s) {
 		}
 	}
 }
-template<class T>
-void Graph<T>::floydWarshallShortestPath() {
-	M.resize(vertexSet.size());
-	P.resize(vertexSet.size());
-	for (int i = 0; i < vertexSet.size(); i++) {
-		M.at(i).resize(vertexSet.size(), INT_INFINITY);
-		P.at(i).resize(vertexSet.size(), NULL);
-	}
-	for (int i = 0; i < vertexSet.size(); i++) {
-		for (int j = 0; j < vertexSet.size(); j++) {
-			M.at(i).at(j) = edgeCost(i, j);
-		}
-	}
-	for (int k = 0; k < vertexSet.size(); k++) {
-		for (int i = 0; i < vertexSet.size(); i++)
-			for (int j = 0; j < vertexSet.size(); j++)
-				if(M.at(i).at(k)+M.at(k).at(i)<M.at(i).at(j)){
-				M.at(i).at(j)=M.at(i).at(k)+M.at(k).at(i);
-				P.at(i).at(j)=vertexSet.at(k);
-				}
-	}
-}
+//template<class T>
+//void Graph<T>::floydWarshallShortestPath() {
+//	M.resize(vertexSet.size());
+//	P.resize(vertexSet.size());
+//	for (int i = 0; i < vertexSet.size(); i++) {
+//		M.at(i).resize(vertexSet.size(), INT_INFINITY);
+//		P.at(i).resize(vertexSet.size(), NULL);
+//	}
+//	for (int i = 0; i < vertexSet.size(); i++) {
+//		for (int j = 0; j < vertexSet.size(); j++) {
+//			M.at(i).at(j) = edgeCost(i, j);
+//		}
+//	}
+//	for (int k = 0; k < vertexSet.size(); k++) {
+//		for (int i = 0; i < vertexSet.size(); i++)
+//			for (int j = 0; j < vertexSet.size(); j++)
+//				if(M.at(i).at(k)+M.at(k).at(i)<M.at(i).at(j)){
+//				M.at(i).at(j)=M.at(i).at(k)+M.at(k).at(i);
+//				P.at(i).at(j)=vertexSet.at(k);
+//				}
+//	}
+//}
 
 template<class T>
 int Graph<T>::edgeCost(int i, int j) {

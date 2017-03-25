@@ -23,6 +23,7 @@ vector<Road*> estradas;
 vector<CPoint> pontos;
 
 /*
+ *
  * @brief Returns the distance between two places
  * @param place1 First place to compare
  * @param place2 Second place to compare
@@ -274,7 +275,7 @@ int main() {
 
 	loadEdges();
 
-
+printf("AQUI\n");
 	interface();
 
 	//TODO: Mostrar ponto de partilha mais

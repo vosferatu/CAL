@@ -128,15 +128,15 @@ void loadEdges() {
 				}
 
 				if (source != NULL && destination != NULL) {
-					//GeoCoordinate src_coords=source->getInfo()->getRadCoords();
-					//GeoCoordinate dest_coords=destination->getInfo()->getRadCoords();
-					//int distance=getDistanceFromLatLonInKm(src_coords, dest_coords);
+					GeoCoordinate src_coords=source->getInfo()->getRadCoords();
+					GeoCoordinate dest_coords=destination->getInfo()->getRadCoords();
+					int distance=getDistanceFromLatLonInKm(src_coords, dest_coords);
 
 					if (road->isTwoWay()) {
-						source->addEdge(destination, 1/*distance*/);
-						destination->addEdge(source, 1/*distance*/);
+						source->addEdge(destination, distance/*distance*/);
+						destination->addEdge(source, distance/*distance*/);
 					} else {
-						source->addEdge(destination, 1);/*distance*/
+						source->addEdge(destination, distance);/*distance*/
 						//printf("ENTROU dest = %d\n", dest);
 					}
 				}

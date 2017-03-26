@@ -31,10 +31,10 @@ vector<CPoint> pontos;
 int getDistanceFromLatLonInKm(GeoCoordinate place1, GeoCoordinate place2) {
 	int R = 6371; // Radius of the earth in km
 	float a = sin((place2.getLat() - place1.getLat()) / 2)
-			* sin((place2.getLat() - place1.getLat()) / 2)
-			+ cos(place1.getLat()) * cos(place2.getLat())
-					* sin((place2.getLon() - place1.getLon()) / 2)
-					* sin((place2.getLon() - place1.getLon()) / 2);
+							* sin((place2.getLat() - place1.getLat()) / 2)
+							+ cos(place1.getLat()) * cos(place2.getLat())
+							* sin((place2.getLon() - place1.getLon()) / 2)
+							* sin((place2.getLon() - place1.getLon()) / 2);
 	float c = 2 * atan2(sqrt(a), sqrt(1 - a));
 	float d = R * c; // Distance in km
 	return d;
@@ -50,7 +50,7 @@ Road* searchRoad(int id) {
 }
 
 void loadCPoints() {
-	ifstream ifs("porto_cpoints.txt");
+	ifstream ifs("espinho_cpoints.txt");
 	if (ifs.is_open()) {
 		string line;
 		//Node* node = NULL;
@@ -75,7 +75,7 @@ void loadCPoints() {
 }
 
 void loadRoads() {
-	ifstream ifs("porto_roads.txt");
+	ifstream ifs("espinho_roads.txt");
 	if (ifs.is_open()) {
 		string line;
 		while (!ifs.eof()) {
@@ -93,7 +93,7 @@ void loadRoads() {
 }
 
 void loadEdges() {
-	ifstream ifs("porto_subroads.txt");
+	ifstream ifs("espinho_subroads.txt");
 	if (ifs.is_open()) {
 		string line;
 		while (!ifs.eof()) {
@@ -117,7 +117,7 @@ void loadEdges() {
 
 				//printf("ENTROU dest = %d\n", dest);
 
-				Vertex<Node>* source, *destination;
+				Vertex<Node>* source=NULL, *destination=NULL;
 
 				for (size_t i = 0; i < grafo.getVertexSet().size(); i++) {
 					if (grafo.getVertexSet()[i]->getInfo()->getId() == sour)
@@ -151,7 +151,7 @@ void loadEdges() {
 void loadNodes() {
 	srand(time(NULL));
 	int index = rand() % 10 + 1;
-	ifstream ifs("porto_nodes.txt");
+	ifstream ifs("espinho_nodes.txt");
 	if (ifs.is_open()) {
 		string line;
 		while (!ifs.eof()) {
@@ -193,7 +193,7 @@ void clientInit() {
 		cout << "Username: ";
 		cin >> name;
 		file.open("Users.txt");
-		while (!file.eof() || !exists) {
+		while (!file.eof()) {
 			string read_name, read_password, line;
 			getline(file, read_name, ';');
 			getline(file, read_password, ';');
@@ -209,10 +209,6 @@ void clientInit() {
 			}
 			if (exists == true) {
 				file.close();
-				break;
-			} else {
-				file.close();
-				cout << "Username not found!\n";
 				break;
 			}
 		}
@@ -238,18 +234,21 @@ void clientInit() {
 	}
 }
 
-void showCPoints() {
+int originCPoint() {
 	size_t ans;
 
-	do {
-		cout << "Which collection point are you in?\n";
-		for (size_t i = 0; i < pontos.size(); i++) {
-			cout << endl;
-			cout << i << " - " << pontos[i].getName();
-		}
+	cout << "Which collection point are you in?\n";
+	for (size_t i = 0; i < pontos.size(); i++) {
 		cout << endl;
-		cin >> ans;
-	} while (ans < 0 || ans >= pontos.size());
+		cout << i << " - " << pontos[i].getName();
+	}
+	cout << endl;
+	cin >> ans;
+
+	if(ans < 0 || ans >= pontos.size())
+		return -1;
+	else
+		return ans;
 
 }
 
@@ -260,11 +259,12 @@ void interface() {
 	grafo.getNumVertex();
 
 	clientInit();
-	showCPoints();
 
 }
 
 int main() {
+
+	int origin_ind;
 
 	cout << "Loading...";
 	cout << endl;
@@ -275,8 +275,9 @@ int main() {
 
 	loadEdges();
 
-printf("AQUI\n");
+	printf("AQUI\n");
 	interface();
+	origin_ind=originCPoint();
 
 	//TODO: Mostrar ponto de partilha mais
 	//pr�ximo de onde se encontra, com lugar

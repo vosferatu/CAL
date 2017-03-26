@@ -1,0 +1,9 @@
+eclipse.preferences.version=1
+environment/project/cdt.managedbuild.config.gnu.mingw.exe.debug.879010441/MINGW/delimiter=;
+environment/project/cdt.managedbuild.config.gnu.mingw.exe.debug.879010441/MINGW/operation=replace
+environment/project/cdt.managedbuild.config.gnu.mingw.exe.debug.879010441/MINGW/value=C\:\\MinGW\\bin
+environment/project/cdt.managedbuild.config.gnu.mingw.exe.debug.879010441/PATH/delimiter=;
+environment/project/cdt.managedbuild.config.gnu.mingw.exe.debug.879010441/PATH/operation=replace
+environment/project/cdt.managedbuild.config.gnu.mingw.exe.debug.879010441/PATH/value=${CYGWIN_HOME}\\bin;C\:/Program Files/Java/jre1.8.0_121/bin/server;C\:/Program Files/Java/jre1.8.0_121/bin;C\:/Program Files/Java/jre1.8.0_121/lib/amd64;C\:\\ProgramData\\Oracle\\Java\\javapath;C\:\\Program Files (x86)\\Intel\\iCLS Client\\;C\:\\Program Files\\Intel\\iCLS Client\\;C\:\\WINDOWS\\system32;C\:\\WINDOWS;C\:\\WINDOWS\\System32\\Wbem;C\:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C\:\\Program Files\\Intel\\Intel(R) Management Engine Components\\DAL;C\:\\Program Files\\Intel\\Intel(R) Management Engine Components\\IPT;C\:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\DAL;C\:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\IPT;C\:\\Program Files (x86)\\Common Files\\Ulead Systems\\MPEG;C\:\\Program Files (x86)\\Windows Live\\Shared;C\:\\Program Files (x86)\\Skype\\Phone\\;C\:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C\:\\MinGW\\bin;C\:\\Program Files\\Git\\cmd;C\:\\sqlite;C\:\\Users\\bmsp2\\AppData\\Local\\Microsoft\\WindowsApps;;C\:\\WINDOWS\\system32;;C\:\\cygwin64\\bin;;C\:\\cygwin64\\usr
+environment/project/cdt.managedbuild.config.gnu.mingw.exe.debug.879010441/append=true
+environment/project/cdt.managedbuild.config.gnu.mingw.exe.debug.879010441/appendContributed=true

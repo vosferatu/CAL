@@ -22,6 +22,16 @@ Graph<Node> grafo;
 vector<Road*> estradas;
 vector<CPoint> pontos;
 
+int origin_ind;
+
+void searchForRent(){
+
+}
+
+void searchForReturn(){
+
+}
+
 /*
  *
  * @brief Returns the distance between two places
@@ -31,10 +41,10 @@ vector<CPoint> pontos;
 int getDistanceFromLatLonInKm(GeoCoordinate place1, GeoCoordinate place2) {
 	int R = 6371; // Radius of the earth in km
 	float a = sin((place2.getLat() - place1.getLat()) / 2)
-							* sin((place2.getLat() - place1.getLat()) / 2)
-							+ cos(place1.getLat()) * cos(place2.getLat())
-							* sin((place2.getLon() - place1.getLon()) / 2)
-							* sin((place2.getLon() - place1.getLon()) / 2);
+									* sin((place2.getLat() - place1.getLat()) / 2)
+									+ cos(place1.getLat()) * cos(place2.getLat())
+									* sin((place2.getLon() - place1.getLon()) / 2)
+									* sin((place2.getLon() - place1.getLon()) / 2);
 	float c = 2 * atan2(sqrt(a), sqrt(1 - a));
 	float d = R * c; // Distance in km
 	return d;
@@ -237,47 +247,45 @@ void clientInit() {
 int originCPoint() {
 	size_t ans;
 
-	cout << "Which collection point are you in?\n";
-	for (size_t i = 0; i < pontos.size(); i++) {
+	while(ans < 0 || ans >= pontos.size()){
+		cout << "Which collection point are you in?\n";
+		for (size_t i = 0; i < pontos.size(); i++) {
+			cout << endl;
+			cout << i << " - " << pontos[i].getName();
+		}
 		cout << endl;
-		cout << i << " - " << pontos[i].getName();
+		cin >> ans;
 	}
-	cout << endl;
-	cin >> ans;
-
-	if(ans < 0 || ans >= pontos.size())
-		return -1;
-	else
-		return ans;
+	return ans;
 
 }
 
-void interface() {
-
-	cout << "	BIKE SHARING	\n" << endl;
-
-	grafo.getNumVertex();
-
-	clientInit();
-
+void menu(){
+	int ans;
+	cout << "\nWhat do you want to do?\n";
+	while (ans < 1 || ans > 2) {
+			cout << "\n1 - Rent\n2 - Return\n";
+			cin >> ans;
+		}
+	if(ans==1)
+		searchForRent();
+	else
+		searchForReturn();
 }
 
 int main() {
 
-	int origin_ind;
-
 	cout << "Loading...";
 	cout << endl;
 	loadNodes();
-
 	loadRoads();
 	loadCPoints();
-
 	loadEdges();
 
-	printf("AQUI\n");
-	interface();
+	cout << "\n 	BIKE SHARING	   \n";
+	clientInit();
 	origin_ind=originCPoint();
+	menu();
 
 	//TODO: Mostrar ponto de partilha mais
 	//pr�ximo de onde se encontra, com lugar

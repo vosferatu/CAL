@@ -113,24 +113,15 @@ void loadEdges() {
 			int id = atoi(line.c_str());
 
 			Road *road = searchRoad(id);
-			//printf("SubRoad = %d\n", id);
 			if (road == NULL) {
 				getline(ifs, line, '\n');
 				continue;
 			} else {
-				//printf("ENTROU SubRoad = %d\n", id);
 				getline(ifs, line, ';');
 				int sour = atoi(line.c_str());
-
-				//printf("ENTROU Source = %d\n", sour);
 				getline(ifs, line, '\n');
-
 				int dest = atoi(line.c_str());
-
-				//printf("ENTROU dest = %d\n", dest);
-
 				Vertex<Node>* source=NULL, *destination=NULL;
-
 				for (size_t i = 0; i < grafo.getVertexSet().size(); i++) {
 					if (grafo.getVertexSet()[i]->getInfo()->getId() == sour)
 						source = grafo.getVertexSet()[i];
@@ -146,11 +137,10 @@ void loadEdges() {
 					int distance=getDistanceFromLatLonInKm(src_coords, dest_coords);
 
 					if (road->isTwoWay()) {
-						source->addEdge(destination, distance/*distance*/);
-						destination->addEdge(source, distance/*distance*/);
+						source->addEdge(destination, distance);
+						destination->addEdge(source, distance);
 					} else {
-						source->addEdge(destination, distance);/*distance*/
-						//printf("ENTROU dest = %d\n", dest);
+						source->addEdge(destination, distance);
 					}
 				}
 

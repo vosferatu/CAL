@@ -10,7 +10,6 @@
 GeoCoordinate::GeoCoordinate() : lat {0}, lon {0} {};
 
 GeoCoordinate::GeoCoordinate(float latitude, float floatitude){
-
 	lat=latitude;
 	lon=floatitude;
 }
@@ -32,6 +31,10 @@ int GeoCoordinate::getDistanceFromLatLon(const GeoCoordinate place) {
 												* sin((place.getLon() - lon) / 2);
 		float c = 2 * atan2(sqrt(a), sqrt(1 - a));
 		float d = R * c;
-
 		return d;
 	}
+
+float GeoCoordinate::latMin=FLT_MAX;
+float GeoCoordinate::latMax=FLT_MIN;
+float GeoCoordinate::lonMin=FLT_MAX;
+float GeoCoordinate::lonMax=FLT_MIN;

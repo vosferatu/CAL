@@ -15,7 +15,7 @@ class Node{
 	/*
 	 * @brief Node's ID
 	 */
-	int ID;
+	long long ID;
 	/*
 	 * @brief Node's degrees geographic coordinates
 	 */
@@ -32,7 +32,7 @@ public:
 	/*
 	 * @brief Constructs a Node
 	 */
-	Node(int node_id, GeoCoordinate node_deg_coords, GeoCoordinate node_rad_coords);
+	Node(long long node_id, GeoCoordinate node_deg_coords, GeoCoordinate node_rad_coords);
 	/*
 	 * @brief Gets the Node's geographic degrees coordinates
 	 */
@@ -44,7 +44,7 @@ public:
 	/*
 	 * @brief Gets the Node's ID
 	 */
-	int getId() const;
+	long long getId() const;
 
 	bool operator==(const Node& n1) const{
 		return ID==n1.getId();

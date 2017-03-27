@@ -5,8 +5,8 @@
  *      Author: bmsp2
  */
 
-#ifndef STREET_H_
-#define STREET_H_
+#ifndef ROAD_H_
+#define ROAD_H_
 
 #include <string>
 
@@ -42,6 +42,4 @@ public:
 	bool isTwoWay() const;
 };
 
-
-
-#endif /* STREET_H_ */
+#endif /* ROAD_H_ */

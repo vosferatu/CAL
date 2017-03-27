@@ -47,8 +47,15 @@ public:
 	int getDist() const;
 	int getIndegree() const;
 
+	vector<Edge<T> >& getAdj();
+
 	Vertex* path;
 };
+
+template<class T>
+vector<Edge<T> >& Vertex<T>::getAdj() {
+		return adj;
+	}
 
 template<class T>
 struct vertex_greater_than {
@@ -114,9 +121,17 @@ class Edge {
 	double weight;
 public:
 	Edge(Vertex<T> *d, double w);
+
+	Vertex<T>* getDest();
+
 	friend class Graph<T> ;
 	friend class Vertex<T> ;
 };
+
+template<class T>
+Vertex<T>* Edge<T>::getDest() {
+	return dest;
+}
 
 template<class T>
 Edge<T>::Edge(Vertex<T> *d, double w) :
@@ -527,7 +542,6 @@ void Graph<T>::bellmanFordShortestPath(const T &s) {
 }
 template<class T>
 void Graph<T>::dijkstraShortestPath(T *s) {
-
 	for (unsigned int i = 0; i < vertexSet.size(); i++) {
 		vertexSet[i]->path = NULL;
 		vertexSet[i]->dist = INT_INFINITY;
@@ -537,8 +551,8 @@ void Graph<T>::dijkstraShortestPath(T *s) {
 	Vertex<T>* v = getVertex(s);
 	v->dist = 0;
 	vector<Vertex<T>*> q;
-	q.resize(0);
 	q.push_back(v);
+
 	while (!q.empty()) {
 		v = q.front();
 		q.erase(q.begin());

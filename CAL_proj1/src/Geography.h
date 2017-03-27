@@ -9,6 +9,7 @@
 #define GEOGRAPHY_H_
 
 #include <math.h>
+#include <cfloat>
 
 class GeoCoordinate{
 	/*
@@ -16,14 +17,14 @@ class GeoCoordinate{
 	 */
 	float lat;
 	/*
-	 * @brief floatitude
+	 * @brief Longitude
 	 */
 	float lon;
-	/*
-	 * @brief Altitude
-	 */
-	//float alt;
 public:
+	static float lonMin;
+	static float lonMax;
+	static float latMin;
+	static float latMax;
 	/*
 	 * @brief GeoCoordinate default constructor
 	 */
@@ -48,7 +49,6 @@ public:
 	 * @param place Place to compare
 	 */
 	int getDistanceFromLatLon(const GeoCoordinate place);
-
 };
 
 #endif /* GEOGRAPHY_H_ */

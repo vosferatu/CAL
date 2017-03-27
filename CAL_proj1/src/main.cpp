@@ -13,6 +13,7 @@
 #include "Geography.h"
 #include "Node.h"
 #include "CPoint.h"
+#include "graphviewer.h"
 #include "Road.h"
 #include <math.h>
 
@@ -24,21 +25,85 @@ vector<CPoint> pontos;
 
 int origin_ind;
 
+void showGraph(){
+	GraphViewer *gv = new GraphViewer(600, 600, false);
+
+	gv->createWindow(600, 600);
+
+	gv->defineEdgeColor("blue");
+	gv->defineVertexColor("yellow");
+	gv->defineEdgeCurved(false);
+	gv->defineVertexSize(0.000001);
+
+	for(size_t i=0; i<grafo.getVertexSet().size(); i++)
+	{
+		long id=grafo.getVertexSet()[i]->getInfo()->getId();
+		float lat=grafo.getVertexSet()[i]->getInfo()->getRadCoords().getLat();
+		float lon=0-grafo.getVertexSet()[i]->getInfo()->getRadCoords().getLon();
+
+		int x, y;
+
+		x = floor(((lon-GeoCoordinate::lonMin)*4199.94/(GeoCoordinate::lonMax-GeoCoordinate::lonMin)));
+		y = -floor(((lat-GeoCoordinate::latMin)*3184.6/(GeoCoordinate::latMax-GeoCoordinate::latMin)));
+
+		cout << x+19289700 << endl;
+		cout << y-7214500 << endl;
+
+		gv->addNode(id, x+19289700, y-7214500);
+		gv->setVertexLabel(id, ".");
+	}
+
+	for(size_t a=0; a<pontos.size(); a++)
+	{
+		long id=pontos[a].getColNode()->getId();
+		float lat=pontos[a].getColNode()->getRadCoords().getLat();
+		float lon=0-pontos[a].getColNode()->getRadCoords().getLon();
+
+		int x, y;
+
+		x = floor(((lon-GeoCoordinate::lonMin)*4199.94/(GeoCoordinate::lonMax-GeoCoordinate::lonMin)));
+		y = -floor(((lat-GeoCoordinate::latMin)*3184.6/(GeoCoordinate::latMax-GeoCoordinate::latMin)));
+
+		cout << x+19289700 << endl;
+		cout << y-7214500 << endl;
+
+		gv->addNode(id, x+19289700, y-7214500);
+		gv->setVertexColor(id,RED);
+	}
+
+	int a=0;
+
+	for(size_t i=0; i<grafo.getVertexSet().size(); i++)
+		for(size_t j=0; j<grafo.getVertexSet()[i]->getAdj().size(); j++, a++)
+		{
+			gv->addEdge(a, grafo.getVertexSet()[i]->getInfo()->getId(), grafo.getVertexSet()[i]->getAdj()[j].getDest()->getInfo()->getId() , EdgeType::DIRECTED);
+		}
+
+	gv->rearrange();
+}
+
+/*
+ *@brief Calculates bike return's price, in cents
+ *@param destination Collection point where the bike will be returned;
+ */
+int priceCentsCalculator(CPoint destination){
+	int price=800-(destination.getAltitude()*1.1);
+
+	return price;
+}
+
 void searchForRent() {
 	int min = INT_MAX;
 	CPoint* ponto = NULL;
 	for (unsigned int i = 0; i < pontos.size(); i++) {
-
-		printf("%d\n", grafo.getVertex(pontos.at(i).getColNode())->getDist());
 		if (pontos.at(i).getBikes() > 0
 				&& grafo.getVertex(pontos.at(i).getColNode())->getDist()
-						< min) {
+				< min) {
 			min = grafo.getVertex(pontos.at(i).getColNode())->getDist();
 			ponto = &(pontos.at(i));
 		}
 	}
-	cout << "The nearest point with bikes for rental is " << ponto->getName()
-					<< endl;
+	cout << "The nearest point with bikes for rental is " << ponto->getName()<< endl;
 }
 
 void searchForReturn() {
@@ -47,18 +112,14 @@ void searchForReturn() {
 	for (unsigned int i = 0; i < pontos.size(); i++) {
 		if (pontos.at(i).getPlaces() > 0
 				&& grafo.getVertex(pontos.at(i).getColNode())->getDist()
-						< min) {
+				< min) {
 			min = grafo.getVertex(pontos.at(i).getColNode())->getDist();
 			ponto = &(pontos.at(i));
 		}
 	}
-	cout << "O ponto mais proximo com vagas e a " << ponto->getName() << endl;
-	cout << "The nearest point with places for return is " << ponto->getName()
-					<< endl;
+	cout << "The nearest point with places for return is " << ponto->getName()<< endl;
 
 }
-
-
 
 Road* searchRoad(int id) {
 	for (size_t i = 0; i < estradas.size(); i++) {
@@ -73,7 +134,6 @@ void loadCPoints() {
 	ifstream ifs("espinho_cpoints.txt");
 	if (ifs.is_open()) {
 		string line;
-		//Node* node = NULL;
 		while (!ifs.eof()) {
 			getline(ifs, line, ';');
 			string name = line;
@@ -87,8 +147,7 @@ void loadCPoints() {
 			int altitude = atoi(line.c_str());
 			for (unsigned int i = 0; i < grafo.getVertexSet().size(); i++) {
 				if (grafo.getVertexSet()[i]->getInfo()->getId() == id_node) {
-					CPoint aux(name, no_bikes, no_vagas,
-							grafo.getVertexSet()[i]->getInfo(), altitude);
+					CPoint aux(name, no_bikes, no_vagas, grafo.getVertexSet()[i]->getInfo(),altitude);
 					pontos.push_back(aux);
 				}
 			}
@@ -132,7 +191,7 @@ void loadEdges() {
 				int sour = atoi(line.c_str());
 				getline(ifs, line, '\n');
 				int dest = atoi(line.c_str());
-				Vertex<Node>* source = NULL, *destination = NULL;
+				Vertex<Node>* source=NULL, *destination=NULL;
 				for (size_t i = 0; i < grafo.getVertexSet().size(); i++) {
 					if (grafo.getVertexSet()[i]->getInfo()->getId() == sour)
 						source = grafo.getVertexSet()[i];
@@ -143,12 +202,10 @@ void loadEdges() {
 				}
 
 				if (source != NULL && destination != NULL) {
-					GeoCoordinate src_coords =
-							source->getInfo()->getRadCoords();
-					GeoCoordinate dest_coords =
-							destination->getInfo()->getRadCoords();
+					GeoCoordinate src_coords=source->getInfo()->getRadCoords();
+					GeoCoordinate dest_coords=destination->getInfo()->getRadCoords();
+					int distance=src_coords.getDistanceFromLatLon(dest_coords);
 
-					int distance = src_coords.getDistanceFromLatLon(dest_coords);
 					if (road->isTwoWay()) {
 						source->addEdge(destination, distance);
 						destination->addEdge(source, distance);
@@ -169,11 +226,24 @@ void loadNodes() {
 		string line;
 		while (!ifs.eof()) {
 			getline(ifs, line, ';');
-			int id = atoi(line.c_str());
+			long long id = atoll(line.c_str());
 			getline(ifs, line, ';');
 			float lat = atof(line.c_str());
 			getline(ifs, line, ';');
 			float lon = atof(line.c_str());
+
+			if(lat>GeoCoordinate::latMax)
+				GeoCoordinate::latMax=lat;
+
+			if(lat<GeoCoordinate::latMin)
+				GeoCoordinate::latMin=lat;
+
+			if(-lon>GeoCoordinate::lonMax)
+				GeoCoordinate::lonMax=lat;
+
+			if(-lon<GeoCoordinate::lonMin)
+				GeoCoordinate::lonMin=lat;
+
 			GeoCoordinate degrees(lat, lon);
 			getline(ifs, line, ';');
 			lat = atof(line.c_str());
@@ -185,6 +255,7 @@ void loadNodes() {
 		}
 	}
 	ifs.close();
+
 }
 
 void clientInit() {
@@ -258,10 +329,9 @@ int originCPoint() {
 		cout << endl;
 		cin >> ans;
 	}
-	return ans-1;
+	return ans;
 
 }
-
 
 void menu(){
 	size_t ans=-1;
@@ -270,9 +340,7 @@ void menu(){
 		cout << "\n1 - Rent\n2 - Return\n";
 		cin >> ans;
 	}
-
-	grafo.dijkstraShortestPath(pontos.at(origin_ind).getColNode());
-
+	grafo.dijkstraShortestPath(pontos.at(ans).getColNode());
 	if (ans == 1)
 		searchForRent();
 	else
@@ -288,13 +356,20 @@ int main() {
 	loadCPoints();
 	loadEdges();
 
-	cout << "\n	   BIKE SHARING	   \n";
+	cout << GeoCoordinate::latMax << endl;
+	cout << GeoCoordinate::latMin << endl;
+	cout << GeoCoordinate::lonMax << endl;
+	cout << GeoCoordinate::lonMin << endl;
 
-	//clientInit();
-	do {
+
+
+	showGraph();
+	cout << "\n	   BIKE SHARING	   \n";
+	clientInit();
+	do{
 		origin_ind = originCPoint();
 		menu();
-	} while (1);
+	}while(1);
 	//TODO: Mostrar ponto de partilha mais
 	//pr�ximo de onde se encontra, com lugar
 	//dispon�vel para a devolu��o da bicicleta
@@ -302,10 +377,6 @@ int main() {
 	//barato de onde se encontra, com lugar
 	//dispon�vel para a devolu��o da bicicleta
 
-	//XXX: Cada v�rtice guarda um T e n�o um pointer para T,
-	//da� que n�o seja recomend�vel guardar no CPoint um pointer
-	//para o Node. O qu� que sugerem?
-	//XXX: Altitudes variam em que amplitude? S� os CPoint t�m altitude?
 	//XXX: Qual a f�rmula de c�lculo do custo?
 }
 

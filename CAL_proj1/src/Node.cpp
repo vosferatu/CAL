@@ -9,7 +9,7 @@
 #include "Geography.h"
 #include <string>
 
-Node::Node(int node_id, GeoCoordinate node_deg_coords, GeoCoordinate node_rad_coords)
+Node::Node(long long node_id, GeoCoordinate node_deg_coords, GeoCoordinate node_rad_coords)
 {
 	ID=node_id;
 	deg_coords=node_deg_coords;
@@ -24,6 +24,6 @@ const GeoCoordinate Node::getRadCoords(){
 	return rad_coords;
 }
 
-int Node::getId() const {
+long long Node::getId() const {
 	return ID;
 }

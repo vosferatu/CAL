@@ -45,7 +45,7 @@ void searchForRent() {
 			ponto = &(pontos.at(i));
 		}
 	}
-	cout << "O ponto mais proximo com bicicletas e a " << ponto->getName()
+	cout << "The nearest point with bikes for rental is " << ponto->getName()
 					<< endl;
 }
 
@@ -60,7 +60,7 @@ void searchForReturn() {
 			ponto = &(pontos.at(i));
 		}
 	}
-	cout << "O ponto mais proximo com vagas e a " << ponto->getName()
+	cout << "The nearest point with places for return is " << ponto->getName()
 					<< endl;
 
 }
@@ -111,7 +111,7 @@ void loadRoads() {
 			string name = line;
 			getline(ifs, line, '\n');
 			string two_way = line;
-			Road *road = new Road(id, name, two_way == "true");
+			Road *road = new Road(id, name, two_way == "True");
 			estradas.push_back(road);
 		}
 	}

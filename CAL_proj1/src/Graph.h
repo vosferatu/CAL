@@ -527,6 +527,7 @@ void Graph<T>::bellmanFordShortestPath(const T &s) {
 }
 template<class T>
 void Graph<T>::dijkstraShortestPath(T *s) {
+
 	for (unsigned int i = 0; i < vertexSet.size(); i++) {
 		vertexSet[i]->path = NULL;
 		vertexSet[i]->dist = INT_INFINITY;
@@ -536,8 +537,8 @@ void Graph<T>::dijkstraShortestPath(T *s) {
 	Vertex<T>* v = getVertex(s);
 	v->dist = 0;
 	vector<Vertex<T>*> q;
+	q.resize(0);
 	q.push_back(v);
-
 	while (!q.empty()) {
 		v = q.front();
 		q.erase(q.begin());

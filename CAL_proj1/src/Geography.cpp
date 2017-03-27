@@ -9,15 +9,15 @@
 
 GeoCoordinate::GeoCoordinate() : lat {0}, lon {0} {};
 
-GeoCoordinate::GeoCoordinate(long latitude, long longitude){
+GeoCoordinate::GeoCoordinate(float latitude, float longitude){
 	lat=latitude;
 	lon=longitude;
 }
 
-long GeoCoordinate::getLon() const {
+float GeoCoordinate::getLon() const {
 	return lon;
 }
 
-long GeoCoordinate::getLat() const {
+float GeoCoordinate::getLat() const {
 	return lat;
 }

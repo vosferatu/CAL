@@ -28,6 +28,8 @@ void searchForRent() {
 	int min = INT_MAX;
 	CPoint* ponto = NULL;
 	for (unsigned int i = 0; i < pontos.size(); i++) {
+
+		printf("%d\n", grafo.getVertex(pontos.at(i).getColNode())->getDist());
 		if (pontos.at(i).getBikes() > 0
 				&& grafo.getVertex(pontos.at(i).getColNode())->getDist()
 						< min) {
@@ -35,6 +37,8 @@ void searchForRent() {
 			ponto = &(pontos.at(i));
 		}
 	}
+	if (ponto == NULL)
+		printf("PORQUE?????%d\n", min);
 	cout << "O ponto mais proximo com bicicletas e a " << ponto->getName()
 			<< endl;
 }
@@ -50,8 +54,7 @@ void searchForReturn() {
 			ponto = &(pontos.at(i));
 		}
 	}
-	cout << "O ponto mais proximo com vagas e a " << ponto->getName()
-			<< endl;
+	cout << "O ponto mais proximo com vagas e a " << ponto->getName() << endl;
 
 }
 
@@ -63,11 +66,14 @@ void searchForReturn() {
  */
 int getDistanceFromLatLonInKm(GeoCoordinate place1, GeoCoordinate place2) {
 	int R = 6371; // Radius of the earth in km
+	printf("1 = %f \n",place1.getLat());
+	printf("2 = %f \n",place2.getLat());
 	float a = sin((place2.getLat() - place1.getLat()) / 2)
 			* sin((place2.getLat() - place1.getLat()) / 2)
 			+ cos(place1.getLat()) * cos(place2.getLat())
 					* sin((place2.getLon() - place1.getLon()) / 2)
 					* sin((place2.getLon() - place1.getLon()) / 2);
+	printf("a = %f \n",a);
 	float c = 2 * atan2(sqrt(a), sqrt(1 - a));
 	float d = R * c; // Distance in km
 	return d;
@@ -160,6 +166,7 @@ void loadEdges() {
 							source->getInfo()->getRadCoords();
 					GeoCoordinate dest_coords =
 							destination->getInfo()->getRadCoords();
+
 					int distance = getDistanceFromLatLonInKm(src_coords,
 							dest_coords);
 
@@ -187,9 +194,9 @@ void loadNodes() {
 			getline(ifs, line, ';');
 			int id = atoi(line.c_str());
 			getline(ifs, line, ';');
-			long lat = atol(line.c_str());
+			float lat = atof(line.c_str());
 			getline(ifs, line, ';');
-			long lon = atol(line.c_str());
+			float lon = atof(line.c_str());
 			GeoCoordinate degrees(lat, lon);
 			getline(ifs, line, ';');
 			lat = atol(line.c_str());
@@ -281,13 +288,15 @@ int originCPoint() {
 }
 
 void menu() {
-	int ans=-1;
+	int ans = -1;
 	cout << "\nWhat do you want to do?\n";
 	while (ans < 1 || ans > 2) {
 		cout << "\n1 - Rent\n2 - Return\n";
 		cin >> ans;
 	}
+
 	grafo.dijkstraShortestPath(pontos.at(ans).getColNode());
+
 	if (ans == 1)
 		searchForRent();
 	else
@@ -304,11 +313,12 @@ int main() {
 	loadEdges();
 
 	cout << "\n	   BIKE SHARING	   \n";
-	clientInit();
-	do{
-	origin_ind = originCPoint();
-	menu();
-	}while(1);
+
+	//clientInit();
+	do {
+		origin_ind = originCPoint();
+		menu();
+	} while (1);
 	//TODO: Mostrar ponto de partilha mais
 	//pr�ximo de onde se encontra, com lugar
 	//dispon�vel para a devolu��o da bicicleta

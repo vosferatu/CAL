@@ -31,6 +31,7 @@ int GeoCoordinate::getDistanceFromLatLon(const GeoCoordinate place) {
 												* sin((place.getLon() - lon) / 2)
 												* sin((place.getLon() - lon) / 2);
 		float c = 2 * atan2(sqrt(a), sqrt(1 - a));
-		float d = R * c; // Distance in km
+		float d = R * c;
+
 		return d;
 	}

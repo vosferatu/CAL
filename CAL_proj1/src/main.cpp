@@ -149,7 +149,6 @@ void loadEdges() {
 							destination->getInfo()->getRadCoords();
 
 					int distance = src_coords.getDistanceFromLatLon(dest_coords);
-
 					if (road->isTwoWay()) {
 						source->addEdge(destination, distance);
 						destination->addEdge(source, distance);
@@ -259,7 +258,7 @@ int originCPoint() {
 		cout << endl;
 		cin >> ans;
 	}
-	return ans;
+	return ans-1;
 
 }
 
@@ -272,7 +271,7 @@ void menu(){
 		cin >> ans;
 	}
 
-	grafo.dijkstraShortestPath(pontos.at(ans).getColNode());
+	grafo.dijkstraShortestPath(pontos.at(origin_ind).getColNode());
 
 	if (ans == 1)
 		searchForRent();

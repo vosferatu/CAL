@@ -37,10 +37,8 @@ void searchForRent() {
 			ponto = &(pontos.at(i));
 		}
 	}
-	if (ponto == NULL)
-		printf("PORQUE?????%d\n", min);
-	cout << "O ponto mais proximo com bicicletas e a " << ponto->getName()
-			<< endl;
+	cout << "The nearest point with bikes for rental is " << ponto->getName()
+					<< endl;
 }
 
 void searchForReturn() {
@@ -55,29 +53,12 @@ void searchForReturn() {
 		}
 	}
 	cout << "O ponto mais proximo com vagas e a " << ponto->getName() << endl;
+	cout << "The nearest point with places for return is " << ponto->getName()
+					<< endl;
 
 }
 
-/*
- *
- * @brief Returns the distance between two places
- * @param place1 First place to compare
- * @param place2 Second place to compare
- */
-int getDistanceFromLatLonInKm(GeoCoordinate place1, GeoCoordinate place2) {
-	int R = 6371; // Radius of the earth in km
-	printf("1 = %f \n",place1.getLat());
-	printf("2 = %f \n",place2.getLat());
-	float a = sin((place2.getLat() - place1.getLat()) / 2)
-			* sin((place2.getLat() - place1.getLat()) / 2)
-			+ cos(place1.getLat()) * cos(place2.getLat())
-					* sin((place2.getLon() - place1.getLon()) / 2)
-					* sin((place2.getLon() - place1.getLon()) / 2);
-	printf("a = %f \n",a);
-	float c = 2 * atan2(sqrt(a), sqrt(1 - a));
-	float d = R * c; // Distance in km
-	return d;
-}
+
 
 Road* searchRoad(int id) {
 	for (size_t i = 0; i < estradas.size(); i++) {
@@ -127,7 +108,7 @@ void loadRoads() {
 			string name = line;
 			getline(ifs, line, '\n');
 			string two_way = line;
-			Road *road = new Road(id, name, two_way == "true");
+			Road *road = new Road(id, name, two_way == "True");
 			estradas.push_back(road);
 		}
 	}
@@ -167,8 +148,7 @@ void loadEdges() {
 					GeoCoordinate dest_coords =
 							destination->getInfo()->getRadCoords();
 
-					int distance = getDistanceFromLatLonInKm(src_coords,
-							dest_coords);
+					int distance = src_coords.getDistanceFromLatLon(dest_coords);
 
 					if (road->isTwoWay()) {
 						source->addEdge(destination, distance);
@@ -185,8 +165,6 @@ void loadEdges() {
 }
 
 void loadNodes() {
-	srand(time(NULL));
-	int index = rand() % 10 + 1;
 	ifstream ifs("espinho_nodes.txt");
 	if (ifs.is_open()) {
 		string line;
@@ -199,13 +177,12 @@ void loadNodes() {
 			float lon = atof(line.c_str());
 			GeoCoordinate degrees(lat, lon);
 			getline(ifs, line, ';');
-			lat = atol(line.c_str());
+			lat = atof(line.c_str());
 			getline(ifs, line, '\n');
-			lon = atol(line.c_str());
+			lon = atof(line.c_str());
 			GeoCoordinate radians(lat, lon);
 			Node node(id, degrees, radians);
 			grafo.addVertex(node);
-			index--;
 		}
 	}
 	ifs.close();
@@ -271,24 +248,24 @@ void clientInit() {
 }
 
 int originCPoint() {
-	size_t ans = -1;
+	size_t ans=-1;
 
-	while (ans < 0 || ans >= pontos.size()) {
-		while (ans < 1 || ans > pontos.size()) {
-			cout << "Which collection point are you in?\n";
-			for (size_t i = 0; i < pontos.size(); i++) {
-				cout << endl;
-				cout << i + 1 << " - " << pontos[i].getName();
-			}
+	while(ans < 1 || ans > pontos.size()){
+		cout << "Which collection point are you in?\n";
+		for (size_t i = 0; i < pontos.size(); i++) {
 			cout << endl;
-			cin >> ans;
+			cout << i+1 << " - " << pontos[i].getName();
 		}
-		return ans;
+		cout << endl;
+		cin >> ans;
 	}
+	return ans;
+
 }
 
-void menu() {
-	int ans = -1;
+
+void menu(){
+	size_t ans=-1;
 	cout << "\nWhat do you want to do?\n";
 	while (ans < 1 || ans > 2) {
 		cout << "\n1 - Rent\n2 - Return\n";

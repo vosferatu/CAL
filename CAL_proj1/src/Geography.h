@@ -42,6 +42,13 @@ public:
 	 * @brief Returns the floatitude
 	 */
 	float getLon() const;
+
+	/*
+	 * @brief Returns the distance between two places
+	 * @param place Place to compare
+	 */
+	int getDistanceFromLatLon(const GeoCoordinate place);
+
 };
 
 #endif /* GEOGRAPHY_H_ */

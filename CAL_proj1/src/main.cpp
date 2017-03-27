@@ -29,15 +29,29 @@ void searchForRent() {
 	CPoint* ponto = NULL;
 	for (unsigned int i = 0; i < pontos.size(); i++) {
 		if (pontos.at(i).getBikes() > 0
-				&& grafo.getVertex(pontos.at(i).getColNode())->getDist()<min){
-			min=grafo.getVertex(pontos.at(i).getColNode())->getDist();
-			ponto=&(pontos.at(i));
+				&& grafo.getVertex(pontos.at(i).getColNode())->getDist()
+						< min) {
+			min = grafo.getVertex(pontos.at(i).getColNode())->getDist();
+			ponto = &(pontos.at(i));
 		}
 	}
-	cout <<"O ponto mais proximo com bicicletas e a "<<ponto->getName()<<endl;
+	cout << "O ponto mais proximo com bicicletas e a " << ponto->getName()
+			<< endl;
 }
 
 void searchForReturn() {
+	int min = INT_MAX;
+	CPoint* ponto = NULL;
+	for (unsigned int i = 0; i < pontos.size(); i++) {
+		if (pontos.at(i).getPlaces() > 0
+				&& grafo.getVertex(pontos.at(i).getColNode())->getDist()
+						< min) {
+			min = grafo.getVertex(pontos.at(i).getColNode())->getDist();
+			ponto = &(pontos.at(i));
+		}
+	}
+	cout << "O ponto mais proximo com vagas e a " << ponto->getName()
+			<< endl;
 
 }
 
@@ -50,10 +64,10 @@ void searchForReturn() {
 int getDistanceFromLatLonInKm(GeoCoordinate place1, GeoCoordinate place2) {
 	int R = 6371; // Radius of the earth in km
 	float a = sin((place2.getLat() - place1.getLat()) / 2)
-									* sin((place2.getLat() - place1.getLat()) / 2)
-									+ cos(place1.getLat()) * cos(place2.getLat())
-									* sin((place2.getLon() - place1.getLon()) / 2)
-									* sin((place2.getLon() - place1.getLon()) / 2);
+			* sin((place2.getLat() - place1.getLat()) / 2)
+			+ cos(place1.getLat()) * cos(place2.getLat())
+					* sin((place2.getLon() - place1.getLon()) / 2)
+					* sin((place2.getLon() - place1.getLon()) / 2);
 	float c = 2 * atan2(sqrt(a), sqrt(1 - a));
 	float d = R * c; // Distance in km
 	return d;
@@ -80,15 +94,14 @@ void loadCPoints() {
 			int id_node = atoi(line.c_str());
 			getline(ifs, line, ';');
 			int no_bikes = atoi(line.c_str());
-			getline(ifs, line, '\n');
+			getline(ifs, line, ';');
 			int no_vagas = atoi(line.c_str());
 			getline(ifs, line, '\n');
 			int altitude = atoi(line.c_str());
 			for (unsigned int i = 0; i < grafo.getVertexSet().size(); i++) {
 				if (grafo.getVertexSet()[i]->getInfo()->getId() == id_node) {
 					CPoint aux(name, no_bikes, no_vagas,
-							grafo.getVertexSet()[i]->getInfo());
-					CPoint aux(name, no_bikes, no_vagas, grafo.getVertexSet()[i]->getInfo(),altitude);
+							grafo.getVertexSet()[i]->getInfo(), altitude);
 					pontos.push_back(aux);
 				}
 			}
@@ -143,9 +156,12 @@ void loadEdges() {
 				}
 
 				if (source != NULL && destination != NULL) {
-					GeoCoordinate src_coords=source->getInfo()->getRadCoords();
-					GeoCoordinate dest_coords=destination->getInfo()->getRadCoords();
-					int distance=getDistanceFromLatLonInKm(src_coords, dest_coords);
+					GeoCoordinate src_coords =
+							source->getInfo()->getRadCoords();
+					GeoCoordinate dest_coords =
+							destination->getInfo()->getRadCoords();
+					int distance = getDistanceFromLatLonInKm(src_coords,
+							dest_coords);
 
 					if (road->isTwoWay()) {
 						source->addEdge(destination, distance);
@@ -248,30 +264,31 @@ void clientInit() {
 }
 
 int originCPoint() {
-	size_t ans=-1;
+	size_t ans = -1;
 
 	while (ans < 0 || ans >= pontos.size()) {
-	while(ans < 1 || ans > pontos.size()){
-		cout << "Which collection point are you in?\n";
-		for (size_t i = 0; i < pontos.size(); i++) {
+		while (ans < 1 || ans > pontos.size()) {
+			cout << "Which collection point are you in?\n";
+			for (size_t i = 0; i < pontos.size(); i++) {
+				cout << endl;
+				cout << i + 1 << " - " << pontos[i].getName();
+			}
 			cout << endl;
-			cout << i+1 << " - " << pontos[i].getName();
-		}
-		cout << endl;
-		cin >> ans;
-	}
-	return ans;
-
-}
-
-void menu(){
-	int ans;
-	cout << "\nWhat do you want to do?\n";
-	while (ans < 1 || ans > 2) {
-			cout << "\n1 - Rent\n2 - Return\n";
 			cin >> ans;
 		}
-	if(ans==1)
+		return ans;
+	}
+}
+
+void menu() {
+	int ans=-1;
+	cout << "\nWhat do you want to do?\n";
+	while (ans < 1 || ans > 2) {
+		cout << "\n1 - Rent\n2 - Return\n";
+		cin >> ans;
+	}
+	grafo.dijkstraShortestPath(pontos.at(ans).getColNode());
+	if (ans == 1)
 		searchForRent();
 	else
 		searchForReturn();
@@ -288,9 +305,10 @@ int main() {
 
 	cout << "\n	   BIKE SHARING	   \n";
 	clientInit();
-	origin_ind=originCPoint();
+	do{
+	origin_ind = originCPoint();
 	menu();
-
+	}while(1);
 	//TODO: Mostrar ponto de partilha mais
 	//pr�ximo de onde se encontra, com lugar
 	//dispon�vel para a devolu��o da bicicleta

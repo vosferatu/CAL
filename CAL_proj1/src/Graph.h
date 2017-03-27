@@ -59,7 +59,7 @@ struct vertex_greater_than {
 
 template<class T>
 bool Vertex<T>::removeEdgeTo(Vertex<T> *d) {
-	d->indegree--; //adicionado do exercicio 5
+	d->indegree--;
 	typename vector<Edge<T> >::iterator it = adj.begin();
 	typename vector<Edge<T> >::iterator ite = adj.end();
 	while (it != ite) {
@@ -72,7 +72,6 @@ bool Vertex<T>::removeEdgeTo(Vertex<T> *d) {
 	return false;
 }
 
-//atualizado pelo exerc�cio 5
 template<class T>
 Vertex<T>::Vertex(T in) :
 		info(in), visited(false), processing(false), indegree(0), dist(0) {
@@ -132,10 +131,7 @@ template<class T>
 class Graph {
 	vector<Vertex<T> *> vertexSet;
 	void dfs(Vertex<T> *v, vector<T> &res) const;
-//	vector<vector<int>> M;
-//	vector<vector<Vertex<T>*>> P;
 
-	//exercicio 5
 	int numCycles;
 	void dfsVisit(Vertex<T> *v);
 	void dfsVisit();
@@ -152,9 +148,7 @@ public:
 	vector<Vertex<T> *> getVertexSet() const;
 	int getNumVertex() const;
 
-	//exercicio 5
-	Vertex<T>* getVertex(const T &v) const;
-//	int getVertex(const T &v) const;
+	Vertex<T>* getVertex(T* v) const;
 	void resetIndegrees();
 	vector<Vertex<T>*> getSources() const;
 	int getNumCycles();
@@ -163,7 +157,7 @@ public:
 	void unweightedShortestPath(const T &v);
 	bool isDAG();
 	void bellmanFordShortestPath(const T &s);
-	void dijkstraShortestPath(const T &s);
+	void dijkstraShortestPath(T* s);
 	void floydWarshallShortestPath();
 	int edgeCost(int i, int j);
 	vector<T> getfloydWarshallPath(const T &origin, const T &dest);
@@ -355,19 +349,12 @@ int Graph<T>::maxNewChildren(Vertex<T> *v, T &inf) const {
 	return maxChildren;
 }
 template<class T>
-Vertex<T>* Graph<T>::getVertex(const T &v) const {
+Vertex<T>* Graph<T>::getVertex(T* v) const {
 	for (unsigned int i = 0; i < vertexSet.size(); i++)
-		if (vertexSet[i]->info == v)
+		if (vertexSet[i]->info == *v)
 			return vertexSet[i];
 	return NULL;
 }
-//template<class T>
-//int Graph<T>::getVertex(const T &v) const {2
-//	for (unsigned int i = 0; i < vertexSet.size(); i++)
-//		if (vertexSet[i]->info == v)
-//			return i;
-//	return 0;
-//}
 template<class T>
 void Graph<T>::resetIndegrees() {
 	//colocar todos os indegree em 0;
@@ -539,7 +526,7 @@ void Graph<T>::bellmanFordShortestPath(const T &s) {
 	}
 }
 template<class T>
-void Graph<T>::dijkstraShortestPath(const T &s) {
+void Graph<T>::dijkstraShortestPath(T *s) {
 	for (unsigned int i = 0; i < vertexSet.size(); i++) {
 		vertexSet[i]->path = NULL;
 		vertexSet[i]->dist = INT_INFINITY;
@@ -562,34 +549,11 @@ void Graph<T>::dijkstraShortestPath(const T &s) {
 				w->path = v;
 				if (!w->visited)
 					q.push_back(w);
-				make_heap(q.begin(), q.end(), vertex_greater_than<int>());
+				make_heap(q.begin(), q.end(), vertex_greater_than<T>());
 			}
 		}
 	}
 }
-//template<class T>
-//void Graph<T>::floydWarshallShortestPath() {
-//	M.resize(vertexSet.size());
-//	P.resize(vertexSet.size());
-//	for (int i = 0; i < vertexSet.size(); i++) {
-//		M.at(i).resize(vertexSet.size(), INT_INFINITY);
-//		P.at(i).resize(vertexSet.size(), NULL);
-//	}
-//	for (int i = 0; i < vertexSet.size(); i++) {
-//		for (int j = 0; j < vertexSet.size(); j++) {
-//			M.at(i).at(j) = edgeCost(i, j);
-//		}
-//	}
-//	for (int k = 0; k < vertexSet.size(); k++) {
-//		for (int i = 0; i < vertexSet.size(); i++)
-//			for (int j = 0; j < vertexSet.size(); j++)
-//				if(M.at(i).at(k)+M.at(k).at(i)<M.at(i).at(j)){
-//				M.at(i).at(j)=M.at(i).at(k)+M.at(k).at(i);
-//				P.at(i).at(j)=vertexSet.at(k);
-//				}
-//	}
-//}
-
 template<class T>
 int Graph<T>::edgeCost(int i, int j) {
 	if (i == j)
@@ -601,8 +565,5 @@ int Graph<T>::edgeCost(int i, int j) {
 	}
 	return INT_INFINITY;
 }
-template<class T>
-vector<T> Graph<T>::getfloydWarshallPath(const T &origin, const T &dest){
 
-}
 #endif /* GRAPH_H_ */

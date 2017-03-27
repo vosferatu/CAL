@@ -34,11 +34,34 @@ int priceCentsCalculator(CPoint destination){
 	return price;
 }
 
-void searchForRent(){
-
+void searchForRent() {
+	int min = INT_MAX;
+	CPoint* ponto = NULL;
+	for (unsigned int i = 0; i < pontos.size(); i++) {
+		if (pontos.at(i).getBikes() > 0
+				&& grafo.getVertex(pontos.at(i).getColNode())->getDist()
+				< min) {
+			min = grafo.getVertex(pontos.at(i).getColNode())->getDist();
+			ponto = &(pontos.at(i));
+		}
+	}
+	cout << "O ponto mais proximo com bicicletas e a " << ponto->getName()
+					<< endl;
 }
 
-void searchForReturn(){
+void searchForReturn() {
+	int min = INT_MAX;
+	CPoint* ponto = NULL;
+	for (unsigned int i = 0; i < pontos.size(); i++) {
+		if (pontos.at(i).getPlaces() > 0
+				&& grafo.getVertex(pontos.at(i).getColNode())->getDist()
+				< min) {
+			min = grafo.getVertex(pontos.at(i).getColNode())->getDist();
+			ponto = &(pontos.at(i));
+		}
+	}
+	cout << "O ponto mais proximo com vagas e a " << ponto->getName()
+					<< endl;
 
 }
 
@@ -50,10 +73,10 @@ void searchForReturn(){
 int getDistanceFromLatLonInKm(GeoCoordinate place1, GeoCoordinate place2) {
 	int R = 6371; // Radius of the earth in km
 	float a = sin((place2.getLat() - place1.getLat()) / 2)
-									* sin((place2.getLat() - place1.getLat()) / 2)
-									+ cos(place1.getLat()) * cos(place2.getLat())
-									* sin((place2.getLon() - place1.getLon()) / 2)
-									* sin((place2.getLon() - place1.getLon()) / 2);
+											* sin((place2.getLat() - place1.getLat()) / 2)
+											+ cos(place1.getLat()) * cos(place2.getLat())
+											* sin((place2.getLon() - place1.getLon()) / 2)
+											* sin((place2.getLon() - place1.getLon()) / 2);
 	float c = 2 * atan2(sqrt(a), sqrt(1 - a));
 	float d = R * c; // Distance in km
 	return d;
@@ -264,10 +287,11 @@ void menu(){
 	size_t ans=-1;
 	cout << "\nWhat do you want to do?\n";
 	while (ans < 1 || ans > 2) {
-			cout << "\n1 - Rent\n2 - Return\n";
-			cin >> ans;
-		}
-	if(ans==1)
+		cout << "\n1 - Rent\n2 - Return\n";
+		cin >> ans;
+	}
+	grafo.dijkstraShortestPath(pontos.at(ans).getColNode());
+	if (ans == 1)
 		searchForRent();
 	else
 		searchForReturn();
@@ -284,9 +308,10 @@ int main() {
 
 	cout << "\n	   BIKE SHARING	   \n";
 	clientInit();
-	origin_ind=originCPoint();
-	menu();
-
+	do{
+		origin_ind = originCPoint();
+		menu();
+	}while(1);
 	//TODO: Mostrar ponto de partilha mais
 	//pr�ximo de onde se encontra, com lugar
 	//dispon�vel para a devolu��o da bicicleta

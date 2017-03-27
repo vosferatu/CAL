@@ -73,9 +73,11 @@ void loadCPoints() {
 			int no_bikes = atoi(line.c_str());
 			getline(ifs, line, '\n');
 			int no_vagas = atoi(line.c_str());
+			getline(ifs, line, '\n');
+			int altitude = atoi(line.c_str());
 			for (unsigned int i = 0; i < grafo.getVertexSet().size(); i++) {
 				if (grafo.getVertexSet()[i]->getInfo()->getId() == id_node) {
-					CPoint aux(name, no_bikes, no_vagas, grafo.getVertexSet()[i]->getInfo());
+					CPoint aux(name, no_bikes, no_vagas, grafo.getVertexSet()[i]->getInfo(),altitude);
 					pontos.push_back(aux);
 				}
 			}
@@ -245,13 +247,13 @@ void clientInit() {
 }
 
 int originCPoint() {
-	size_t ans;
+	size_t ans=-1;
 
-	while(ans < 0 || ans >= pontos.size()){
+	while(ans < 1 || ans > pontos.size()){
 		cout << "Which collection point are you in?\n";
 		for (size_t i = 0; i < pontos.size(); i++) {
 			cout << endl;
-			cout << i << " - " << pontos[i].getName();
+			cout << i+1 << " - " << pontos[i].getName();
 		}
 		cout << endl;
 		cin >> ans;
@@ -282,7 +284,7 @@ int main() {
 	loadCPoints();
 	loadEdges();
 
-	cout << "\n 	BIKE SHARING	   \n";
+	cout << "\n	   BIKE SHARING	   \n";
 	clientInit();
 	origin_ind=originCPoint();
 	menu();

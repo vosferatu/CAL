@@ -28,11 +28,15 @@ class CPoint{
 	 * @brief Pointer to the correspondent node
 	 */
 	Node* col_node;
+	/*
+	 * @brief CPoint's altitude
+	 */
+	double altitude;
 public:
 	/*
 	* @brief CPoint constructor;
 	*/
-	CPoint(std::string name_cpoint, int bikes_cpoint, int places_cpoint, Node* col_node_cpoint);
+	CPoint(std::string name_cpoint, int bikes_cpoint, int places_cpoint, Node* col_node_cpoint, double altitude_cpoint);
 	/*
 	 * @brief Gets the number of available bikes
 	 */
@@ -52,6 +56,11 @@ public:
 	 * @brief Gets CPoint's name
 	 */
 	const std::string& getName() const;
+
+	/*
+	 * @brief Gets CPoint's altitude
+	 */
+	double getAltitude() const;
 };
 
 #endif

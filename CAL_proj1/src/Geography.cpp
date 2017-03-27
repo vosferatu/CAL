@@ -9,21 +9,21 @@
 
 GeoCoordinate::GeoCoordinate() : lat {0}, lon {0} {};
 
-GeoCoordinate::GeoCoordinate(long latitude, long longitude){
+GeoCoordinate::GeoCoordinate(float latitude, float floatitude){
 	lat=latitude;
-	lon=longitude;
+	lon=floatitude;
 }
 
-long GeoCoordinate::getLon() const {
+float GeoCoordinate::getLon() const {
 	return lon;
 }
 
-long GeoCoordinate::getLat() const {
+float GeoCoordinate::getLat() const {
 	return lat;
 }
 
-int GeoCoordinate::getDistanceFromLatLonInKm(const GeoCoordinate place) {
-		int R = 6371; // Radius of the earth in km
+int GeoCoordinate::getDistanceFromLatLon(const GeoCoordinate place) {
+		int R = 6371000;
 		float a = sin((place.getLat() - lat) / 2)
 												* sin((place.getLat() - lat) / 2)
 												+ cos(lat) * cos(place.getLat())

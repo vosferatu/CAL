@@ -148,7 +148,8 @@ void loadEdges() {
 				if (source != NULL && destination != NULL) {
 					GeoCoordinate src_coords=source->getInfo()->getRadCoords();
 					GeoCoordinate dest_coords=destination->getInfo()->getRadCoords();
-					int distance=src_coords.getDistanceFromLatLonInKm(dest_coords);
+					cout << source->getInfo()->getRadCoords().getLat() << endl;
+					int distance=src_coords.getDistanceFromLatLon(dest_coords);
 
 					if (road->isTwoWay()) {
 						source->addEdge(destination, distance);
@@ -165,8 +166,6 @@ void loadEdges() {
 }
 
 void loadNodes() {
-	srand(time(NULL));
-	int index = rand() % 10 + 1;
 	ifstream ifs("espinho_nodes.txt");
 	if (ifs.is_open()) {
 		string line;
@@ -174,21 +173,21 @@ void loadNodes() {
 			getline(ifs, line, ';');
 			int id = atoi(line.c_str());
 			getline(ifs, line, ';');
-			long lat = atol(line.c_str());
+			float lat = atof(line.c_str());
 			getline(ifs, line, ';');
-			long lon = atol(line.c_str());
+			float lon = atof(line.c_str());
 			GeoCoordinate degrees(lat, lon);
 			getline(ifs, line, ';');
-			lat = atol(line.c_str());
+			lat = atof(line.c_str());
 			getline(ifs, line, '\n');
-			lon = atol(line.c_str());
+			lon = atof(line.c_str());
 			GeoCoordinate radians(lat, lon);
 			Node node(id, degrees, radians);
 			grafo.addVertex(node);
-			index--;
 		}
 	}
 	ifs.close();
+
 }
 
 void clientInit() {

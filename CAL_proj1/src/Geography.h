@@ -14,15 +14,15 @@ class GeoCoordinate{
 	/*
 	 * @brief Latitude
 	 */
-	long lat;
+	float lat;
 	/*
 	 * @brief Longitude
 	 */
-	long lon;
+	float lon;
 	/*
 	 * @brief Altitude
 	 */
-	//long alt;
+	//float alt;
 public:
 	/*
 	 * @brief GeoCoordinate default constructor
@@ -31,23 +31,23 @@ public:
 	/*
 	 * @brief Creates a GeoCoordinate
 	 */
-	GeoCoordinate(long latitude, long longitude);
+	GeoCoordinate(float latitude, float floatitude);
 
 	/*
 	 * @brief Returns the latitude
 	 */
-	long getLat() const;
+	float getLat() const;
 
 	/*
-	 * @brief Returns the longitude
+	 * @brief Returns the floatitude
 	 */
-	long getLon() const;
+	float getLon() const;
 
 	/*
 	 * @brief Returns the distance between two places
 	 * @param place Place to compare
 	 */
-	int getDistanceFromLatLonInKm(const GeoCoordinate place);
+	int getDistanceFromLatLon(const GeoCoordinate place);
 };
 
 #endif /* GEOGRAPHY_H_ */

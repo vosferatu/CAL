@@ -42,6 +42,12 @@ public:
 	 * @brief Returns the longitude
 	 */
 	long getLon() const;
+
+	/*
+	 * @brief Returns the distance between two places
+	 * @param place Place to compare
+	 */
+	int getDistanceFromLatLonInKm(const GeoCoordinate place);
 };
 
 #endif /* GEOGRAPHY_H_ */

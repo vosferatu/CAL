@@ -50,10 +50,10 @@ void searchForReturn() {
 int getDistanceFromLatLonInKm(GeoCoordinate place1, GeoCoordinate place2) {
 	int R = 6371; // Radius of the earth in km
 	float a = sin((place2.getLat() - place1.getLat()) / 2)
-			* sin((place2.getLat() - place1.getLat()) / 2)
-			+ cos(place1.getLat()) * cos(place2.getLat())
-					* sin((place2.getLon() - place1.getLon()) / 2)
-					* sin((place2.getLon() - place1.getLon()) / 2);
+									* sin((place2.getLat() - place1.getLat()) / 2)
+									+ cos(place1.getLat()) * cos(place2.getLat())
+									* sin((place2.getLon() - place1.getLon()) / 2)
+									* sin((place2.getLon() - place1.getLon()) / 2);
 	float c = 2 * atan2(sqrt(a), sqrt(1 - a));
 	float d = R * c; // Distance in km
 	return d;
@@ -82,10 +82,13 @@ void loadCPoints() {
 			int no_bikes = atoi(line.c_str());
 			getline(ifs, line, '\n');
 			int no_vagas = atoi(line.c_str());
+			getline(ifs, line, '\n');
+			int altitude = atoi(line.c_str());
 			for (unsigned int i = 0; i < grafo.getVertexSet().size(); i++) {
 				if (grafo.getVertexSet()[i]->getInfo()->getId() == id_node) {
 					CPoint aux(name, no_bikes, no_vagas,
 							grafo.getVertexSet()[i]->getInfo());
+					CPoint aux(name, no_bikes, no_vagas, grafo.getVertexSet()[i]->getInfo(),altitude);
 					pontos.push_back(aux);
 				}
 			}
@@ -121,24 +124,15 @@ void loadEdges() {
 			int id = atoi(line.c_str());
 
 			Road *road = searchRoad(id);
-			//printf("SubRoad = %d\n", id);
 			if (road == NULL) {
 				getline(ifs, line, '\n');
 				continue;
 			} else {
-				//printf("ENTROU SubRoad = %d\n", id);
 				getline(ifs, line, ';');
 				int sour = atoi(line.c_str());
-
-				//printf("ENTROU Source = %d\n", sour);
 				getline(ifs, line, '\n');
-
 				int dest = atoi(line.c_str());
-
-				//printf("ENTROU dest = %d\n", dest);
-
 				Vertex<Node>* source = NULL, *destination = NULL;
-
 				for (size_t i = 0; i < grafo.getVertexSet().size(); i++) {
 					if (grafo.getVertexSet()[i]->getInfo()->getId() == sour)
 						source = grafo.getVertexSet()[i];
@@ -149,19 +143,15 @@ void loadEdges() {
 				}
 
 				if (source != NULL && destination != NULL) {
-					GeoCoordinate src_coords =
-							source->getInfo()->getRadCoords();
-					GeoCoordinate dest_coords =
-							destination->getInfo()->getRadCoords();
-					int distance = getDistanceFromLatLonInKm(src_coords,
-							dest_coords);
+					GeoCoordinate src_coords=source->getInfo()->getRadCoords();
+					GeoCoordinate dest_coords=destination->getInfo()->getRadCoords();
+					int distance=getDistanceFromLatLonInKm(src_coords, dest_coords);
 
 					if (road->isTwoWay()) {
-						source->addEdge(destination, distance/*distance*/);
-						destination->addEdge(source, distance/*distance*/);
+						source->addEdge(destination, distance);
+						destination->addEdge(source, distance);
 					} else {
-						source->addEdge(destination, distance);/*distance*/
-						//printf("ENTROU dest = %d\n", dest);
+						source->addEdge(destination, distance);
 					}
 				}
 
@@ -258,13 +248,14 @@ void clientInit() {
 }
 
 int originCPoint() {
-	size_t ans;
+	size_t ans=-1;
 
 	while (ans < 0 || ans >= pontos.size()) {
+	while(ans < 1 || ans > pontos.size()){
 		cout << "Which collection point are you in?\n";
 		for (size_t i = 0; i < pontos.size(); i++) {
 			cout << endl;
-			cout << i << " - " << pontos[i].getName();
+			cout << i+1 << " - " << pontos[i].getName();
 		}
 		cout << endl;
 		cin >> ans;
@@ -273,16 +264,14 @@ int originCPoint() {
 
 }
 
-void menu() {
+void menu(){
 	int ans;
 	cout << "\nWhat do you want to do?\n";
 	while (ans < 1 || ans > 2) {
-		cout << "\n1 - Rent\n2 - Return\n";
-		cin >> ans;
-	}
-
-	grafo.dijkstraShortestPath(pontos.at(origin_ind).getColNode());
-	if (ans == 1)
+			cout << "\n1 - Rent\n2 - Return\n";
+			cin >> ans;
+		}
+	if(ans==1)
 		searchForRent();
 	else
 		searchForReturn();
@@ -297,9 +286,9 @@ int main() {
 	loadCPoints();
 	loadEdges();
 
-	cout << "\n 	BIKE SHARING	   \n";
+	cout << "\n	   BIKE SHARING	   \n";
 	clientInit();
-	origin_ind = originCPoint();
+	origin_ind=originCPoint();
 	menu();
 
 	//TODO: Mostrar ponto de partilha mais

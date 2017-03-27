@@ -9,8 +9,6 @@
 #include "Geography.h"
 #include <string>
 
-Node::Node(){}
-
 Node::Node(int node_id, GeoCoordinate node_deg_coords, GeoCoordinate node_rad_coords)
 {
 	ID=node_id;

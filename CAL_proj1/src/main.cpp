@@ -24,6 +24,16 @@ vector<CPoint> pontos;
 
 int origin_ind;
 
+/*
+ *@brief Calculates bike return's price, in cents
+ *@param destination Collection point where the bike will be returned;
+ */
+int priceCentsCalculator(CPoint destination){
+	int price=800-(destination.getAltitude()*1.1);
+
+	return price;
+}
+
 void searchForRent(){
 
 }
@@ -33,7 +43,6 @@ void searchForReturn(){
 }
 
 /*
- *
  * @brief Returns the distance between two places
  * @param place1 First place to compare
  * @param place2 Second place to compare
@@ -63,7 +72,6 @@ void loadCPoints() {
 	ifstream ifs("espinho_cpoints.txt");
 	if (ifs.is_open()) {
 		string line;
-		//Node* node = NULL;
 		while (!ifs.eof()) {
 			getline(ifs, line, ';');
 			string name = line;
@@ -71,7 +79,7 @@ void loadCPoints() {
 			int id_node = atoi(line.c_str());
 			getline(ifs, line, ';');
 			int no_bikes = atoi(line.c_str());
-			getline(ifs, line, '\n');
+			getline(ifs, line, ';');
 			int no_vagas = atoi(line.c_str());
 			getline(ifs, line, '\n');
 			int altitude = atoi(line.c_str());
@@ -253,7 +261,7 @@ int originCPoint() {
 }
 
 void menu(){
-	int ans;
+	size_t ans=-1;
 	cout << "\nWhat do you want to do?\n";
 	while (ans < 1 || ans > 2) {
 			cout << "\n1 - Rent\n2 - Return\n";
@@ -286,10 +294,6 @@ int main() {
 	//barato de onde se encontra, com lugar
 	//dispon�vel para a devolu��o da bicicleta
 
-	//XXX: Cada v�rtice guarda um T e n�o um pointer para T,
-	//da� que n�o seja recomend�vel guardar no CPoint um pointer
-	//para o Node. O qu� que sugerem?
-	//XXX: Altitudes variam em que amplitude? S� os CPoint t�m altitude?
 	//XXX: Qual a f�rmula de c�lculo do custo?
 }
 

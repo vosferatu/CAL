@@ -70,11 +70,14 @@ void searchForRent() {
 		cout << "\nSo where do you want to do it?\n";
 		for (unsigned int i = 0, a=0; i < pontos.size(); i++)
 		{
-			//TODO:Lidar com pontos inacessíveis ou devoluções no mesmo ponto
-			cout << a+1 << " - " << pontos.at(i).getName() << " ("<< grafo.getVertex(pontos.at(i).getColNode())->getDist() <<" m)"<< endl;
+			if(a!=origin_ind)
+				cout << a+1 << " - " << pontos.at(i).getName() << " ("<< grafo.getVertex(pontos.at(i).getColNode())->getDist() <<" m)"<< endl;
 			a++;
 		}
-		cin >> ans;
+
+		while(ans < 1 || ans > pontos.size() || ans==(origin_ind+1)){
+				cin >> ans;
+		}
 		pontos.at(ans-1).rentBike();
 		origin_ind=ans;
 		break;
@@ -121,11 +124,13 @@ void searchForReturn() {
 		cout << "\nSo where do you want to do it?\n";
 		for (unsigned int i = 0, a=0; i < pontos.size(); i++)
 		{
-			//TODO:Lidar com pontos inacessíveis ou devoluções no mesmo ponto
-			cout << a+1 << " - " << pontos.at(i).getName() << " ("<< grafo.getVertex(pontos.at(i).getColNode())->getDist() <<" m | " << 8-0.11*pontos.at(i).getAltitude() << " euros)" << endl;
+			if(a!=origin_ind)
+				cout << a+1 << " - " << pontos.at(i).getName() << " ("<< grafo.getVertex(pontos.at(i).getColNode())->getDist() <<" m | " << 8-0.11*pontos.at(i).getAltitude() << " euros)" << endl;
 			a++;
 		}
-		cin >> ans;
+		while(ans < 1 || ans > pontos.size() || ans==(origin_ind+1)){
+				cin >> ans;
+		}
 		pontos.at(ans-1).returnBike();
 		origin_ind=ans;
 		break;

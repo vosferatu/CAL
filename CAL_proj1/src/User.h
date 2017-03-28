@@ -9,6 +9,7 @@
 #define USER_H_
 
 #include <string>
+#include <stack>
 
 #define PAYPAL 0
 #define CREDIT 1
@@ -18,14 +19,21 @@ class User{
 	 * @brief Client's name
 	 */
 	std::string name;
+
 	/*
 	 * @brief Client's payment method
 	 */
 	int pay_method;
+
 	/*
 	 * @brief Client's payment number
 	 */
 	int pay_no;
+
+	/**
+	 * @brief Stack of visited points
+	 */
+	CPoint* last_visited;
 public:
 	User() {
 	}

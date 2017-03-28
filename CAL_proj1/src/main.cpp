@@ -362,7 +362,9 @@ int originCPoint() {
 			cout << i+1 << " - " << pontos[i].getName();
 		}
 		cout << endl;
-		cin >> ans;
+		while(ans < 1 || ans > pontos.size()){
+			cin >> ans;
+		}
 	}
 	return ans-1;
 
@@ -371,41 +373,37 @@ int originCPoint() {
 void menu(){
 	size_t ans=-1;
 	cout << "\nWhat do you want to do?";
-	while (ans < 1 || ans > 2) {
+	while (ans != 1 || ans != 2) {
 		cout << "\n1 - Rent\n2 - Return\n";
 		cin >> ans;
 	}
 
-	while(1)
-	{
-		char exit;
+	while(1){
 
 		grafo.dijkstraShortestPath(pontos.at(origin_ind).getColNode());
 
-		if (ans == 1)
-		{
+		if (ans == 1){
 			searchForRent();
 			ans=2;
 		}
-		else
-		{
+		else{
 			searchForReturn();
 			ans=1;
 		}
 
-		cout<<"\nDo you want to exit? (Y/N)\n";
+		char exit = 'a';
 
-		cin >> exit;
+		while(exit != 'Y' || exit != 'N'){
+			cout<<"\nDo you want to exit? (Y/N)\n";
+			exit = getchar();
+			exit = toupper(exit);
 
-		switch(exit)
-		{
-		case 'Y':
-			return;
-		case 'y':
-			return;
-		default:
-			continue;
+			if(exit == 'Y')
+				return;
+			if(exit == 'N')
+				break;
 		}
+
 	}
 }
 
@@ -423,7 +421,9 @@ int main() {
 	cout << "\n	   BIKE SHARING	   \n";
 	//clientInit();
 	origin_ind = originCPoint();
+
 	menu();
+
 	saveCPoints();
 
 	//TODO: Analise do tempo de execucao

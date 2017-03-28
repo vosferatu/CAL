@@ -369,11 +369,12 @@ int main() {
 	showGraph(&grafo,&pontos);
 
 	cout << "\n	   BIKE SHARING	   \n";
-	clientInit();
+	//clientInit();
 	do{
 		origin_ind = originCPoint();
 		menu();
 	}while(1);
+
 	//TODO: Mostrar ponto de partilha mais
 	//pr�ximo de onde se encontra, com lugar
 	//dispon�vel para a devolu��o da bicicleta

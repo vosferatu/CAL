@@ -5,4 +5,4 @@
 
 void showGraph(Graph<Node>* grafo, vector<CPoint>* pontos);
 
-bool menu();
+void menu();

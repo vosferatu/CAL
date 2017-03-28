@@ -102,7 +102,7 @@ void searchForReturn() {
 	cout << "\nThe nearest point with places for return is ("<< grafo.getVertex(ponto->getColNode())->getDist() <<" m | " << 8-0.11*ponto->getAltitude() << " euros) " << ponto->getName()<< endl;
 	cout << "Do you want to return a bike on there? (Y/N)";
 
-	while (ans < 1 || ans > 2) {
+	while (ans != 1 || ans != 2) {
 		cout << "\n1 - Yes\n2 - No\n";
 		cin >> ans;
 	}
@@ -110,13 +110,8 @@ void searchForReturn() {
 	switch(ans)
 	{
 	case 1:
-		if(ponto->getPlaces() > 0){
-			ponto->returnBike();
-			origin_ind=new_ind;
-		}
-		else{
-			//TODO maybe run function again? probably after searching, before asking user
-		}
+		ponto->returnBike();
+		origin_ind=new_ind;
 		break;
 	case 2:
 		cout << "\nSo where do you want to do it?\n";
@@ -126,7 +121,9 @@ void searchForReturn() {
 			cout << a+1 << " - " << pontos.at(i).getName() << " ("<< grafo.getVertex(pontos.at(i).getColNode())->getDist() <<" m | " << 8-0.11*pontos.at(i).getAltitude() << " euros)" << endl;
 			a++;
 		}
-		cin >> ans;
+		while(ans < 1 || ans > pontos.size()){
+			cin >> ans;
+		}
 		pontos.at(ans-1).returnBike();
 		origin_ind=ans;
 		break;
@@ -358,7 +355,9 @@ int originCPoint() {
 			cout << i+1 << " - " << pontos[i].getName();
 		}
 		cout << endl;
-		cin >> ans;
+		while(ans < 1 || ans > pontos.size()){
+			cin >> ans;
+		}
 	}
 	return ans-1;
 
@@ -367,41 +366,37 @@ int originCPoint() {
 void menu(){
 	size_t ans=-1;
 	cout << "\nWhat do you want to do?";
-	while (ans < 1 || ans > 2) {
+	while (ans != 1 || ans != 2) {
 		cout << "\n1 - Rent\n2 - Return\n";
 		cin >> ans;
 	}
 
-	while(1)
-	{
-		char exit;
+	while(1){
 
 		grafo.dijkstraShortestPath(pontos.at(origin_ind).getColNode());
 
-		if (ans == 1)
-		{
+		if (ans == 1){
 			searchForRent();
 			ans=2;
 		}
-		else
-		{
+		else{
 			searchForReturn();
 			ans=1;
 		}
 
-		cout<<"\nDo you want to exit? (Y/N)\n";
+		char exit = 'a';
 
-		cin >> exit;
+		while(exit != 'Y' || exit != 'N'){
+			cout<<"\nDo you want to exit? (Y/N)\n";
+			exit = getchar();
+			exit = toupper(exit);
 
-		switch(exit)
-		{
-		case 'Y':
-			return;
-		case 'y':
-			return;
-		default:
-			continue;
+			if(exit == 'Y')
+				return;
+			if(exit == 'N')
+				break;
 		}
+
 	}
 }
 
@@ -419,7 +414,9 @@ int main() {
 	cout << "\n	   BIKE SHARING	   \n";
 	//clientInit();
 	origin_ind = originCPoint();
+
 	menu();
+
 	saveCPoints();
 
 	//TODO: Mostrar ponto de partilha mais

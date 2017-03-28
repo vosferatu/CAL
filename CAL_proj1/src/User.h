@@ -10,6 +10,7 @@
 
 #include <string>
 #include <stack>
+#include "CPoint.h"
 
 #define PAYPAL 0
 #define CREDIT 1
@@ -19,6 +20,11 @@ class User{
 	 * @brief Client's name
 	 */
 	std::string name;
+
+	/*
+	 * @brief Client's password
+	 */
+	std::string password;
 
 	/*
 	 * @brief Client's payment method
@@ -31,9 +37,9 @@ class User{
 	int pay_no;
 
 	/**
-	 * @brief Stack of visited points
+	 * @brief Last CPoint visited;
 	 */
-	CPoint* last_visited;
+	size_t last;
 public:
 	User() {
 	}
@@ -41,7 +47,7 @@ public:
 	/*
 	 * @brief Client constructor
 	 */
-	User(std::string cli_name, int cli_pay_method,int cli_pay_no);
+	User(std::string cli_name, std::string cli_password, size_t cli_last, int cli_pay_method,int cli_pay_no);
 
 	/*
 	 * @brief Gets Client's name
@@ -57,6 +63,12 @@ public:
 	 * @brief Gets Client's payment number
 	 */
 	int getPayNo() const;
+
+	friend std::ofstream& operator<<(std::ofstream& out, const User& user);
+
+	const std::string& getPassword() const;
+
+	size_t getLast() const;
 };
 
 

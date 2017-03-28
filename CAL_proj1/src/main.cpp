@@ -18,12 +18,14 @@
 #include <math.h>
 #include "Interface.h"
 #include <ctype.h>
+#include "User.h"
 
 using namespace std;
 
 Graph<Node> grafo;
 vector<Road*> estradas;
 vector<CPoint> pontos;
+vector<User*> utils;
 
 size_t origin_ind;
 
@@ -39,7 +41,7 @@ int priceCentsCalculator(CPoint destination){
 
 void searchForRent() {
 	int min = INT_MAX;
-	int ans=-1;
+	size_t ans=-1;
 	int new_ind=origin_ind;
 	CPoint* ponto = NULL;
 	for (size_t i = 0; i < pontos.size(); i++) {
@@ -91,7 +93,7 @@ void searchForRent() {
 void searchForReturn() {
 	int min = INT_MAX;
 	int new_ind=origin_ind;
-	int ans=-1;
+	size_t ans=-1;
 	CPoint* ponto = NULL;
 	for (unsigned int i = 0; i < pontos.size(); i++) {
 		if (pontos.at(i).getPlaces() > 0
@@ -293,6 +295,19 @@ void saveCPoints(){
 	ifs.close();
 }
 
+void saveUsers(){
+	ofstream ifs("Users.txt", ios::trunc);
+
+	if(ifs.is_open()){
+		for(size_t i = 0; i < utils.size(); i++) {
+			ifs << utils[i];
+			if(i < (utils.size()-1))
+				ifs << '\n';
+		}
+	}
+	ifs.close();
+}
+
 void clientInit() {
 	int ans = 0;
 	string name;
@@ -312,10 +327,13 @@ void clientInit() {
 		cin >> name;
 		file.open("Users.txt");
 		while (!file.eof()) {
-			string read_name, read_password, line;
+			string read_name, read_password, read_index, read_paymet, read_no, line;
 			getline(file, read_name, ';');
 			getline(file, read_password, ';');
-			getline(file, line, '\n');
+			getline(file, read_index, ';');
+			getline(file, read_paymet, ';');
+			getline(file, read_no, '\n');
+			utils.push_back(new User(read_name, read_password, (size_t) atoi(read_index.c_str()), atoi(read_paymet.c_str()), atoi(read_no.c_str())));
 			if (read_name == name) {
 				exists = true;
 				while (!valid) {
@@ -344,30 +362,10 @@ void clientInit() {
 		cin >> pay_met;
 		cout << "Payment method number: ";
 		cin >> pay_no;
-		file.open("Users.txt");
-		file.seekg(0, file.end);
-		file << name << ";" << password << ";" << pay_met << ";" << pay_no
-				<< '\n';
-		file.close();
+
+		originCPoint(&pontos,&origin_ind);
+		utils.push_back(new User(name,password,origin_ind,pay_met,pay_no));
 	}
-}
-
-int originCPoint() {
-	size_t ans=-1;
-
-	while(ans < 1 || ans > pontos.size()){
-		cout << "\nWhich collection point are you in?";
-		for (size_t i = 0; i < pontos.size(); i++) {
-			cout << endl;
-			cout << i+1 << " - " << pontos[i].getName();
-		}
-		cout << endl;
-		while(ans < 1 || ans > pontos.size()){
-			cin >> ans;
-		}
-	}
-	return ans-1;
-
 }
 
 void menu(){
@@ -407,7 +405,7 @@ void menu(){
 	}
 }
 
-int main() {
+int main(){
 
 	cout << "Loading...";
 	cout << endl;
@@ -420,7 +418,6 @@ int main() {
 
 	cout << "\n	   BIKE SHARING	   \n";
 	//clientInit();
-	origin_ind = originCPoint();
 
 	menu();
 

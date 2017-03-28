@@ -43,13 +43,10 @@ void showGraph(){
 
 		int x, y;
 
-		x = floor(((lon-GeoCoordinate::lonMin)*4199.94/(GeoCoordinate::lonMax-GeoCoordinate::lonMin)));
-		y = -floor(((lat-GeoCoordinate::latMin)*3184.6/(GeoCoordinate::latMax-GeoCoordinate::latMin)));
+		x = -2607300+floor(((lon-GeoCoordinate::lonMin)*4199.94/(GeoCoordinate::lonMax-GeoCoordinate::lonMin)));
+		y = -7214500-floor(((lat-GeoCoordinate::latMin)*3184.6/(GeoCoordinate::latMax-GeoCoordinate::latMin)));
 
-		cout << x+19289700 << endl;
-		cout << y-7214500 << endl;
-
-		gv->addNode(id, x+19289700, y-7214500);
+		gv->addNode(id, x, y);
 		gv->setVertexLabel(id, ".");
 	}
 
@@ -61,13 +58,10 @@ void showGraph(){
 
 		int x, y;
 
-		x = floor(((lon-GeoCoordinate::lonMin)*4199.94/(GeoCoordinate::lonMax-GeoCoordinate::lonMin)));
-		y = -floor(((lat-GeoCoordinate::latMin)*3184.6/(GeoCoordinate::latMax-GeoCoordinate::latMin)));
+		x = -2607300+floor(((lon-GeoCoordinate::lonMin)*4199.94/(GeoCoordinate::lonMax-GeoCoordinate::lonMin)));
+		y = -7214500-floor(((lat-GeoCoordinate::latMin)*3184.6/(GeoCoordinate::latMax-GeoCoordinate::latMin)));
 
-		cout << x+19289700 << endl;
-		cout << y-7214500 << endl;
-
-		gv->addNode(id, x+19289700, y-7214500);
+		gv->addNode(id, x, y);
 		gv->setVertexColor(id,RED);
 	}
 
@@ -238,11 +232,11 @@ void loadNodes() {
 			if(lat<GeoCoordinate::latMin)
 				GeoCoordinate::latMin=lat;
 
-			if(-lon>GeoCoordinate::lonMax)
-				GeoCoordinate::lonMax=lat;
+			if(lon>GeoCoordinate::lonMax)
+				GeoCoordinate::lonMax=lon;
 
-			if(-lon<GeoCoordinate::lonMin)
-				GeoCoordinate::lonMin=lat;
+			if(lon<GeoCoordinate::lonMin)
+				GeoCoordinate::lonMin=lon;
 
 			GeoCoordinate degrees(lat, lon);
 			getline(ifs, line, ';');

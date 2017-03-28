@@ -9,6 +9,7 @@
 #define CPOINT_H_
 
 #include "Node.h"
+#include <fstream>
 #include <string>
 
 class CPoint{
@@ -71,6 +72,8 @@ public:
 	 * @brief Return a bike from this CPoint
 	 */
 	void returnBike();
+
+	friend std::ofstream& operator<<(std::ofstream& out, const CPoint& point);
 };
 
 #endif

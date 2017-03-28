@@ -17,6 +17,7 @@
 #include "Road.h"
 #include <math.h>
 #include "Interface.h"
+#include <ctype.h>
 
 using namespace std;
 
@@ -61,39 +62,17 @@ void searchForRent() {
 
 	switch(ans)
 	{
-	case 1:
-		ponto->rentBike();
-		origin_ind=new_ind;
-		break;
-	case 2:
-		cout << "\nSo where do you want to do it?\n";
-		for (unsigned int i = 0, a=0; i < pontos.size(); i++)
-		{
-<<<<<<< HEAD
-			//TODO:Lidar com pontos inacessíveis ou devoluções no mesmo ponto
-			cout << a+1 << " - " << pontos.at(i).getName() << " ("<< grafo.getVertex(pontos.at(i).getColNode())->getDist() <<" m)"<< endl;
-			a++;
-=======
 		case 1:
 			ponto->rentBike();
 			origin_ind=new_ind;
-
 			break;
 		case 2:
 			/*
-			 * Mostrar outras hip�teses
+			 * Mostrar outras hip�teses
 			 */
-			break;
+		break;
 		default:
 			break;
->>>>>>> branch 'master' of https://github.com/JMendes25/CAL.git
-		}
-		cin >> ans;
-		pontos.at(ans-1).rentBike();
-		origin_ind=ans;
-		break;
-	default:
-		break;
 	}
 
 	return;
@@ -286,6 +265,20 @@ void loadNodes() {
 
 }
 
+void saveCPoints(){
+	ofstream ifs("espinho_cpoints.txt", ios::trunc);
+
+	if(ifs.is_open()){
+		for(size_t i = 0; i < pontos.size(); i++) {
+			ifs << pontos[i];
+			if(i < (pontos.size()-1))
+				ifs << '\n';
+
+		}
+	}
+	ifs.close();
+}
+
 void clientInit() {
 	int ans = 0;
 	string name;
@@ -361,7 +354,7 @@ int originCPoint() {
 
 }
 
-void menu(){
+bool menu(){
 	size_t ans=-1;
 	cout << "\nWhat do you want to do?";
 	while (ans < 1 || ans > 2) {
@@ -386,17 +379,17 @@ void menu(){
 
 		cout<<"Do you want to exit? (Y/N)"<<endl;
 
-		char exit=getchar();
+		char exit= 'a';
 
-		switch(exit)
-		{
-		case 'Y':
-			return;
-		case 'y':
-			return;
-		default:
-			continue;
+		while(exit != 'Y' || exit != 'N'){
+			exit = getchar();
+			exit = toupper(exit);
+			if(exit == 'Y')
+				return true;
+			if(exit == 'N')
+				break;
 		}
+
 	}
 }
 
@@ -415,8 +408,11 @@ int main() {
 	//clientInit();
 	do{
 		origin_ind = originCPoint();
-		menu();
+		if(menu())
+			break;
 	}while(1);
+
+	saveCPoints();
 
 	//TODO: Mostrar ponto de partilha mais
 	//prďż˝ximo de onde se encontra, com lugar

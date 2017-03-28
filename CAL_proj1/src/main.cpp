@@ -55,12 +55,25 @@ void searchForRent() {
 	cout << "\nDo you want to rent a bike on there? (Y/N)";
 
 	while (ans < 1 || ans > 2) {
-			cout << "\n1 - Yes\n2 - No\n";
-			cin >> ans;
-		}
+		cout << "\n1 - Yes\n2 - No\n";
+		cin >> ans;
+	}
 
-		switch(ans)
+	switch(ans)
+	{
+	case 1:
+		ponto->rentBike();
+		origin_ind=new_ind;
+		break;
+	case 2:
+		cout << "\nSo where do you want to do it?\n";
+		for (unsigned int i = 0, a=0; i < pontos.size(); i++)
 		{
+<<<<<<< HEAD
+			//TODO:Lidar com pontos inacessíveis ou devoluções no mesmo ponto
+			cout << a+1 << " - " << pontos.at(i).getName() << " ("<< grafo.getVertex(pontos.at(i).getColNode())->getDist() <<" m)"<< endl;
+			a++;
+=======
 		case 1:
 			ponto->rentBike();
 			origin_ind=new_ind;
@@ -73,9 +86,17 @@ void searchForRent() {
 			break;
 		default:
 			break;
+>>>>>>> branch 'master' of https://github.com/JMendes25/CAL.git
 		}
+		cin >> ans;
+		pontos.at(ans-1).rentBike();
+		origin_ind=ans;
+		break;
+	default:
+		break;
+	}
 
-		return;
+	return;
 }
 
 void searchForReturn() {
@@ -92,7 +113,7 @@ void searchForReturn() {
 			new_ind=i;
 		}
 	}
-	cout << "\nThe nearest point with places for return is ("<< grafo.getVertex(ponto->getColNode())->getDist() <<" m | " << 8-0.11*ponto->getAltitude() << " �) " << ponto->getName()<< endl;
+	cout << "\nThe nearest point with places for return is ("<< grafo.getVertex(ponto->getColNode())->getDist() <<" m | " << 8-0.11*ponto->getAltitude() << " €) " << ponto->getName()<< endl;
 	cout << "Do you want to return a bike on there? (Y/N)";
 
 	while (ans < 1 || ans > 2) {
@@ -108,9 +129,17 @@ void searchForReturn() {
 
 		break;
 	case 2:
-		/*
-		 * Mostrar outras hip�teses
-		 */
+		cout << "\nSo where do you want to do it?\n";
+		for (unsigned int i = 0, a=0; i < pontos.size(); i++)
+		{
+			//TODO:Lidar com pontos inacessíveis ou devoluções no mesmo ponto
+			cout << a+1 << " - " << pontos.at(i).getName() << " ("<< grafo.getVertex(pontos.at(i).getColNode())->getDist() <<" m | " << 8-0.11*pontos.at(i).getAltitude() << " €)" << endl;
+			a++;
+		}
+		cin >> ans;
+		pontos.at(ans-1).returnBike();
+		origin_ind=ans;
+		break;
 		break;
 	default:
 		break;
@@ -390,12 +419,12 @@ int main() {
 	}while(1);
 
 	//TODO: Mostrar ponto de partilha mais
-	//pr�ximo de onde se encontra, com lugar
-	//dispon�vel para a devolu��o da bicicleta
+	//prďż˝ximo de onde se encontra, com lugar
+	//disponďż˝vel para a devoluďż˝ďż˝o da bicicleta
 	//TODO: Mostrar ponto de partilha mais
 	//barato de onde se encontra, com lugar
-	//dispon�vel para a devolu��o da bicicleta
+	//disponďż˝vel para a devoluďż˝ďż˝o da bicicleta
 
-	//XXX: Qual a f�rmula de c�lculo do custo?
+	//XXX: Qual a fďż˝rmula de cďż˝lculo do custo?
 }
 

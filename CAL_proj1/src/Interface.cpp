@@ -17,6 +17,12 @@ void showGraph(Graph<Node> *grafo, vector<CPoint> *pontos)
 		float lat=grafo->getVertexSet()[i]->getInfo()->getRadCoords().getLat();
 		float lon=0-grafo->getVertexSet()[i]->getInfo()->getRadCoords().getLon();
 
+		int v = -526400000 + 6371000 * cos(lat) * cos(lon)/(cos(GeoCoordinate::lonMax)-cos(GeoCoordinate::lonMin));
+		int w = 6371000 * cos(lat) * sin(lon);
+
+		cout << v << endl;
+		cout << w << endl;
+
 		int x, y;
 
 		x = -2607300+floor(((lon-GeoCoordinate::lonMin)*4199.94/(GeoCoordinate::lonMax-GeoCoordinate::lonMin)));

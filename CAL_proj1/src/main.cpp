@@ -419,7 +419,8 @@ int main() {
 	cout << "\n	   BIKE SHARING	   \n";
 	//clientInit();
 	origin_ind = originCPoint();
-		menu();
+	menu();
+	saveCPoints();
 
 	//TODO: Mostrar ponto de partilha mais
 	//prďż˝ximo de onde se encontra, com lugar

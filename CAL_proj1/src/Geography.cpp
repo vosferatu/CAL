@@ -23,18 +23,16 @@ float GeoCoordinate::getLat() const {
 }
 
 int GeoCoordinate::getDistanceFromLatLon(const GeoCoordinate place) {
-		int R = 6371000;
-		float a = sin((place.getLat() - lat) / 2)
-												* sin((place.getLat() - lat) / 2)
-												+ cos(lat) * cos(place.getLat())
-												* sin((place.getLon() - lon) / 2)
-												* sin((place.getLon() - lon) / 2);
-		float c = 2 * atan2(sqrt(a), sqrt(1 - a));
-		float d = R * c;
+	int R { 6371000 };
+	float a { sin((place.getLat() - lat) / 2) * sin((place.getLat() - lat) / 2)
+			+ cos(lat) * cos(place.getLat()) * sin((place.getLon() - lon) / 2)
+					* sin((place.getLon() - lon) / 2) };
+	float c { 2 * atan2(sqrt(a), sqrt(1 - a)) };
+	float d { R * c };
 		return d;
 	}
 
-float GeoCoordinate::latMin=FLT_MAX;
-float GeoCoordinate::latMax=FLT_MIN;
-float GeoCoordinate::lonMin=FLT_MAX;
-float GeoCoordinate::lonMax=-FLT_MAX;
+float GeoCoordinate::latMin { 3.40282346638528859812e+38F };
+float GeoCoordinate::latMax { 1.17549435082228750797e-38F };
+float GeoCoordinate::lonMin { 3.40282346638528859812e+38F };
+float GeoCoordinate::lonMax { -3.40282346638528859812e+38F };

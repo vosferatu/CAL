@@ -50,6 +50,7 @@ void searchForRent() {
 			new_ind=i;
 		}
 	}
+
 	cout << "\nThe nearest point ("<< grafo.getVertex(ponto->getColNode())->getDist() <<" m) with bikes for rental is " << ponto->getName() << endl;
 	cout << "\nDo you want to rent a bike on there? (Y/N)";
 
@@ -61,8 +62,13 @@ void searchForRent() {
 		switch(ans)
 		{
 		case 1:
-			ponto->rentBike();
-			origin_ind=new_ind;
+			if(ponto->getBikes() > 0){
+				ponto->rentBike();
+				origin_ind=new_ind;
+			}
+			else{
+				//TODO maybe run function again? probably after searching, before asking user
+			}
 			break;
 		case 2:
 			/*
@@ -101,8 +107,13 @@ void searchForReturn() {
 	switch(ans)
 	{
 	case 1:
-		ponto->returnBike();
-		origin_ind=new_ind;
+		if(ponto->getPlaces() > 0){
+			ponto->returnBike();
+			origin_ind=new_ind;
+		}
+		else{
+			//TODO maybe run function again? probably after searching, before asking user
+		}
 		break;
 	case 2:
 		/*

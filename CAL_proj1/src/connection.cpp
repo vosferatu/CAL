@@ -27,7 +27,7 @@ Connection::Connection(short port) {
   if (connect(sock, (struct sockaddr *) &echoServAddr, sizeof(echoServAddr)) < 0)
     myerror("connect() failed");
 #else
-		WSADATA wsaData;
+	WSADATA wsaData { };
     int iResult = WSAStartup(MAKEWORD(2,2), &wsaData);
     if (iResult != NO_ERROR)
 				printf("Client: Error at WSAStartup().\n");
@@ -40,7 +40,7 @@ Connection::Connection(short port) {
     }
 
     // Connect to a server.
-    sockaddr_in clientService;
+	sockaddr_in clientService { };
     clientService.sin_family = AF_INET;
     // Just test using the localhost, you can try other IP address
     clientService.sin_addr.s_addr = inet_addr("127.0.0.1");
@@ -63,7 +63,7 @@ bool Connection::sendMsg(string msg) {
 
 string Connection::readLine() {
   string msg;  
-  char ch;
+  char ch { };
   while (true) {
     recv(sock, &ch, 1, 0);
     if (ch == '\n')

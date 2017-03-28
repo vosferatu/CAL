@@ -50,6 +50,7 @@ void searchForRent() {
 			new_ind=i;
 		}
 	}
+
 	cout << "\nThe nearest point ("<< grafo.getVertex(ponto->getColNode())->getDist() <<" m) with bikes for rental is " << ponto->getName() << endl;
 	cout << "\nDo you want to rent a bike on there? (Y/N)";
 
@@ -68,9 +69,28 @@ void searchForRent() {
 		cout << "\nSo where do you want to do it?\n";
 		for (unsigned int i = 0, a=0; i < pontos.size(); i++)
 		{
+<<<<<<< HEAD
 			//TODO:Lidar com pontos inacessíveis ou devoluções no mesmo ponto
 			cout << a+1 << " - " << pontos.at(i).getName() << " ("<< grafo.getVertex(pontos.at(i).getColNode())->getDist() <<" m)"<< endl;
 			a++;
+=======
+		case 1:
+			if(ponto->getBikes() > 0){
+				ponto->rentBike();
+				origin_ind=new_ind;
+			}
+			else{
+				//TODO maybe run function again? probably after searching, before asking user
+			}
+			break;
+		case 2:
+			/*
+			 * Mostrar outras hip�teses
+			 */
+			break;
+		default:
+			break;
+>>>>>>> branch 'master' of https://github.com/JMendes25/CAL.git
 		}
 		cin >> ans;
 		pontos.at(ans-1).rentBike();
@@ -108,8 +128,13 @@ void searchForReturn() {
 	switch(ans)
 	{
 	case 1:
-		ponto->returnBike();
-		origin_ind=new_ind;
+		if(ponto->getPlaces() > 0){
+			ponto->returnBike();
+			origin_ind=new_ind;
+		}
+		else{
+			//TODO maybe run function again? probably after searching, before asking user
+		}
 		break;
 	case 2:
 		cout << "\nSo where do you want to do it?\n";

@@ -24,7 +24,7 @@ Graph<Node> grafo;
 vector<Road*> estradas;
 vector<CPoint> pontos;
 
-int origin_ind;
+size_t origin_ind;
 
 /*
  *@brief Calculates bike return's price, in cents
@@ -41,17 +41,17 @@ void searchForRent() {
 	int ans=-1;
 	int new_ind=origin_ind;
 	CPoint* ponto = NULL;
-	for (unsigned int i = 0; i < pontos.size(); i++) {
+	for (size_t i = 0; i < pontos.size(); i++) {
 		if (pontos.at(i).getBikes() > 0
 				&& grafo.getVertex(pontos.at(i).getColNode())->getDist()
-				< min) {
+				< min && i!=origin_ind) {
 			min = grafo.getVertex(pontos.at(i).getColNode())->getDist();
 			ponto = &(pontos.at(i));
 			new_ind=i;
 		}
 	}
-	cout << "The nearest point with bikes for rental is " << ponto->getName() << endl;
-	cout << "Do you want to rent a bike on there? (Y/N)" << endl;
+	cout << "\nThe nearest point ("<< grafo.getVertex(ponto->getColNode())->getDist() <<" m) with bikes for rental is " << ponto->getName() << endl;
+	cout << "\nDo you want to rent a bike on there? (Y/N)";
 
 	while (ans < 1 || ans > 2) {
 			cout << "\n1 - Yes\n2 - No\n";
@@ -63,6 +63,11 @@ void searchForRent() {
 		case 1:
 			ponto->rentBike();
 			origin_ind=new_ind;
+			break;
+		case 2:
+			/*
+			 * Mostrar outras hipóteses
+			 */
 			break;
 		default:
 			break;
@@ -79,14 +84,14 @@ void searchForReturn() {
 	for (unsigned int i = 0; i < pontos.size(); i++) {
 		if (pontos.at(i).getPlaces() > 0
 				&& grafo.getVertex(pontos.at(i).getColNode())->getDist()
-				< min) {
+				< min && i!=origin_ind) {
 			min = grafo.getVertex(pontos.at(i).getColNode())->getDist();
 			ponto = &(pontos.at(i));
 			new_ind=i;
 		}
 	}
-	cout << "The nearest point with places for return is " << ponto->getName()<< endl;
-	cout << "Do you want to return a bike on there? (Y/N)" << endl;
+	cout << "\nThe nearest point with places for return is ("<< grafo.getVertex(ponto->getColNode())->getDist() <<" m | " << 8-0.11*ponto->getAltitude() << " €) " << ponto->getName()<< endl;
+	cout << "Do you want to return a bike on there? (Y/N)";
 
 	while (ans < 1 || ans > 2) {
 		cout << "\n1 - Yes\n2 - No\n";
@@ -98,6 +103,11 @@ void searchForReturn() {
 	case 1:
 		ponto->returnBike();
 		origin_ind=new_ind;
+		break;
+	case 2:
+		/*
+		 * Mostrar outras hipóteses
+		 */
 		break;
 	default:
 		break;
@@ -307,7 +317,7 @@ int originCPoint() {
 	size_t ans=-1;
 
 	while(ans < 1 || ans > pontos.size()){
-		cout << "Which collection point are you in?\n";
+		cout << "\nWhich collection point are you in?";
 		for (size_t i = 0; i < pontos.size(); i++) {
 			cout << endl;
 			cout << i+1 << " - " << pontos[i].getName();
@@ -321,15 +331,16 @@ int originCPoint() {
 
 void menu(){
 	size_t ans=-1;
-	cout << "\nWhat do you want to do?\n";
+	cout << "\nWhat do you want to do?";
 	while (ans < 1 || ans > 2) {
 		cout << "\n1 - Rent\n2 - Return\n";
 		cin >> ans;
 	}
-	grafo.dijkstraShortestPath(pontos.at(origin_ind).getColNode());
 
 	while(1)
 	{
+		grafo.dijkstraShortestPath(pontos.at(origin_ind).getColNode());
+
 		if (ans == 1)
 		{
 			searchForRent();

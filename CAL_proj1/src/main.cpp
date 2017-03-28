@@ -62,13 +62,9 @@ void searchForRent() {
 		switch(ans)
 		{
 		case 1:
-			if(ponto->getBikes() > 0){
-				ponto->rentBike();
-				origin_ind=new_ind;
-			}
-			else{
-				//TODO maybe run function again? probably after searching, before asking user
-			}
+			ponto->rentBike();
+			origin_ind=new_ind;
+
 			break;
 		case 2:
 			/*
@@ -107,13 +103,9 @@ void searchForReturn() {
 	switch(ans)
 	{
 	case 1:
-		if(ponto->getPlaces() > 0){
-			ponto->returnBike();
-			origin_ind=new_ind;
-		}
-		else{
-			//TODO maybe run function again? probably after searching, before asking user
-		}
+		ponto->returnBike();
+		origin_ind=new_ind;
+
 		break;
 	case 2:
 		/*

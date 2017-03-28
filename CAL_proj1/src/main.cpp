@@ -315,7 +315,7 @@ int originCPoint() {
 		cout << endl;
 		cin >> ans;
 	}
-	return ans;
+	return ans-1;
 
 }
 
@@ -326,7 +326,7 @@ void menu(){
 		cout << "\n1 - Rent\n2 - Return\n";
 		cin >> ans;
 	}
-	grafo.dijkstraShortestPath(pontos.at(ans).getColNode());
+	grafo.dijkstraShortestPath(pontos.at(origin_ind).getColNode());
 
 	while(1)
 	{

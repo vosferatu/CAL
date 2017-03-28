@@ -115,7 +115,6 @@ void searchForReturn() {
 			origin_ind=new_ind;
 		}
 		else{
-			//TODO maybe run function again? probably after searching, before asking user
 		}
 		break;
 	case 2:
@@ -422,11 +421,9 @@ int main() {
 	menu();
 	saveCPoints();
 
-	//TODO: Mostrar ponto de partilha mais
-	//prďż˝ximo de onde se encontra, com lugar
-	//disponďż˝vel para a devoluďż˝ďż˝o da bicicleta
-	//TODO: Mostrar ponto de partilha mais
-	//barato de onde se encontra, com lugar
-	//disponďż˝vel para a devoluďż˝ďż˝o da bicicleta
+	//TODO: Analise do tempo de execucao
+	//TODO: Avaliar a conectividade
+	//TODO: Guardar ultimo (historico?) CPoint de um user / CPoint de registo
+	//TODO: Imprimir caminho ate aluguer ou recolha (Consola + GUI)
 }
 

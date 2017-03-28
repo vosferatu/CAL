@@ -69,28 +69,9 @@ void searchForRent() {
 		cout << "\nSo where do you want to do it?\n";
 		for (unsigned int i = 0, a=0; i < pontos.size(); i++)
 		{
-<<<<<<< HEAD
 			//TODO:Lidar com pontos inacessíveis ou devoluções no mesmo ponto
 			cout << a+1 << " - " << pontos.at(i).getName() << " ("<< grafo.getVertex(pontos.at(i).getColNode())->getDist() <<" m)"<< endl;
 			a++;
-=======
-		case 1:
-			if(ponto->getBikes() > 0){
-				ponto->rentBike();
-				origin_ind=new_ind;
-			}
-			else{
-				//TODO maybe run function again? probably after searching, before asking user
-			}
-			break;
-		case 2:
-			/*
-			 * Mostrar outras hip�teses
-			 */
-			break;
-		default:
-			break;
->>>>>>> branch 'master' of https://github.com/JMendes25/CAL.git
 		}
 		cin >> ans;
 		pontos.at(ans-1).rentBike();
@@ -117,7 +98,7 @@ void searchForReturn() {
 			new_ind=i;
 		}
 	}
-	cout << "\nThe nearest point with places for return is ("<< grafo.getVertex(ponto->getColNode())->getDist() <<" m | " << 8-0.11*ponto->getAltitude() << " €) " << ponto->getName()<< endl;
+	cout << "\nThe nearest point with places for return is ("<< grafo.getVertex(ponto->getColNode())->getDist() <<" m | " << 8-0.11*ponto->getAltitude() << " euros) " << ponto->getName()<< endl;
 	cout << "Do you want to return a bike on there? (Y/N)";
 
 	while (ans < 1 || ans > 2) {
@@ -141,13 +122,12 @@ void searchForReturn() {
 		for (unsigned int i = 0, a=0; i < pontos.size(); i++)
 		{
 			//TODO:Lidar com pontos inacessíveis ou devoluções no mesmo ponto
-			cout << a+1 << " - " << pontos.at(i).getName() << " ("<< grafo.getVertex(pontos.at(i).getColNode())->getDist() <<" m | " << 8-0.11*pontos.at(i).getAltitude() << " €)" << endl;
+			cout << a+1 << " - " << pontos.at(i).getName() << " ("<< grafo.getVertex(pontos.at(i).getColNode())->getDist() <<" m | " << 8-0.11*pontos.at(i).getAltitude() << " euros)" << endl;
 			a++;
 		}
 		cin >> ans;
 		pontos.at(ans-1).returnBike();
 		origin_ind=ans;
-		break;
 		break;
 	default:
 		break;
@@ -379,6 +359,8 @@ void menu(){
 
 	while(1)
 	{
+		char exit;
+
 		grafo.dijkstraShortestPath(pontos.at(origin_ind).getColNode());
 
 		if (ans == 1)
@@ -392,9 +374,9 @@ void menu(){
 			ans=1;
 		}
 
-		cout<<"Do you want to exit? (Y/N)"<<endl;
+		cout<<"\nDo you want to exit? (Y/N)\n";
 
-		char exit=getchar();
+		cin >> exit;
 
 		switch(exit)
 		{
@@ -421,10 +403,8 @@ int main() {
 
 	cout << "\n	   BIKE SHARING	   \n";
 	//clientInit();
-	do{
-		origin_ind = originCPoint();
+	origin_ind = originCPoint();
 		menu();
-	}while(1);
 
 	//TODO: Mostrar ponto de partilha mais
 	//prďż˝ximo de onde se encontra, com lugar
@@ -432,7 +412,5 @@ int main() {
 	//TODO: Mostrar ponto de partilha mais
 	//barato de onde se encontra, com lugar
 	//disponďż˝vel para a devoluďż˝ďż˝o da bicicleta
-
-	//XXX: Qual a fďż˝rmula de cďż˝lculo do custo?
 }
 

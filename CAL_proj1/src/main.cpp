@@ -110,8 +110,17 @@ void searchForReturn() {
 	switch(ans)
 	{
 	case 1:
+<<<<<<< HEAD
 		ponto->returnBike();
 		origin_ind=new_ind;
+=======
+		if(ponto->getPlaces() > 0){
+			ponto->returnBike();
+			origin_ind=new_ind;
+		}
+		else{
+		}
+>>>>>>> branch 'master' of git@github.com:JMendes25/CAL.git
 		break;
 	case 2:
 		cout << "\nSo where do you want to do it?\n";
@@ -419,11 +428,9 @@ int main() {
 
 	saveCPoints();
 
-	//TODO: Mostrar ponto de partilha mais
-	//prďż˝ximo de onde se encontra, com lugar
-	//disponďż˝vel para a devoluďż˝ďż˝o da bicicleta
-	//TODO: Mostrar ponto de partilha mais
-	//barato de onde se encontra, com lugar
-	//disponďż˝vel para a devoluďż˝ďż˝o da bicicleta
+	//TODO: Analise do tempo de execucao
+	//TODO: Avaliar a conectividade
+	//TODO: Guardar ultimo (historico?) CPoint de um user / CPoint de registo
+	//TODO: Imprimir caminho ate aluguer ou recolha (Consola + GUI)
 }
 

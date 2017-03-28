@@ -37,4 +37,4 @@ int GeoCoordinate::getDistanceFromLatLon(const GeoCoordinate place) {
 float GeoCoordinate::latMin=FLT_MAX;
 float GeoCoordinate::latMax=FLT_MIN;
 float GeoCoordinate::lonMin=FLT_MAX;
-float GeoCoordinate::lonMax=FLT_MIN;
+float GeoCoordinate::lonMax=-FLT_MAX;

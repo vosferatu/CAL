@@ -45,3 +45,13 @@ void CPoint::returnBike(){
 	bikes++;
 	places--;
 }
+
+std::ofstream& operator<<(std::ofstream& out, const CPoint& point){
+	out << point.getName() << ";" << point.getColNode()->getId() << ";";
+
+	out << point.getBikes() << ";" << point.getPlaces() << ";";
+
+	out << point.getAltitude();
+
+	return out;
+}

@@ -17,6 +17,7 @@
 #include "Road.h"
 #include <math.h>
 #include "Interface.h"
+#include <ctype.h>
 
 using namespace std;
 
@@ -272,6 +273,20 @@ void loadNodes() {
 	}
 	ifs.close();
 
+}
+
+void saveCPoints(){
+	ofstream ifs("espinho_cpoints.txt", ios::trunc);
+
+	if(ifs.is_open()){
+		for(size_t i = 0; i < pontos.size(); i++) {
+			ifs << pontos[i];
+			if(i < (pontos.size()-1))
+				ifs << '\n';
+
+		}
+	}
+	ifs.close();
 }
 
 void clientInit() {

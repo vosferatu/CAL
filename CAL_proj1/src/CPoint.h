@@ -61,6 +61,16 @@ public:
 	 * @brief Gets CPoint's altitude
 	 */
 	double getAltitude() const;
+
+	/*
+	 * @brief Rent a bike from this CPoint
+	 */
+	void rentBike();
+
+	/*
+	 * @brief Return a bike from this CPoint
+	 */
+	void returnBike();
 };
 
 #endif

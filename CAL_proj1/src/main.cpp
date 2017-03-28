@@ -16,6 +16,7 @@
 #include "graphviewer.h"
 #include "Road.h"
 #include <math.h>
+#include "Interface.h"
 
 using namespace std;
 
@@ -24,57 +25,6 @@ vector<Road*> estradas;
 vector<CPoint> pontos;
 
 int origin_ind;
-
-void showGraph(){
-	GraphViewer *gv = new GraphViewer(600, 600, false);
-
-	gv->createWindow(600, 600);
-
-	gv->defineEdgeColor("blue");
-	gv->defineVertexColor("yellow");
-	gv->defineEdgeCurved(false);
-	gv->defineVertexSize(0.000001);
-
-	for(size_t i=0; i<grafo.getVertexSet().size(); i++)
-	{
-		long id=grafo.getVertexSet()[i]->getInfo()->getId();
-		float lat=grafo.getVertexSet()[i]->getInfo()->getRadCoords().getLat();
-		float lon=0-grafo.getVertexSet()[i]->getInfo()->getRadCoords().getLon();
-
-		int x, y;
-
-		x = -2607300+floor(((lon-GeoCoordinate::lonMin)*4199.94/(GeoCoordinate::lonMax-GeoCoordinate::lonMin)));
-		y = -7214500-floor(((lat-GeoCoordinate::latMin)*3184.6/(GeoCoordinate::latMax-GeoCoordinate::latMin)));
-
-		gv->addNode(id, x, y);
-		gv->setVertexLabel(id, ".");
-	}
-
-	for(size_t a=0; a<pontos.size(); a++)
-	{
-		long id=pontos[a].getColNode()->getId();
-		float lat=pontos[a].getColNode()->getRadCoords().getLat();
-		float lon=0-pontos[a].getColNode()->getRadCoords().getLon();
-
-		int x, y;
-
-		x = -2607300+floor(((lon-GeoCoordinate::lonMin)*4199.94/(GeoCoordinate::lonMax-GeoCoordinate::lonMin)));
-		y = -7214500-floor(((lat-GeoCoordinate::latMin)*3184.6/(GeoCoordinate::latMax-GeoCoordinate::latMin)));
-
-		gv->addNode(id, x, y);
-		gv->setVertexColor(id,RED);
-	}
-
-	int a=0;
-
-	for(size_t i=0; i<grafo.getVertexSet().size(); i++)
-		for(size_t j=0; j<grafo.getVertexSet()[i]->getAdj().size(); j++, a++)
-		{
-			gv->addEdge(a, grafo.getVertexSet()[i]->getInfo()->getId(), grafo.getVertexSet()[i]->getAdj()[j].getDest()->getInfo()->getId() , EdgeType::DIRECTED);
-		}
-
-	gv->rearrange();
-}
 
 /*
  *@brief Calculates bike return's price, in cents
@@ -88,6 +38,8 @@ int priceCentsCalculator(CPoint destination){
 
 void searchForRent() {
 	int min = INT_MAX;
+	int ans=-1;
+	int new_ind=origin_ind;
 	CPoint* ponto = NULL;
 	for (unsigned int i = 0; i < pontos.size(); i++) {
 		if (pontos.at(i).getBikes() > 0
@@ -95,13 +47,34 @@ void searchForRent() {
 				< min) {
 			min = grafo.getVertex(pontos.at(i).getColNode())->getDist();
 			ponto = &(pontos.at(i));
+			new_ind=i;
 		}
 	}
-	cout << "The nearest point with bikes for rental is " << ponto->getName()<< endl;
+	cout << "The nearest point with bikes for rental is " << ponto->getName() << endl;
+	cout << "Do you want to rent a bike on there? (Y/N)" << endl;
+
+	while (ans < 1 || ans > 2) {
+			cout << "\n1 - Yes\n2 - No\n";
+			cin >> ans;
+		}
+
+		switch(ans)
+		{
+		case 1:
+			ponto->rentBike();
+			origin_ind=new_ind;
+			break;
+		default:
+			break;
+		}
+
+		return;
 }
 
 void searchForReturn() {
 	int min = INT_MAX;
+	int new_ind=origin_ind;
+	int ans=-1;
 	CPoint* ponto = NULL;
 	for (unsigned int i = 0; i < pontos.size(); i++) {
 		if (pontos.at(i).getPlaces() > 0
@@ -109,9 +82,28 @@ void searchForReturn() {
 				< min) {
 			min = grafo.getVertex(pontos.at(i).getColNode())->getDist();
 			ponto = &(pontos.at(i));
+			new_ind=i;
 		}
 	}
 	cout << "The nearest point with places for return is " << ponto->getName()<< endl;
+	cout << "Do you want to return a bike on there? (Y/N)" << endl;
+
+	while (ans < 1 || ans > 2) {
+		cout << "\n1 - Yes\n2 - No\n";
+		cin >> ans;
+	}
+
+	switch(ans)
+	{
+	case 1:
+		ponto->returnBike();
+		origin_ind=new_ind;
+		break;
+	default:
+		break;
+	}
+
+	return;
 
 }
 
@@ -335,10 +327,34 @@ void menu(){
 		cin >> ans;
 	}
 	grafo.dijkstraShortestPath(pontos.at(ans).getColNode());
-	if (ans == 1)
-		searchForRent();
-	else
-		searchForReturn();
+
+	while(1)
+	{
+		if (ans == 1)
+		{
+			searchForRent();
+			ans=2;
+		}
+		else
+		{
+			searchForReturn();
+			ans=1;
+		}
+
+		cout<<"Do you want to exit? (Y/N)"<<endl;
+
+		char exit=getchar();
+
+		switch(exit)
+		{
+		case 'Y':
+			return;
+		case 'y':
+			return;
+		default:
+			continue;
+		}
+	}
 }
 
 int main() {
@@ -350,14 +366,8 @@ int main() {
 	loadCPoints();
 	loadEdges();
 
-	cout << GeoCoordinate::latMax << endl;
-	cout << GeoCoordinate::latMin << endl;
-	cout << GeoCoordinate::lonMax << endl;
-	cout << GeoCoordinate::lonMin << endl;
+	showGraph(&grafo,&pontos);
 
-
-
-	showGraph();
 	cout << "\n	   BIKE SHARING	   \n";
 	clientInit();
 	do{

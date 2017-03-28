@@ -10,7 +10,6 @@
 
 #include <stdlib.h>
 #include <signal.h>
-#include <string>
 
 #include "edgetype.h"
 #include "connection.h"

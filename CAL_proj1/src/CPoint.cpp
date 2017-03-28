@@ -35,3 +35,13 @@ const std::string& CPoint::getName() const {
 double CPoint::getAltitude() const {
 	return altitude;
 }
+
+void CPoint::rentBike(){
+	bikes--;
+	places++;
+}
+
+void CPoint::returnBike(){
+	bikes++;
+	places--;
+}

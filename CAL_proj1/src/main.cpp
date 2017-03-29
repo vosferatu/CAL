@@ -254,6 +254,11 @@ void loadNodes() {
 			float lat = atof(line.c_str());
 			getline(ifs, line, ';');
 			float lon = atof(line.c_str());
+			GeoCoordinate degrees(lat, lon);
+			getline(ifs, line, ';');
+			lat = atof(line.c_str());
+			getline(ifs, line, '\n');
+			lon = atof(line.c_str());
 
 			if(lat>GeoCoordinate::latMax)
 				GeoCoordinate::latMax=lat;
@@ -267,11 +272,6 @@ void loadNodes() {
 			if(lon<GeoCoordinate::lonMin)
 				GeoCoordinate::lonMin=lon;
 
-			GeoCoordinate degrees(lat, lon);
-			getline(ifs, line, ';');
-			lat = atof(line.c_str());
-			getline(ifs, line, '\n');
-			lon = atof(line.c_str());
 			GeoCoordinate radians(lat, lon);
 			Node node(id, degrees, radians);
 			grafo.addVertex(node);
@@ -362,7 +362,6 @@ void clientInit() {
 		cin >> pay_met;
 		cout << "Payment method number: ";
 		cin >> pay_no;
-
 		originCPoint(&pontos,&origin_ind);
 		utils.push_back(new User(name,password,origin_ind,pay_met,pay_no));
 	}
@@ -414,18 +413,20 @@ int main(){
 	loadCPoints();
 	loadEdges();
 
+	/* Shows full graph */
 	showGraph(&grafo,&pontos);
 
 	cout << "\n	   BIKE SHARING	   \n";
-	//clientInit();
+	clientInit();
 
 	menu();
 
+
 	saveCPoints();
+	saveUsers();
 
 	//TODO: Analise do tempo de execucao
 	//TODO: Avaliar a conectividade
-	//TODO: Guardar ultimo (historico?) CPoint de um user / CPoint de registo
 	//TODO: Imprimir caminho ate aluguer ou recolha (Consola + GUI)
 }
 

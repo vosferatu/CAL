@@ -14,19 +14,11 @@ void showGraph(Graph<Node> *grafo, vector<CPoint> *pontos)
 	for(size_t i=0; i<grafo->getVertexSet().size(); i++)
 	{
 		long id=grafo->getVertexSet()[i]->getInfo()->getId();
-		float lat=grafo->getVertexSet()[i]->getInfo()->getRadCoords().getLat();
-		float lon=0-grafo->getVertexSet()[i]->getInfo()->getRadCoords().getLon();
+		float lat=0-grafo->getVertexSet()[i]->getInfo()->getRadCoords().getLat();
+		float lon=grafo->getVertexSet()[i]->getInfo()->getRadCoords().getLon();
 
-		int v = -526400000 + 6371000 * cos(lat) * cos(lon)/(cos(GeoCoordinate::lonMax)-cos(GeoCoordinate::lonMin));
-		int w = 6371000 * cos(lat) * sin(lon);
-
-		cout << v << endl;
-		cout << w << endl;
-
-		int x, y;
-
-		x = -2607300+floor(((lon-GeoCoordinate::lonMin)*4199.94/(GeoCoordinate::lonMax-GeoCoordinate::lonMin)));
-		y = -7214500-floor(((lat-GeoCoordinate::latMin)*3184.6/(GeoCoordinate::latMax-GeoCoordinate::latMin)));
+		int x = (lon-GeoCoordinate::lonMin)*600.0/(GeoCoordinate::lonMax-GeoCoordinate::lonMin);
+		int y = (lat+GeoCoordinate::latMax)*600.0/(GeoCoordinate::latMax-GeoCoordinate::latMin);
 
 		{
 			gv->addNode(id, x, y);
@@ -37,13 +29,11 @@ void showGraph(Graph<Node> *grafo, vector<CPoint> *pontos)
 	for(size_t a=0; a<pontos->size(); a++)
 	{
 		long id=pontos->at(a).getColNode()->getId();
-		float lat=pontos->at(a).getColNode()->getRadCoords().getLat();
-		float lon=0-pontos->at(a).getColNode()->getRadCoords().getLon();
+		float lat=0-pontos->at(a).getColNode()->getRadCoords().getLat();
+		float lon=pontos->at(a).getColNode()->getRadCoords().getLon();
 
-		int x, y;
-
-		x = -2607300+floor(((lon-GeoCoordinate::lonMin)*4199.94/(GeoCoordinate::lonMax-GeoCoordinate::lonMin)));
-		y = -7214500-floor(((lat-GeoCoordinate::latMin)*3184.6/(GeoCoordinate::latMax-GeoCoordinate::latMin)));
+		int x = (lon-GeoCoordinate::lonMin)*600.0/(GeoCoordinate::lonMax-GeoCoordinate::lonMin);
+		int y = (lat+GeoCoordinate::latMax)*600.0/(GeoCoordinate::latMax-GeoCoordinate::latMin);
 
 		gv->addNode(id, x, y);
 		gv->setVertexColor(id,RED);

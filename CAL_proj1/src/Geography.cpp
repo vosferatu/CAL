@@ -33,6 +33,6 @@ int GeoCoordinate::getDistanceFromLatLon(const GeoCoordinate place) {
 	}
 
 float GeoCoordinate::latMin { 3.40282346638528859812e+38F };
-float GeoCoordinate::latMax { 1.17549435082228750797e-38F };
+float GeoCoordinate::latMax { -3.40282346638528859812e+38F };
 float GeoCoordinate::lonMin { 3.40282346638528859812e+38F };
 float GeoCoordinate::lonMax { -3.40282346638528859812e+38F };

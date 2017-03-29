@@ -62,6 +62,8 @@ void searchForRent() {
 		cin >> ans;
 	}
 
+	vector<Node> path;
+
 	switch(ans)
 	{
 	case 1:
@@ -439,7 +441,6 @@ int main(){
 	clientInit();
 
 	menu();
-
 
 	saveCPoints();
 	saveUsers();

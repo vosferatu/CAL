@@ -18,7 +18,7 @@ void showGraph(Graph<Node> *grafo, vector<CPoint> *pontos)
 		float lon=grafo->getVertexSet()[i]->getInfo()->getRadCoords().getLon();
 
 		int y = 600-(lon-GeoCoordinate::lonMin)*600.0/(GeoCoordinate::lonMax-GeoCoordinate::lonMin);
-		int x = 600-(lat+GeoCoordinate::latMax)*600.0/(GeoCoordinate::latMax-GeoCoordinate::latMin);
+		int x = 450-(lat+GeoCoordinate::latMax)*450.0/(GeoCoordinate::latMax-GeoCoordinate::latMin);
 
 		cout << x << endl;
 		cout << y << endl;
@@ -36,7 +36,7 @@ void showGraph(Graph<Node> *grafo, vector<CPoint> *pontos)
 		float lon=pontos->at(a).getColNode()->getRadCoords().getLon();
 
 		int y = 600-(lon-GeoCoordinate::lonMin)*600.0/(GeoCoordinate::lonMax-GeoCoordinate::lonMin);
-		int x = 600-(lat+GeoCoordinate::latMax)*600.0/(GeoCoordinate::latMax-GeoCoordinate::latMin);
+		int x = 450-(lat+GeoCoordinate::latMax)*450.0/(GeoCoordinate::latMax-GeoCoordinate::latMin);
 
 		gv->addNode(id, x, y);
 		gv->setVertexColor(id,RED);

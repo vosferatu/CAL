@@ -73,6 +73,9 @@ public:
 	 */
 	void returnBike();
 
+	/*
+	 * @brief CPoint extraction operator
+	 */
 	friend std::ofstream& operator<<(std::ofstream& out, const CPoint& point);
 };
 

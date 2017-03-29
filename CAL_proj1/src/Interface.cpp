@@ -17,8 +17,11 @@ void showGraph(Graph<Node> *grafo, vector<CPoint> *pontos)
 		float lat=0-grafo->getVertexSet()[i]->getInfo()->getRadCoords().getLat();
 		float lon=grafo->getVertexSet()[i]->getInfo()->getRadCoords().getLon();
 
-		int x = (lon-GeoCoordinate::lonMin)*600.0/(GeoCoordinate::lonMax-GeoCoordinate::lonMin);
-		int y = (lat+GeoCoordinate::latMax)*600.0/(GeoCoordinate::latMax-GeoCoordinate::latMin);
+		int y = 600-(lon-GeoCoordinate::lonMin)*600.0/(GeoCoordinate::lonMax-GeoCoordinate::lonMin);
+		int x = 600-(lat+GeoCoordinate::latMax)*600.0/(GeoCoordinate::latMax-GeoCoordinate::latMin);
+
+		cout << x << endl;
+		cout << y << endl;
 
 		{
 			gv->addNode(id, x, y);
@@ -32,8 +35,8 @@ void showGraph(Graph<Node> *grafo, vector<CPoint> *pontos)
 		float lat=0-pontos->at(a).getColNode()->getRadCoords().getLat();
 		float lon=pontos->at(a).getColNode()->getRadCoords().getLon();
 
-		int x = (lon-GeoCoordinate::lonMin)*600.0/(GeoCoordinate::lonMax-GeoCoordinate::lonMin);
-		int y = (lat+GeoCoordinate::latMax)*600.0/(GeoCoordinate::latMax-GeoCoordinate::latMin);
+		int y = 600-(lon-GeoCoordinate::lonMin)*600.0/(GeoCoordinate::lonMax-GeoCoordinate::lonMin);
+		int x = 600-(lat+GeoCoordinate::latMax)*600.0/(GeoCoordinate::latMax-GeoCoordinate::latMin);
 
 		gv->addNode(id, x, y);
 		gv->setVertexColor(id,RED);
@@ -48,22 +51,4 @@ void showGraph(Graph<Node> *grafo, vector<CPoint> *pontos)
 		}
 
 	gv->rearrange();
-}
-
-int originCPoint(vector<CPoint> *pontos, size_t *origin_ind) {
-	size_t ans=-1;
-
-	while(ans < 1 || ans > pontos->size()){
-		cout << "\nWhich collection point are you in?";
-		for (size_t i = 0; i < pontos->size(); i++) {
-			cout << endl;
-			cout << i+1 << " - " << pontos->at(i).getName();
-		}
-		cout << endl;
-		while(ans < 1 || ans > pontos->size()){
-			cin >> ans;
-		}
-	}
-	return ans-1;
-
 }

@@ -27,3 +27,7 @@ const GeoCoordinate Node::getRadCoords(){
 long long Node::getId() const {
 	return ID;
 }
+
+bool Node::operator==(const Node& n1) const{
+	return ID==n1.getId();
+}

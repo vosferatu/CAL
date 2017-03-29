@@ -46,10 +46,10 @@ public:
 	 */
 	long long getId() const;
 
-	bool operator==(const Node& n1) const{
-		return ID==n1.getId();
-	}
+	/*
+	 * @brief Node equals comparison
+	 */
+	bool operator==(const Node& n1) const;
 };
-
 
 #endif /* NODE_H_ */

@@ -308,6 +308,24 @@ void saveUsers(){
 	ifs.close();
 }
 
+int originCPoint(vector<CPoint> *pontos, size_t *origin_ind) {
+	size_t ans=-1;
+
+	while(ans < 1 || ans > pontos->size()){
+		cout << "\nWhich collection point are you in?";
+		for (size_t i = 0; i < pontos->size(); i++) {
+			cout << endl;
+			cout << i+1 << " - " << pontos->at(i).getName();
+		}
+		cout << endl;
+		while(ans < 1 || ans > pontos->size()){
+			cin >> ans;
+		}
+	}
+	return ans-1;
+
+}
+
 void clientInit() {
 	int ans = 0;
 	string name;
@@ -340,12 +358,11 @@ void clientInit() {
 					cout << "PASSWORD: ";
 					cin >> password;
 					if (read_password == password)
-						valid = true;
+						{
+						file.close();
+						return;
+						}
 				}
-			}
-			if (exists == true) {
-				file.close();
-				break;
 			}
 		}
 	}
@@ -365,6 +382,8 @@ void clientInit() {
 		originCPoint(&pontos,&origin_ind);
 		utils.push_back(new User(name,password,origin_ind,pay_met,pay_no));
 	}
+
+	clientInit();
 }
 
 void menu(){
@@ -429,4 +448,3 @@ int main(){
 	//TODO: Avaliar a conectividade
 	//TODO: Imprimir caminho ate aluguer ou recolha (Consola + GUI)
 }
-

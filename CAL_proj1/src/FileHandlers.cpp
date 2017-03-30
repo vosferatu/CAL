@@ -28,7 +28,7 @@ void saveUsers(std::vector<User*> &utils){
 
 	if(ifs.is_open()){
 		for(size_t i = 0; i < utils.size(); i++) {
-			ifs << utils[i];
+			ifs << &utils[i];
 			if(i < (utils.size()-1))
 				ifs << '\n';
 		}

@@ -1,7 +1,6 @@
 #include "Interface.h"
 #include "FileHandlers.h"
 
-
 int originCPoint(vector<CPoint> &pontos, size_t &origin_ind) {
 	size_t ans = -1;
 
@@ -109,6 +108,8 @@ void searchForRent(size_t &origin_ind, vector<CPoint> &pontos,
 
 	switch (ans) {
 	case 1:
+		path = grafo.getPath(*pontos.at(origin_ind).getColNode(),
+				*pontos.at(new_ind).getColNode());
 		ponto->rentBike();
 		origin_ind = new_ind;
 		break;
@@ -121,8 +122,8 @@ void searchForRent(size_t &origin_ind, vector<CPoint> &pontos,
 						<< " m)" << endl;
 			a++;
 		}
-		 cin.ignore();
-				ans=0;
+		cin.ignore();
+		ans = 0;
 		while (ans < 1 || ans > pontos.size() || ans == (origin_ind + 1)) {
 			cin >> ans;
 		}
@@ -182,8 +183,9 @@ void searchForReturn(size_t &origin_ind, vector<CPoint> &pontos,
 						<< " m | " << 8 - 0.11 * pontos.at(i).getAltitude()
 						<< " euros)" << endl;
 			a++;
-		} cin.ignore();
-		ans=0;
+		}
+		cin.ignore();
+		ans = 0;
 		while (ans < 1 || ans > pontos.size() || ans == (origin_ind + 1)) {
 			printf("RECOLHI RESPOSTA\n");
 			cin >> ans;
@@ -243,6 +245,11 @@ void clientInit(size_t &origin_ind, vector<User*> &utils,
 						while (name == "" || name == "\n") {
 							cin >> name;
 						}
+						cout << "\nLOGIN\n";
+						cout << "Username: ";
+						while (name == "" || name == "\n") {
+							cin >> name;
+						}
 
 						for (size_t i = 0; utils.size() < 0 && !exists; i++) {
 							if (utils[i]->getName() == name) {
@@ -258,32 +265,33 @@ void clientInit(size_t &origin_ind, vector<User*> &utils,
 								}
 							}
 						}
+
+					}
+
+					if (!exists || ans == 2) {
+						int pay_met, pay_no;
+						cout << "\nREGISTRATION";
+						cout << "\nUsername: ";
+						cin.ignore();
+						getline(cin, name);
+						cout << "Password: ";
+						cin >> password;
+						cout
+								<< "Payment method?\n1 - Paypal\n2 - Credit Card\n";
+						cin >> pay_met;
+						cout << "Payment method number: ";
+						cin >> pay_no;
+						originCPoint(pontos, origin_ind);
+						User* novo = new User(name, password, origin_ind,
+								pay_met, pay_no);
+						utils.push_back(novo);
+						current_user = novo;
 					}
 				}
 			}
-
-		}
-
-		if (!exists || ans == 2) {
-			int pay_met, pay_no;
-			cout << "\nREGISTRATION";
-			cout << "\nUsername: ";
-			cin.ignore();
-			getline(cin, name);
-			cout << "Password: ";
-			cin >> password;
-			cout << "Payment method?\n1 - Paypal\n2 - Credit Card\n";
-			cin >> pay_met;
-			cout << "Payment method number: ";
-			cin >> pay_no;
-			originCPoint(pontos, origin_ind);
-			User* novo = new User(name, password, origin_ind, pay_met, pay_no);
-			utils.push_back(novo);
-			current_user = novo;
 		}
 	}
 }
-
 void menu(size_t &origin_ind, vector<CPoint> &pontos, Graph<Node> &grafo) {
 	size_t ans = -1;
 	cout << "\nWhat do you want to do?";

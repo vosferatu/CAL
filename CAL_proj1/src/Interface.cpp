@@ -2,14 +2,14 @@
 
 void showGraph(Graph<Node> *grafo, vector<CPoint> *pontos)
 {
-	GraphViewer *gv = new GraphViewer(600, 600, false);
+	GraphViewer *gv = new GraphViewer(450, 600, false);
 
-	gv->createWindow(600, 600);
-
+	gv->setBackground("Limits.PNG");
+	gv->createWindow(450, 600);
 	gv->defineEdgeColor("blue");
 	gv->defineVertexColor("yellow");
 	gv->defineEdgeCurved(false);
-	gv->defineVertexSize(0.000001);
+	gv->defineVertexSize(1);
 
 	for(size_t i=0; i<grafo->getVertexSet().size(); i++)
 	{
@@ -19,9 +19,6 @@ void showGraph(Graph<Node> *grafo, vector<CPoint> *pontos)
 
 		int y = 600-(lon-GeoCoordinate::lonMin)*600.0/(GeoCoordinate::lonMax-GeoCoordinate::lonMin);
 		int x = 450-(lat+GeoCoordinate::latMax)*450.0/(GeoCoordinate::latMax-GeoCoordinate::latMin);
-
-		cout << x << endl;
-		cout << y << endl;
 
 		{
 			gv->addNode(id, x, y);

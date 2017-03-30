@@ -434,6 +434,11 @@ int main(){
 	loadCPoints();
 	loadEdges();
 
+	cout << GeoCoordinate::latMin << endl;
+	cout << GeoCoordinate::latMax << endl;
+	cout << GeoCoordinate::lonMin << endl;
+	cout << GeoCoordinate::lonMax << endl;
+
 	/* Shows full graph */
 	showGraph(&grafo,&pontos);
 

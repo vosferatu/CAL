@@ -339,6 +339,7 @@ void menu(size_t &origin_ind, vector<CPoint> &pontos, Graph<Node> &grafo) {
 	}
 
 	while (1) {
+		auto t0=std::chrono::high_resolution_clock::now();
 		grafo.dijkstraShortestPath(pontos.at(origin_ind).getColNode());
 
 		if (ans == 1) {

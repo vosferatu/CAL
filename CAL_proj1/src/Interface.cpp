@@ -1,4 +1,5 @@
 #include "Interface.h"
+#include "FileHandlers.h"
 
 int originCPoint(vector<CPoint> &pontos, size_t &origin_ind) {
 	size_t ans=-1;
@@ -195,8 +196,9 @@ void clientInit(size_t &origin_ind, vector<User*> &utils, vector<CPoint> &pontos
 		cout << "\nLOGIN\n";
 		cout << "Username: ";
 		cin >> name;
-		file.open("Users.txt");
+		file.open(USERS_TXT);
 		while (!file.eof()) {
+			printf("NAO DEVIA ACONTECER\n");
 			string read_name, read_password, read_index, read_paymet, read_no, line;
 			getline(file, read_name, ';');
 			getline(file, read_password, ';');
@@ -216,7 +218,7 @@ void clientInit(size_t &origin_ind, vector<User*> &utils, vector<CPoint> &pontos
 						}
 				}
 			}
-		}
+		}printf("OK\n");
 	}
 
 	if (!exists || ans == 2) {

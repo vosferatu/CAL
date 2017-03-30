@@ -28,6 +28,8 @@ vector<Road*> estradas;
 vector<CPoint> pontos;
 vector<User*> utils;
 
+User* current_user;
+
 size_t origin_ind;
 
 int main(){

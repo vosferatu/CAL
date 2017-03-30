@@ -39,10 +39,11 @@ int main(){
 	loadCPoints(pontos,grafo);
 	loadEdges(grafo,estradas);
 
+	cout << "\n	   BIKE SHARING	   \n";
+
 	/* Shows full graph */
 	showGraph(&grafo,&pontos);
 
-	cout << "\n	   BIKE SHARING	   \n";
 	clientInit(origin_ind, utils, pontos, current_user);
 
 	menu(origin_ind,pontos,grafo);

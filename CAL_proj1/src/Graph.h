@@ -471,11 +471,12 @@ template<class T>
 vector<T> Graph<T>::getPath(const T &origin, const T &dest) {
 
 	list<T> buffer;
-	Vertex<T>* v = getVertex(dest);
+	T destino=dest;
+	Vertex<T>* v = getVertex(&destino);
 
 	//cout << v->info << " ";
 	buffer.push_front(v->info);
-	while (v->path != NULL && v->path->info != origin) {
+	while (!(v->path == NULL) &&!( v->path->info == origin)) {
 		v = v->path;
 		buffer.push_front(v->info);
 	}
@@ -583,3 +584,4 @@ int Graph<T>::edgeCost(int i, int j) {
 }
 
 #endif /* GRAPH_H_ */
+

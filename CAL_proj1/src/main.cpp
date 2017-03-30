@@ -19,6 +19,7 @@
 #include "Interface.h"
 #include <ctype.h>
 #include "User.h"
+#include "FileHandlers.h"
 
 using namespace std;
 
@@ -28,16 +29,6 @@ vector<CPoint> pontos;
 vector<User*> utils;
 
 size_t origin_ind;
-
-/*
- *@brief Calculates bike return's price, in cents
- *@param destination Collection point where the bike will be returned;
- */
-int priceCentsCalculator(CPoint destination){
-	int price=800-(destination.getAltitude()*1.1);
-
-	return price;
-}
 
 void searchForRent() {
 	int min = INT_MAX;
@@ -144,170 +135,6 @@ void searchForReturn() {
 
 	return;
 
-}
-
-Road* searchRoad(int id) {
-	for (size_t i = 0; i < estradas.size(); i++) {
-		if (estradas[i]->getId() == id)
-			return estradas[i];
-	}
-
-	return NULL;
-}
-
-void loadCPoints() {
-	ifstream ifs("espinho_cpoints.txt");
-	if (ifs.is_open()) {
-		string line;
-		while (!ifs.eof()) {
-			getline(ifs, line, ';');
-			string name = line;
-			getline(ifs, line, ';');
-			int id_node = atoi(line.c_str());
-			getline(ifs, line, ';');
-			int no_bikes = atoi(line.c_str());
-			getline(ifs, line, ';');
-			int no_vagas = atoi(line.c_str());
-			getline(ifs, line, '\n');
-			int altitude = atoi(line.c_str());
-			for (unsigned int i = 0; i < grafo.getVertexSet().size(); i++) {
-				if (grafo.getVertexSet()[i]->getInfo()->getId() == id_node) {
-					CPoint aux(name, no_bikes, no_vagas, grafo.getVertexSet()[i]->getInfo(),altitude);
-					pontos.push_back(aux);
-				}
-			}
-		}
-	}
-	ifs.close();
-}
-
-void loadRoads() {
-	ifstream ifs("espinho_roads.txt");
-	if (ifs.is_open()) {
-		string line;
-		while (!ifs.eof()) {
-			getline(ifs, line, ';');
-			int id = atoi(line.c_str());
-			getline(ifs, line, ';');
-			string name = line;
-			getline(ifs, line, '\n');
-			string two_way = line;
-			Road *road = new Road(id, name, two_way == "True");
-			estradas.push_back(road);
-		}
-	}
-	ifs.close();
-}
-
-void loadEdges() {
-	ifstream ifs("espinho_subroads.txt");
-	if (ifs.is_open()) {
-		string line;
-		while (!ifs.eof()) {
-			getline(ifs, line, ';');
-			int id = atoi(line.c_str());
-
-			Road *road = searchRoad(id);
-			if (road == NULL) {
-				getline(ifs, line, '\n');
-				continue;
-			} else {
-				getline(ifs, line, ';');
-				int sour = atoi(line.c_str());
-				getline(ifs, line, '\n');
-				int dest = atoi(line.c_str());
-				Vertex<Node>* source=NULL, *destination=NULL;
-				for (size_t i = 0; i < grafo.getVertexSet().size(); i++) {
-					if (grafo.getVertexSet()[i]->getInfo()->getId() == sour)
-						source = grafo.getVertexSet()[i];
-					if (grafo.getVertexSet()[i]->getInfo()->getId() == dest)
-						destination = grafo.getVertexSet()[i];
-					if (source != NULL && destination != NULL)
-						break;
-				}
-
-				if (source != NULL && destination != NULL) {
-					GeoCoordinate src_coords=source->getInfo()->getRadCoords();
-					GeoCoordinate dest_coords=destination->getInfo()->getRadCoords();
-					int distance=src_coords.getDistanceFromLatLon(dest_coords);
-
-					if (road->isTwoWay()) {
-						source->addEdge(destination, distance);
-						destination->addEdge(source, distance);
-					} else {
-						source->addEdge(destination, distance);
-					}
-				}
-
-			}
-		}
-	}
-
-}
-
-void loadNodes() {
-	ifstream ifs("espinho_nodes.txt");
-	if (ifs.is_open()) {
-		string line;
-		while (!ifs.eof()) {
-			getline(ifs, line, ';');
-			long long id = atoll(line.c_str());
-			getline(ifs, line, ';');
-			float lat = atof(line.c_str());
-			getline(ifs, line, ';');
-			float lon = atof(line.c_str());
-			GeoCoordinate degrees(lat, lon);
-			getline(ifs, line, ';');
-			lat = atof(line.c_str());
-			getline(ifs, line, '\n');
-			lon = atof(line.c_str());
-
-			if(lat>GeoCoordinate::latMax)
-				GeoCoordinate::latMax=lat;
-
-			if(lat<GeoCoordinate::latMin)
-				GeoCoordinate::latMin=lat;
-
-			if(lon>GeoCoordinate::lonMax)
-				GeoCoordinate::lonMax=lon;
-
-			if(lon<GeoCoordinate::lonMin)
-				GeoCoordinate::lonMin=lon;
-
-			GeoCoordinate radians(lat, lon);
-			Node node(id, degrees, radians);
-			grafo.addVertex(node);
-		}
-	}
-	ifs.close();
-
-}
-
-void saveCPoints(){
-	ofstream ifs("espinho_cpoints.txt", ios::trunc);
-
-	if(ifs.is_open()){
-		for(size_t i = 0; i < pontos.size(); i++) {
-			ifs << pontos[i];
-			if(i < (pontos.size()-1))
-				ifs << '\n';
-
-		}
-	}
-	ifs.close();
-}
-
-void saveUsers(){
-	ofstream ifs("Users.txt", ios::trunc);
-
-	if(ifs.is_open()){
-		for(size_t i = 0; i < utils.size(); i++) {
-			ifs << utils[i];
-			if(i < (utils.size()-1))
-				ifs << '\n';
-		}
-	}
-	ifs.close();
 }
 
 int originCPoint(vector<CPoint> *pontos, size_t *origin_ind) {
@@ -421,7 +248,6 @@ void menu(){
 			if(exit == 'N')
 				break;
 		}
-
 	}
 }
 
@@ -429,15 +255,10 @@ int main(){
 
 	cout << "Loading...";
 	cout << endl;
-	loadNodes();
-	loadRoads();
-	loadCPoints();
-	loadEdges();
-
-	cout << GeoCoordinate::latMin << endl;
-	cout << GeoCoordinate::latMax << endl;
-	cout << GeoCoordinate::lonMin << endl;
-	cout << GeoCoordinate::lonMax << endl;
+	loadNodes(grafo);
+	loadRoads(estradas);
+	loadCPoints(pontos,grafo);
+	loadEdges(grafo,estradas);
 
 	/* Shows full graph */
 	showGraph(&grafo,&pontos);
@@ -447,8 +268,8 @@ int main(){
 
 	menu();
 
-	saveCPoints();
-	saveUsers();
+	saveCPoints(pontos);
+	saveUsers(utils);
 
 	//TODO: Analise do tempo de execucao
 	//TODO: Avaliar a conectividade

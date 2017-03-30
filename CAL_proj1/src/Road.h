@@ -9,6 +9,7 @@
 #define ROAD_H_
 
 #include <string>
+#include <vector>
 
 class Road{
 	/*
@@ -41,5 +42,7 @@ public:
 	 */
 	bool isTwoWay() const;
 };
+
+Road* searchRoad(int id, std::vector<Road*> &estradas);
 
 #endif /* ROAD_H_ */

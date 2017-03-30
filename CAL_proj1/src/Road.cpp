@@ -27,4 +27,3 @@ const std::string& Road::getName() const {
 bool Road::isTwoWay() const {
 	return two_way;
 }
-

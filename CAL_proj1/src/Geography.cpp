@@ -15,6 +15,7 @@ GeoCoordinate::GeoCoordinate(float latitude, float floatitude){
 }
 
 float GeoCoordinate::getLon() const {
+
 	return lon;
 }
 

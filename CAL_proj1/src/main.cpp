@@ -43,7 +43,7 @@ int main(){
 	showGraph(&grafo,&pontos);
 
 	cout << "\n	   BIKE SHARING	   \n";
-	clientInit(origin_ind, utils, pontos);
+	clientInit(origin_ind, utils, pontos, current_user);
 
 	menu(origin_ind,pontos,grafo);
 

@@ -1,6 +1,7 @@
 #include "Interface.h"
 #include "FileHandlers.h"
 
+
 int originCPoint(vector<CPoint> &pontos, size_t &origin_ind) {
 	size_t ans = -1;
 

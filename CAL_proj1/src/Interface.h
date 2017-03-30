@@ -4,8 +4,6 @@
 #include "User.h"
 #include "graphviewer.h"
 
-User* current_user = NULL;
-
 /*
  * @brief Shows the complete graph
  * @param grafo Graph to be shown

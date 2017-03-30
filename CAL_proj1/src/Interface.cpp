@@ -187,7 +187,7 @@ void clientInit(size_t &origin_ind, vector<User*> &utils, vector<CPoint> &pontos
 	bool exists = false;
 	bool valid = false;
 
-	while (ans < 1 || ans > 2) {
+	while (ans < 1 && ans > 2) {
 		cout << "\n1 - Login\n2 - Register\n";
 		cin >> ans;
 	}
@@ -215,10 +215,27 @@ void clientInit(size_t &origin_ind, vector<User*> &utils, vector<CPoint> &pontos
 						{
 						file.close();
 						return;
+		while (name == "" || name == "\n"){
+			cin >> name;
+		}
+
+		for(size_t i = 0; utils.size() < 0 && !exists ; i++){
+					if(utils[i]->getName() == name){
+						cout << "Password: ";
+						while (!valid){
+							cin >> password;
+							if(utils[i]->getPassword() == password){
+								exists = true;
+								valid = true;
+								current_user = utils[i];
+								break;
+							}
 						}
+					}
 				}
 			}
 		}printf("OK\n");
+
 	}
 
 	if (!exists || ans == 2) {
@@ -234,14 +251,16 @@ void clientInit(size_t &origin_ind, vector<User*> &utils, vector<CPoint> &pontos
 		cout << "Payment method number: ";
 		cin >> pay_no;
 		originCPoint(pontos, origin_ind);
-		utils.push_back(new User(name,password,origin_ind,pay_met,pay_no));
+		User* novo = new User(name,password,origin_ind,pay_met,pay_no);
+		utils.push_back(novo);
+		current_user = novo;
 	}
 }
 
 void menu(size_t &origin_ind, vector<CPoint> &pontos, Graph<Node> &grafo){
 	size_t ans=-1;
 	cout << "\nWhat do you want to do?";
-	while (ans != 1 || ans != 2) {
+	while (ans != 1 && ans != 2) {
 		cout << "\n1 - Rent\n2 - Return\n";
 		cin >> ans;
 	}
@@ -260,7 +279,7 @@ void menu(size_t &origin_ind, vector<CPoint> &pontos, Graph<Node> &grafo){
 
 		char exit = 'a';
 
-		while(exit != 'Y' || exit != 'N'){
+		while(exit != 'Y' && exit != 'N'){
 			cout<<"\nDo you want to exit? (Y/N)\n";
 			exit = getchar();
 			exit = toupper(exit);

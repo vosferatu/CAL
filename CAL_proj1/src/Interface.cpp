@@ -303,6 +303,7 @@ void menu(size_t &origin_ind, vector<CPoint> &pontos, Graph<Node> &grafo) {
 
 		while (exit != 'Y' && exit != 'N') {
 			cout << "\nDo you want to exit? (Y/N)\n";
+			cin.ignore();
 			exit = getchar();
 			exit = toupper(exit);
 

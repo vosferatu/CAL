@@ -28,6 +28,8 @@ void saveCPoints(std::vector<CPoint>& pontos);
 
 void saveUsers(std::vector<User*> &utils);
 
+void loadUsers(std::vector<User*> &utils);
+
 void loadRoads(std::vector<Road*> &estradas);
 
 void loadCPoints(std::vector<CPoint> &pontos, Graph<Node> &grafo);

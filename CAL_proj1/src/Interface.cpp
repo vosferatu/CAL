@@ -121,7 +121,8 @@ void searchForRent(size_t &origin_ind, vector<CPoint> &pontos,
 						<< " m)" << endl;
 			a++;
 		}
-
+		 cin.ignore();
+				ans=0;
 		while (ans < 1 || ans > pontos.size() || ans == (origin_ind + 1)) {
 			cin >> ans;
 		}
@@ -181,8 +182,10 @@ void searchForReturn(size_t &origin_ind, vector<CPoint> &pontos,
 						<< " m | " << 8 - 0.11 * pontos.at(i).getAltitude()
 						<< " euros)" << endl;
 			a++;
-		}
+		} cin.ignore();
+		ans=0;
 		while (ans < 1 || ans > pontos.size() || ans == (origin_ind + 1)) {
+			printf("RECOLHI RESPOSTA\n");
 			cin >> ans;
 		}
 		pontos.at(ans - 1).returnBike();
@@ -198,6 +201,7 @@ void searchForReturn(size_t &origin_ind, vector<CPoint> &pontos,
 
 void clientInit(size_t &origin_ind, vector<User*> &utils,
 		vector<CPoint> &pontos, User* current_user) {
+
 	int ans = 0;
 	string name;
 	string password;
@@ -205,7 +209,8 @@ void clientInit(size_t &origin_ind, vector<User*> &utils,
 	bool exists = false;
 	bool valid = false;
 
-	while (ans < 1 && ans > 2) {
+	while (ans < 1 || ans > 2) {
+
 		cout << "\n1 - Login\n2 - Register\n";
 		cin >> ans;
 	}
@@ -216,7 +221,6 @@ void clientInit(size_t &origin_ind, vector<User*> &utils,
 		cin >> name;
 		file.open(USERS_TXT);
 		while (!file.eof()) {
-			printf("NAO DEVIA ACONTECER\n");
 			string read_name, read_password, read_index, read_paymet, read_no,
 					line;
 			getline(file, read_name, ';');

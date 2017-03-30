@@ -29,7 +29,6 @@ vector<CPoint> pontos;
 vector<User*> utils;
 
 User* current_user;
-
 size_t origin_ind;
 
 void searchForRent() {
@@ -208,19 +207,14 @@ void clientInit() {
 		current_user = novo;
 	}
 
-
+	clientInit();
 }
 
 void menu(){
 	size_t ans=-1;
 	cout << "\nWhat do you want to do?";
-<<<<<<< HEAD
 	while (ans != 1 || ans != 2) {
 		cout << "\n1 - Rent\n2 - Return\n3 - Logout\n";
-=======
-	while (ans != 1 && ans != 2) {
-		cout << "\n1 - Rent\n2 - Return\n";
->>>>>>> branch 'master' of git@github.com:JMendes25/CAL.git
 		cin >> ans;
 	}
 

@@ -385,13 +385,13 @@ void clientInit() {
 		utils.push_back(new User(name,password,origin_ind,pay_met,pay_no));
 	}
 
-	clientInit();
+
 }
 
 void menu(){
 	size_t ans=-1;
 	cout << "\nWhat do you want to do?";
-	while (ans != 1 || ans != 2) {
+	while (ans != 1 && ans != 2) {
 		cout << "\n1 - Rent\n2 - Return\n";
 		cin >> ans;
 	}
@@ -411,7 +411,7 @@ void menu(){
 
 		char exit = 'a';
 
-		while(exit != 'Y' || exit != 'N'){
+		while(exit != 'Y' && exit != 'N'){
 			cout<<"\nDo you want to exit? (Y/N)\n";
 			exit = getchar();
 			exit = toupper(exit);

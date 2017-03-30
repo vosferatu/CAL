@@ -50,7 +50,7 @@ public:
 	/*
 	 * @brief User constructor
 	 */
-	User(std::string cli_name, std::string cli_password, size_t cli_last, int cli_pay_method,int cli_pay_no);
+	User(std::string cli_name, std::string cli_password, int cli_pay_method, int cli_pay_no, size_t cli_last);
 
 	/*
 	 * @brief Gets User's name

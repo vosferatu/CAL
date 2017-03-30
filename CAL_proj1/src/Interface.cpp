@@ -110,10 +110,10 @@ void showGraph(Graph<Node> *grafo, vector<CPoint> *pontos) {
 
 		int y = 600
 				- (lon - GeoCoordinate::lonMin) * 600.0
-				/ (GeoCoordinate::lonMax - GeoCoordinate::lonMin);
+						/ (GeoCoordinate::lonMax - GeoCoordinate::lonMin);
 		int x = 450
 				- (lat + GeoCoordinate::latMax) * 450.0
-				/ (GeoCoordinate::latMax - GeoCoordinate::latMin);
+						/ (GeoCoordinate::latMax - GeoCoordinate::latMin);
 
 		{
 			gv->addNode(id, x, y);
@@ -128,10 +128,10 @@ void showGraph(Graph<Node> *grafo, vector<CPoint> *pontos) {
 
 		int y = 600
 				- (lon - GeoCoordinate::lonMin) * 600.0
-				/ (GeoCoordinate::lonMax - GeoCoordinate::lonMin);
+						/ (GeoCoordinate::lonMax - GeoCoordinate::lonMin);
 		int x = 450
 				- (lat + GeoCoordinate::latMax) * 450.0
-				/ (GeoCoordinate::latMax - GeoCoordinate::latMin);
+						/ (GeoCoordinate::latMax - GeoCoordinate::latMin);
 
 		gv->addNode(id, x, y);
 		gv->setVertexColor(id, RED);
@@ -178,13 +178,13 @@ void searchForRent(size_t &origin_ind, vector<CPoint> &pontos,
 
 	vector<Node> path;
 
-	switch(ans)
-	{
+	switch (ans) {
 	case 1:
-		path=grafo.getPath(*pontos.at(origin_ind).getColNode(), *pontos.at(new_ind).getColNode());
+		path = grafo.getPath(*pontos.at(origin_ind).getColNode(),
+				*pontos.at(new_ind).getColNode());
 		showRoute(&grafo,&pontos,&path,RENT);
 		ponto->rentBike();
-		origin_ind=new_ind;
+		origin_ind = new_ind;
 		break;
 	case 2:
 		cout << "\nSo where do you want to do it?\n";
@@ -207,13 +207,8 @@ void searchForRent(size_t &origin_ind, vector<CPoint> &pontos,
 	}
 
 	return;
-
-
 }
 
-/*
- * @brief Search for a place to return a bike
- */
 void searchForReturn(size_t &origin_ind, vector<CPoint> &pontos,
 		Graph<Node> &grafo) {
 	int min = INT_MAX;
@@ -259,6 +254,8 @@ void searchForReturn(size_t &origin_ind, vector<CPoint> &pontos,
 				<< " m | " << 8 - 0.11 * pontos.at(i).getAltitude()
 				<< " euros)" << endl;
 		}
+		cin.ignore();
+		ans = 0;
 		while (ans < 1 || ans > pontos.size() || ans == (origin_ind + 1) || pontos.at(ans-1).getPlaces()==0) {
 			cin >> ans;
 		}
@@ -277,6 +274,7 @@ void searchForReturn(size_t &origin_ind, vector<CPoint> &pontos,
 
 void clientInit(size_t &origin_ind, vector<User*> &utils,
 		vector<CPoint> &pontos, User* current_user) {
+
 	int ans = 0;
 	string name;
 	string password;
@@ -306,6 +304,7 @@ void clientInit(size_t &origin_ind, vector<User*> &utils,
 						valid = true;
 						current_user = utils[i];
 						break;
+
 					}
 				}
 			}
@@ -331,7 +330,6 @@ void clientInit(size_t &origin_ind, vector<User*> &utils,
 		current_user = novo;
 	}
 }
-
 void menu(size_t &origin_ind, vector<CPoint> &pontos, Graph<Node> &grafo) {
 	size_t ans = -1;
 	cout << "\nWhat do you want to do?";

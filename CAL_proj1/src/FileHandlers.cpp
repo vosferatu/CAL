@@ -36,6 +36,29 @@ void saveUsers(std::vector<User*> &utils){
 	ifs.close();
 }
 
+void loadUsers(std::vector<User*> &utils) {
+	ifstream ifs(USERS_TXT);
+	if (ifs.is_open()) {
+		string line;
+		while (!ifs.eof()) {
+			getline(ifs, line, ';');
+			string name = line;
+			getline(ifs, line, ';');
+			string password = line;
+			getline(ifs, line, ';');
+			int pay_method = atoi(line.c_str());
+			getline(ifs, line, ';');
+			int pay_no = atoi(line.c_str());
+			getline(ifs, line, '\n');
+			int last = atoi(line.c_str());
+			User * user = new User(name, password, pay_method, pay_no,last);
+			utils.push_back(user);
+		}
+	}
+	ifs.close();
+}
+
+
 void loadCPoints(vector<CPoint> &pontos, Graph<Node> &grafo) {
 	ifstream ifs(CPOINTS_TXT);
 	if (ifs.is_open()) {

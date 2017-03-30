@@ -100,42 +100,42 @@ void searchForRent(size_t &origin_ind, vector<CPoint> &pontos,
 			<< " m) with bikes for rental is " << ponto->getName() << endl;
 	cout << "\nDo you want to rent a bike on there? (Y/N)";
 
-	while (ans != 1 && ans != 2) {
+	while (ans < 1 || ans > 2) {
 		cout << "\n1 - Yes\n2 - No\n";
 		cin >> ans;
 	}
 
 	vector<Node> path;
 
-	switch(ans)
-	{
+	switch (ans) {
 	case 1:
-		path=grafo.getPath(*pontos.at(origin_ind).getColNode(), *pontos.at(new_ind).getColNode());
+		path = grafo.getPath(*pontos.at(origin_ind).getColNode(),
+				*pontos.at(new_ind).getColNode());
 		ponto->rentBike();
-		origin_ind=new_ind;
+		origin_ind = new_ind;
 		break;
 	case 2:
 		cout << "\nSo where do you want to do it?\n";
-		for (unsigned int i = 0, a=0; i < pontos.size(); i++)
-		{
-			if(a!=origin_ind)
-				cout << a+1 << " - " << pontos.at(i).getName() << " ("<< grafo.getVertex(pontos.at(i).getColNode())->getDist() <<" m)"<< endl;
+		for (unsigned int i = 0, a = 0; i < pontos.size(); i++) {
+			if (a != origin_ind)
+				cout << a + 1 << " - " << pontos.at(i).getName() << " ("
+						<< grafo.getVertex(pontos.at(i).getColNode())->getDist()
+						<< " m)" << endl;
 			a++;
 		}
-
-		while(ans < 1 || ans > pontos.size() || ans==(origin_ind+1)){
+		cin.ignore();
+		ans = 0;
+		while (ans < 1 || ans > pontos.size() || ans == (origin_ind + 1)) {
 			cin >> ans;
 		}
-		pontos.at(ans-1).rentBike();
-		origin_ind=ans;
+		pontos.at(ans - 1).rentBike();
+		origin_ind = ans;
 		break;
 	default:
 		break;
 	}
 
 	return;
-
-
 }
 
 /*
@@ -162,7 +162,7 @@ void searchForReturn(size_t &origin_ind, vector<CPoint> &pontos,
 			<< endl;
 	cout << "Do you want to return a bike on there? (Y/N)";
 
-	while (ans != 1 || ans != 2) {
+	while (ans < 1 || ans > 2) {
 		cout << "\n1 - Yes\n2 - No\n";
 		cin >> ans;
 	}
@@ -185,7 +185,10 @@ void searchForReturn(size_t &origin_ind, vector<CPoint> &pontos,
 						<< " euros)" << endl;
 			a++;
 		}
+		cin.ignore();
+		ans = 0;
 		while (ans < 1 || ans > pontos.size() || ans == (origin_ind + 1)) {
+			printf("RECOLHI RESPOSTA\n");
 			cin >> ans;
 		}
 		pontos.at(ans - 1).returnBike();
@@ -201,6 +204,7 @@ void searchForReturn(size_t &origin_ind, vector<CPoint> &pontos,
 
 void clientInit(size_t &origin_ind, vector<User*> &utils,
 		vector<CPoint> &pontos, User* current_user) {
+
 	int ans = 0;
 	string name;
 	string password;
@@ -208,54 +212,87 @@ void clientInit(size_t &origin_ind, vector<User*> &utils,
 	bool exists = false;
 	bool valid = false;
 
-	while (ans != 1 && ans != 2) {
+	while (ans < 1 || ans > 2) {
+
 		cout << "\n1 - Login\n2 - Register\n";
 		cin >> ans;
 	}
 
 	if (ans == 1) {
-			cout << "\nLOGIN\n";
-			cout << "Username: ";
-			while (name == "" || name == "\n"){
-				cin >> name;
-			}
+		cout << "\nLOGIN\n";
+		cout << "Username: ";
+		cin >> name;
+		file.open(USERS_TXT);
+		while (!file.eof()) {
+			string read_name, read_password, read_index, read_paymet, read_no,
+					line;
+			getline(file, read_name, ';');
+			getline(file, read_password, ';');
+			getline(file, read_index, ';');
+			getline(file, read_paymet, ';');
+			getline(file, read_no, '\n');
+			utils.push_back(
+					new User(read_name, read_password,
+							(size_t) atoi(read_index.c_str()),
+							atoi(read_paymet.c_str()), atoi(read_no.c_str())));
+			if (read_name == name) {
+				exists = true;
+				while (!valid) {
+					cout << "PASSWORD: ";
+					cin >> password;
+					if (read_password == password) {
+						file.close();
+						return;
+						while (name == "" || name == "\n") {
+							cin >> name;
+						}
+						cout << "\nLOGIN\n";
+						cout << "Username: ";
+						while (name == "" || name == "\n") {
+							cin >> name;
+						}
 
-			for(size_t i = 0; utils.size() < 0 && !exists ; i++){
-						if(utils[i]->getName() == name){
-							cout << "Password: ";
-							while (!valid){
-								cin >> password;
-								if(utils[i]->getPassword() == password){
-									exists = true;
-									valid = true;
-									current_user = utils[i];
-									break;
+						for (size_t i = 0; utils.size() < 0 && !exists; i++) {
+							if (utils[i]->getName() == name) {
+								cout << "Password: ";
+								while (!valid) {
+									cin >> password;
+									if (utils[i]->getPassword() == password) {
+										exists = true;
+										valid = true;
+										current_user = utils[i];
+										break;
+									}
 								}
 							}
 						}
+
 					}
 
-	}
-
-		if (!exists || ans == 2) {
-			int pay_met, pay_no;
-			cout << "\nREGISTRATION";
-			cout << "\nUsername: ";
-			cin.ignore();
-			getline(cin, name);
-			cout << "Password: ";
-			cin >> password;
-			cout << "Payment method?\n1 - Paypal\n2 - Credit Card\n";
-			cin >> pay_met;
-			cout << "Payment method number: ";
-			cin >> pay_no;
-			originCPoint(pontos, origin_ind);
-			User* novo = new User(name, password, origin_ind, pay_met, pay_no);
-			utils.push_back(novo);
-			current_user = novo;
+					if (!exists || ans == 2) {
+						int pay_met, pay_no;
+						cout << "\nREGISTRATION";
+						cout << "\nUsername: ";
+						cin.ignore();
+						getline(cin, name);
+						cout << "Password: ";
+						cin >> password;
+						cout
+								<< "Payment method?\n1 - Paypal\n2 - Credit Card\n";
+						cin >> pay_met;
+						cout << "Payment method number: ";
+						cin >> pay_no;
+						originCPoint(pontos, origin_ind);
+						User* novo = new User(name, password, origin_ind,
+								pay_met, pay_no);
+						utils.push_back(novo);
+						current_user = novo;
+					}
+				}
+			}
 		}
+	}
 }
-
 void menu(size_t &origin_ind, vector<CPoint> &pontos, Graph<Node> &grafo) {
 	size_t ans = -1;
 	cout << "\nWhat do you want to do?";

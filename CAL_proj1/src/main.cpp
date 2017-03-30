@@ -40,7 +40,7 @@ int main(){
 	loadEdges(grafo,estradas);
 
 	/* Shows full graph */
-	showGraph(&grafo,&pontos);
+	//showGraph(&grafo,&pontos);
 
 	cout << "\n	   BIKE SHARING	   \n";
 	clientInit(origin_ind, utils, pontos, current_user);
@@ -49,6 +49,7 @@ int main(){
 
 	saveCPoints(pontos);
 	saveUsers(utils);
+
 
 	//TODO: Analise do tempo de execucao
 	//TODO: Avaliar a conectividade

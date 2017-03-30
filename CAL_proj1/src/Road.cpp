@@ -27,3 +27,12 @@ const std::string& Road::getName() const {
 bool Road::isTwoWay() const {
 	return two_way;
 }
+
+Road* searchRoad(int id, std::vector<Road*> &estradas) {
+	for (size_t i = 0; i < estradas.size(); i++) {
+		if (estradas[i]->getId() == id)
+			return estradas[i];
+	}
+
+	return NULL;
+}

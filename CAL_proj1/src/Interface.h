@@ -33,4 +33,4 @@ void searchForRent(size_t &origin_ind, vector<CPoint> &pontos, Graph<Node> &graf
 
 void searchForReturn(size_t &origin_ind, vector<CPoint> &pontos, Graph<Node> &grafo);
 
-void clientInit(size_t &origin_ind, vector<User*> &utils, vector<CPoint> &pontos);
+void clientInit(size_t &origin_ind, vector<User*> &utils, vector<CPoint> &pontos, User* current_user);

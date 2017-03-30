@@ -28,6 +28,8 @@ vector<Road*> estradas;
 vector<CPoint> pontos;
 vector<User*> utils;
 
+User* current_user;
+
 size_t origin_ind;
 
 void searchForRent() {
@@ -48,7 +50,7 @@ void searchForRent() {
 	cout << "\nThe nearest point ("<< grafo.getVertex(ponto->getColNode())->getDist() <<" m) with bikes for rental is " << ponto->getName() << endl;
 	cout << "\nDo you want to rent a bike on there? (Y/N)";
 
-	while (ans < 1 || ans > 2) {
+	while (ans != 1 || ans != 2) {
 		cout << "\n1 - Yes\n2 - No\n";
 		cin >> ans;
 	}
@@ -100,7 +102,7 @@ void searchForReturn() {
 	cout << "\nThe nearest point with places for return is ("<< grafo.getVertex(ponto->getColNode())->getDist() <<" m | " << 8-0.11*ponto->getAltitude() << " euros) " << ponto->getName()<< endl;
 	cout << "Do you want to return a bike on there? (Y/N)";
 
-	while (ans < 1 || ans > 2) {
+	while (ans != 1 || ans != 2) {
 		cout << "\n1 - Yes\n2 - No\n";
 		cin >> ans;
 	}
@@ -157,13 +159,13 @@ int originCPoint(vector<CPoint> *pontos, size_t *origin_ind) {
 
 void clientInit() {
 	int ans = 0;
-	string name;
-	string password;
+	string name = "";
+	string password = "";
 	fstream file;
 	bool exists = false;
 	bool valid = false;
 
-	while (ans < 1 || ans > 2) {
+	while (ans != 1 || ans != 2) {
 		cout << "\n1 - Login\n2 - Register\n";
 		cin >> ans;
 	}
@@ -171,30 +173,22 @@ void clientInit() {
 	if (ans == 1) {
 		cout << "\nLOGIN\n";
 		cout << "Username: ";
-		cin >> name;
-		file.open("Users.txt");
-		while (!file.eof()) {
-			string read_name, read_password, read_index, read_paymet, read_no, line;
-			getline(file, read_name, ';');
-			getline(file, read_password, ';');
-			getline(file, read_index, ';');
-			getline(file, read_paymet, ';');
-			getline(file, read_no, '\n');
-			utils.push_back(new User(read_name, read_password, (size_t) atoi(read_index.c_str()), atoi(read_paymet.c_str()), atoi(read_no.c_str())));
-			if (read_name == name) {
-				exists = true;
-				while (!valid) {
-					cout << "PASSWORD: ";
+		while (name == "" || name == "\n"){
+			cin >> name;
+		}
+
+		for(size_t i = 0; utils.size() < 0 && !exists ; i++){
+			if(utils[i]->getName() == name){
+				cout << "Password: ";
+				while (!valid){
 					cin >> password;
-					if (read_password == password)
-						{
-						file.close();
-						return;
-						}
+					if(utils[i]->getPassword() == password)
+						exists = true;
+						current_user = utils[i];
+						break;
 				}
 			}
 		}
-	}
 
 	if (!exists || ans == 2) {
 		int pay_met, pay_no;
@@ -209,7 +203,9 @@ void clientInit() {
 		cout << "Payment method number: ";
 		cin >> pay_no;
 		originCPoint(&pontos,&origin_ind);
-		utils.push_back(new User(name,password,origin_ind,pay_met,pay_no));
+		User* novo = new User(name,password,origin_ind,pay_met,pay_no);
+		utils.push_back(novo);
+		current_user = novo;
 	}
 
 	clientInit();
@@ -219,7 +215,7 @@ void menu(){
 	size_t ans=-1;
 	cout << "\nWhat do you want to do?";
 	while (ans != 1 || ans != 2) {
-		cout << "\n1 - Rent\n2 - Return\n";
+		cout << "\n1 - Rent\n2 - Return\n3 - Logout\n";
 		cin >> ans;
 	}
 
@@ -231,14 +227,17 @@ void menu(){
 			searchForRent();
 			ans=2;
 		}
-		else{
+		if (ans == 2){
 			searchForReturn();
 			ans=1;
+		} else {
+			current_user = null;
+			return;
 		}
 
 		char exit = 'a';
 
-		while(exit != 'Y' || exit != 'N'){
+		while(exit != 'Y' && exit != 'N'){
 			cout<<"\nDo you want to exit? (Y/N)\n";
 			exit = getchar();
 			exit = toupper(exit);

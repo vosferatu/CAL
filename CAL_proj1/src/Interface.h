@@ -4,7 +4,6 @@
 #include "User.h"
 #include "graphviewer.h"
 
-
 /*
  * @brief Shows the complete graph
  * @param grafo Graph to be shown

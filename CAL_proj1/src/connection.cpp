@@ -27,7 +27,7 @@ Connection::Connection(short port) {
   if (connect(sock, (struct sockaddr *) &echoServAddr, sizeof(echoServAddr)) < 0)
     myerror("connect() failed");
 #else
-	WSADATA wsaData { };
+	WSADATA wsaData;
     int iResult = WSAStartup(MAKEWORD(2,2), &wsaData);
     if (iResult != NO_ERROR)
 				printf("Client: Error at WSAStartup().\n");

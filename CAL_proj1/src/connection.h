@@ -11,7 +11,7 @@
 #include <sys/types.h>
 #include <netdb.h>
 #else
-#include <winsock2.h>
+#include <Winsock2.h>
 #endif
 
 #include <string>

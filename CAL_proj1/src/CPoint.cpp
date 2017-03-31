@@ -7,6 +7,8 @@
 
 #include "CPoint.h"
 
+CPoint::CPoint(){}
+
 CPoint::CPoint(std::string name_cpoint, int bikes_cpoint, int places_cpoint, Node* col_node_cpoint, double altitude_cpoint)
 {
 	name=name_cpoint;

@@ -1,6 +1,6 @@
 #include <vector>
+#include <chrono>
 #include <iostream>
-#include <chrono> // C++11
 #include "Graph.h"
 #include "CPoint.h"
 #include "User.h"

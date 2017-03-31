@@ -20,9 +20,10 @@
 
 #define CPOINTS_TXT "espinho_cpoints.txt"
 #define USERS_TXT "users.txt"
-#define ROADS_TXT "espinho_roads.txt"
-#define SUBROADS_TXT "espinho_subroads.txt"
-#define NODES_TXT "espinho_nodes.txt"
+#define ROADS_TXT "./maps/espinho_roads3.txt"
+#define SUBROADS_TXT "./maps/espinho_subroads3.txt"
+#define NODES_TXT "./maps/espinho_nodes3.txt"
+
 
 void saveCPoints(std::vector<CPoint>& pontos);
 

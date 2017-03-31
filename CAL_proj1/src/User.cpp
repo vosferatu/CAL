@@ -35,7 +35,7 @@ size_t User::getLast() const {
 	return last;
 }
 
-std::ofstream& operator<<(std::ofstream& out, const User& user){
+std::ofstream& operator<<(std::ofstream& out, const User user){
 	out << user.getName() << ";" << user.getPassword() << ";";
 
 	out << user.getPayMethod() << ";" << user.getPayNo() << ";";

@@ -80,7 +80,7 @@ public:
 	/*
 	 * @brief User extraction operator
 	 */
-	friend std::ofstream& operator<<(std::ofstream& out, const User& user);
+	friend std::ofstream& operator<<(std::ofstream& out, const User user);
 };
 
 

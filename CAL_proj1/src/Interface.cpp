@@ -276,7 +276,7 @@ void clientInit(size_t &origin_ind, vector<User*> &utils,
 		vector<CPoint> &pontos, User* current_user) {
 
 	int ans = 0;
-	string name;
+	string name="";
 	string password;
 	fstream file;
 	bool exists = false;

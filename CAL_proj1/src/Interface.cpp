@@ -201,7 +201,8 @@ void searchForRent(size_t &origin_ind, vector<CPoint> &pontos,
 			if(i!=origin_ind && pontos.at(i).getBikes()>0)
 				cout << i+1 << " - " << pontos.at(i).getName() << " ("<< grafo.getVertex(pontos.at(i).getColNode())->getDist() <<" m)"<< endl;
 		}
-
+		cin.ignore();
+		ans=0;
 		while(ans < 1 || ans > pontos.size() || ans==(origin_ind+1) || pontos.at(ans-1).getBikes()==0){
 			cin >> ans;
 		}

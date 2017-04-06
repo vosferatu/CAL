@@ -332,7 +332,6 @@ vector<T> Graph<T>::bfs(Vertex<T> *v) const {
 
 template<class T>
 float Graph<T>::conetivity(){
-	cout <<"ERRO 2";
 	float numberConected=0;
 	for(unsigned int i=0;i<vertexSet.size();i++){
 		for(unsigned int j=0;j<vertexSet.size();j++){
@@ -340,7 +339,7 @@ float Graph<T>::conetivity(){
 		}
 		numberConected+=bfs(vertexSet.at(i)).size();
 	}
-	return numberConected/(2*vertexSet.size());
+	return numberConected/(vertexSet.size()*vertexSet.size());
 }
 
 template<class T>

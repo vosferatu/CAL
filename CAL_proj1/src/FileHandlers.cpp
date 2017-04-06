@@ -156,7 +156,7 @@ void loadNodes(Graph<Node> &grafo) {
 		string line;
 		while (!ifs.eof()) {
 			User a;
-			cout << a;
+			//cout << a;
 			getline(ifs, line, ';');
 			long long id = atoll(line.c_str());
 			getline(ifs, line, ';');

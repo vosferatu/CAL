@@ -39,7 +39,8 @@ double CPoint::getAltitude() const {
 }
 
 void CPoint::rentBike(){
-	bikes--;
+	if(bikes != 0)
+		bikes--;
 	places++;
 }
 

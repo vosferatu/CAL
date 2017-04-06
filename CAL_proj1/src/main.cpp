@@ -46,6 +46,7 @@ int main(){
 	/* Shows full graph */
 	//showGraph(&grafo,&pontos);
 
+
 	clientInit(origin_ind, utils, pontos, current_user);
 
 	menu(origin_ind,pontos,grafo);

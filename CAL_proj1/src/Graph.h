@@ -342,6 +342,7 @@ float Graph<T>::conetivity(){
 	}
 	return numberConected/(2*vertexSet.size());
 }
+
 template<class T>
 int Graph<T>::maxNewChildren(Vertex<T> *v, T &inf) const {
 	vector<T> res;

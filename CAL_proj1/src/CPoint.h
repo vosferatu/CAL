@@ -34,6 +34,7 @@ class CPoint{
 	 */
 	double altitude;
 public:
+	CPoint();
 	/*
 	* @brief CPoint constructor;
 	*/

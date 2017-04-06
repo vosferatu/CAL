@@ -177,6 +177,7 @@ public:
 	void floydWarshallShortestPath();
 	int edgeCost(int i, int j);
 	vector<T> getfloydWarshallPath(const T &origin, const T &dest);
+	float conetivity();
 
 };
 
@@ -328,6 +329,20 @@ vector<T> Graph<T>::bfs(Vertex<T> *v) const {
 	}
 	return res;
 }
+
+template<class T>
+float Graph<T>::conetivity(){
+	cout <<"ERRO 2";
+	float numberConected=0;
+	for(unsigned int i=0;i<vertexSet.size();i++){
+		for(unsigned int j=0;j<vertexSet.size();j++){
+			vertexSet.at(j)->visited=false;
+		}
+		numberConected+=bfs(vertexSet.at(i)).size();
+	}
+	return numberConected/(2*vertexSet.size());
+}
+
 template<class T>
 int Graph<T>::maxNewChildren(Vertex<T> *v, T &inf) const {
 	vector<T> res;

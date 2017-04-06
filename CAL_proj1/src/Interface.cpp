@@ -4,6 +4,9 @@
 #define RENT false
 #define RETURN true
 
+auto t0 = std::chrono::high_resolution_clock::now();
+auto t1 = std::chrono::high_resolution_clock::now();
+
 int originCPoint(vector<CPoint> &pontos, size_t &origin_ind) {
 	size_t ans = -1;
 
@@ -166,6 +169,11 @@ void searchForRent(size_t &origin_ind, vector<CPoint> &pontos,
 		}
 	}
 
+	t1 = std::chrono::high_resolution_clock::now();
+
+	cout << "RESULT: ";
+	cout << chrono::duration_cast<std::chrono::nanoseconds>(t1-t0).count()*1e-6 << endl;
+
 	cout << "\nThe nearest point ("
 			<< grafo.getVertex(ponto->getColNode())->getDist()
 			<< " m) with bikes for rental is " << ponto->getName() << endl;
@@ -193,7 +201,8 @@ void searchForRent(size_t &origin_ind, vector<CPoint> &pontos,
 			if(i!=origin_ind && pontos.at(i).getBikes()>0)
 				cout << i+1 << " - " << pontos.at(i).getName() << " ("<< grafo.getVertex(pontos.at(i).getColNode())->getDist() <<" m)"<< endl;
 		}
-
+		cin.ignore();
+		ans=0;
 		while(ans < 1 || ans > pontos.size() || ans==(origin_ind+1) || pontos.at(ans-1).getBikes()==0){
 			cin >> ans;
 		}
@@ -224,6 +233,12 @@ void searchForReturn(size_t &origin_ind, vector<CPoint> &pontos,
 			new_ind = i;
 		}
 	}
+
+	t1 = std::chrono::high_resolution_clock::now();
+
+	cout << "RESULT: ";
+	cout << chrono::duration_cast<std::chrono::nanoseconds>(t1-t0).count()*1e-6 << endl;
+
 	cout << "\nThe nearest point with places for return is ("
 			<< grafo.getVertex(ponto->getColNode())->getDist() << " m | "
 			<< 8 - 0.11 * ponto->getAltitude() << " euros) " << ponto->getName()
@@ -275,12 +290,12 @@ void searchForReturn(size_t &origin_ind, vector<CPoint> &pontos,
 void clientInit(size_t &origin_ind, vector<User*> &utils,
 		vector<CPoint> &pontos, User* current_user) {
 
-	int ans = 0;
-	string name;
+	int ans { 0 };
+	string name="";
 	string password;
-	fstream file;
-	bool exists = false;
-	bool valid = false;
+	fstream file { };
+	bool exists { false };
+	bool valid { false };
 
 	while (ans != 1 && ans != 2) {
 		cout << "\n1 - Login\n2 - Register\n";
@@ -294,7 +309,7 @@ void clientInit(size_t &origin_ind, vector<User*> &utils,
 			cin >> name;
 		}
 
-		for(size_t i = 0; utils.size() < 0 && !exists ; i++){
+		for(size_t i = 0; utils.size() < 0 ; i++){
 			if(utils[i]->getName() == name){
 				cout << "Password: ";
 				while (!valid){
@@ -339,13 +354,10 @@ void menu(size_t &origin_ind, vector<CPoint> &pontos, Graph<Node> &grafo) {
 	}
 
 	while (1) {
-		auto t0 = std::chrono::high_resolution_clock::now();
+
+		t0 = std::chrono::high_resolution_clock::now();
 
 		grafo.dijkstraShortestPath(pontos.at(origin_ind).getColNode());
-
-		auto t1 = std::chrono::high_resolution_clock::now();
-
-
 
 		if (ans == 1) {
 			searchForRent(origin_ind, pontos, grafo);

@@ -23,12 +23,12 @@
 
 using namespace std;
 
-Graph<Node> grafo;
+Graph<Node> grafo { };
 vector<Road*> estradas;
 vector<CPoint> pontos;
 vector<User*> utils;
-User* current_user;
-size_t origin_ind;
+User*current_user { };
+size_t origin_ind { };
 
 int main(){
 
@@ -40,9 +40,11 @@ int main(){
 	loadEdges(grafo,estradas);
 
 	cout << "\n	   BIKE SHARING	   \n";
+	printf("ERRO 1");
+	printf("Aanabela  %f\n", grafo.conetivity());
 
 	/* Shows full graph */
-	showGraph(&grafo,&pontos);
+	//showGraph(&grafo,&pontos);
 
 	clientInit(origin_ind, utils, pontos, current_user);
 

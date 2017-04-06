@@ -28,7 +28,8 @@ void saveUsers(std::vector<User*> &utils){
 
 	if(ifs.is_open()){
 		for(size_t i = 0; i < utils.size(); i++) {
-			ifs << &utils[i];
+			ifs << (*utils[i]);
+
 			if(i < (utils.size()-1))
 				ifs << '\n';
 		}
@@ -154,6 +155,9 @@ void loadNodes(Graph<Node> &grafo) {
 	if (ifs.is_open()) {
 		string line;
 		while (!ifs.eof()) {
+			User a;
+			//cout << a;
+		//	cout << a;
 			getline(ifs, line, ';');
 			long long id = atoll(line.c_str());
 			getline(ifs, line, ';');

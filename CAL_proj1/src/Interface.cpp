@@ -209,7 +209,7 @@ void searchForRent(size_t &origin_ind, vector<CPoint> &pontos,
 		pontos.at(ans-1).rentBike();
 		path=grafo.getPath(*pontos.at(origin_ind).getColNode(), *pontos.at(ans-1).getColNode());
 		showRoute(&grafo,&pontos,&path,RENT);
-		origin_ind=ans;
+		origin_ind=ans-1;
 		break;
 	default:
 		break;
@@ -277,7 +277,7 @@ void searchForReturn(size_t &origin_ind, vector<CPoint> &pontos,
 		pontos.at(ans - 1).returnBike();
 		path=grafo.getPath(*pontos.at(origin_ind).getColNode(), *pontos.at(ans-1).getColNode());
 		showRoute(&grafo,&pontos,&path,RETURN);
-		origin_ind = ans;
+		origin_ind = ans-1;
 		break;
 	default:
 		break;
@@ -306,10 +306,12 @@ void clientInit(size_t &origin_ind, vector<User*> &utils,
 		cout << "\nLOGIN\n";
 		cout << "Username: ";
 		while (name == "" || name == "\n"){
-			cin >> name;
+			getline(cin, name);
 		}
 
-		for(size_t i = 0; utils.size() < 0 ; i++){
+		cin.clear();
+
+		for(size_t i = 0; i < utils.size() ; i++){
 			if(utils[i]->getName() == name){
 				cout << "Password: ";
 				while (!valid){
@@ -327,7 +329,7 @@ void clientInit(size_t &origin_ind, vector<User*> &utils,
 
 	}
 
-	if (!exists || ans == 2) {
+	if (exists == false || ans == 2) {
 		int pay_met, pay_no;
 		cout << "\nREGISTRATION";
 		cout << "\nUsername: ";

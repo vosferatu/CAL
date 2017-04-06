@@ -41,12 +41,7 @@ class User{
 	 */
 	size_t last;
 public:
-	User() {
-		last = 0;
-		pay_no = 0;
-		pay_method = 0;
-	}
-
+	
 	/*
 	 * @brief User constructor
 	 */

@@ -41,26 +41,31 @@ public:
 	CPoint(std::string name_cpoint, int bikes_cpoint, int places_cpoint, Node* col_node_cpoint, double altitude_cpoint);
 	/*
 	 * @brief Gets the number of available bikes
+	 * @return Number of available bikes
 	 */
 	int getBikes() const;
 
 	/*
 	 * @brief Gets the number of available parking places
+	 * @return Number of available parking places
 	 */
 	int getPlaces() const;
 
 	/*
 	 * @brief Gets the Collection Node
+	 * @return Collection Node
 	 */
 	Node* getColNode() const;
 
 	/*
 	 * @brief Gets CPoint's name
+	 * @return CPoint's name
 	 */
 	const std::string& getName() const;
 
 	/*
 	 * @brief Gets CPoint's altitude
+	 * @return CPoint's altitude
 	 */
 	double getAltitude() const;
 

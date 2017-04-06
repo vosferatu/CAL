@@ -21,14 +21,31 @@ class GeoCoordinate{
 	 */
 	float lon;
 public:
+	/*
+	* @brief Longitude Minimum
+	*/
 	static float lonMin;
+
+	/*
+	* @brief Longitude Maximum
+	*/
 	static float lonMax;
+	
+	/*
+	* @brief Latitude Minimum
+	*/
 	static float latMin;
+	
+	/*
+	* @brief Latitude Maximum
+	*/
 	static float latMax;
+	
 	/*
 	 * @brief GeoCoordinate default constructor
 	 */
 	GeoCoordinate();
+	
 	/*
 	 * @brief Creates a GeoCoordinate
 	 */

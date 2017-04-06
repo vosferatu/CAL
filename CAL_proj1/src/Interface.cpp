@@ -341,7 +341,7 @@ void clientInit(size_t &origin_ind, vector<User*> &utils,
 		cin >> pay_met;
 		cout << "Payment method number: ";
 		cin >> pay_no;
-		originCPoint(pontos, origin_ind);
+
 		User* novo = new User(name, password, origin_ind, pay_met, pay_no);
 		utils.push_back(novo);
 		current_user = novo;
@@ -349,6 +349,7 @@ void clientInit(size_t &origin_ind, vector<User*> &utils,
 }
 void menu(size_t &origin_ind, vector<CPoint> &pontos, Graph<Node> &grafo) {
 	size_t ans = -1;
+	originCPoint(pontos, origin_ind);
 	cout << "\nWhat do you want to do?";
 	while (ans != 1 && ans != 2) {
 		cout << "\n1 - Rent\n2 - Return\n";

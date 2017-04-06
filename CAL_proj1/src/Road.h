@@ -25,18 +25,22 @@ class Road{
 	 */
 	bool two_way;
 public:
+	
 	/*
 	 * @brief Creates a Road
 	 */
 	Road(int number_ID, std::string street_name, bool two_way_street);
+	
 	/*
 	 * @brief Returns the ID
 	 */
 	int getId() const;
+	
 	/*
 	 * @brief Returns the name
 	 */
 	const std::string& getName() const;
+	
 	/*
 	 * @brief Returns true if street is 'two-way'
 	 */

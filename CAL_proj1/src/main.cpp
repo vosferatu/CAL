@@ -23,14 +23,37 @@
 
 using namespace std;
 
-Graph<Node> grafo { };
-vector<Road*> estradas;
-vector<CPoint> pontos;
-vector<User*> utils;
-User*current_user { };
-size_t origin_ind { };
-
 int main(){
+
+	/*
+	* @brief Graph representing the map
+	*/
+	Graph<Node> grafo { };
+
+	/*
+	* @brief Roads vector
+	*/
+	vector<Road*> estradas;
+
+	/*
+	* @brief CPoints vector
+	*/
+	vector<CPoint> pontos;
+
+	/*
+	* @brief Users vector
+	*/
+	vector<User*> utils;
+
+	/*
+	* @brief Current user
+	*/
+	User* current_user { };
+
+	/*
+	* @brief Current user
+	*/
+	size_t origin_ind { };
 
 	cout << "Loading...";
 	cout << endl;
@@ -52,8 +75,4 @@ int main(){
 
 	saveCPoints(pontos);
 	saveUsers(utils);
-
-	//TODO: Analise do tempo de execucao
-	//TODO: Avaliar a conectividade
-	//TODO: Imprimir caminho ate aluguer ou recolha (Consola + GUI)
 }

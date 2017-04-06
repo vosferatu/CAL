@@ -50,7 +50,7 @@ void loadUsers(std::vector<User*> &utils) {
 			int pay_method = atoi(line.c_str());
 			getline(ifs, line, ';');
 			int pay_no = atoi(line.c_str());
-			getline(ifs, line, '\n');
+			getline(ifs, line);
 			int last = atoi(line.c_str());
 			User * user = new User(name, password, pay_method, pay_no,last);
 			utils.push_back(user);

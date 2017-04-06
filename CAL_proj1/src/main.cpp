@@ -38,6 +38,7 @@ int main(){
 	loadRoads(estradas);
 	loadCPoints(pontos,grafo);
 	loadEdges(grafo,estradas);
+	loadUsers(utils);
 
 	cout << "\n	   BIKE SHARING	   \n";
 	printf("Percentage %f\n", grafo.conetivity());

@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['sendmsg',['sendMsg',['../class_connection.html#a4b9f6db1fb42fc9857f829fa0bc52e6e',1,'Connection']]],
-  ['setbackground',['setBackground',['../class_graph_viewer.html#a02437b5fecd8b90de24436068312d593',1,'GraphViewer']]],
   ['setedgecolor',['setEdgeColor',['../class_graph_viewer.html#a07ccc96707efae4aa5f3ced3dca015af',1,'GraphViewer']]],
   ['setedgedashed',['setEdgeDashed',['../class_graph_viewer.html#a1698f1c6b3a8e7cabc7b7d7cf42fc7f0',1,'GraphViewer']]],
   ['setedgeflow',['setEdgeFlow',['../class_graph_viewer.html#a69eb065145063e4dea41961e92e35c8e',1,'GraphViewer']]],

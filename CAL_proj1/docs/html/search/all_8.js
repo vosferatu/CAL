@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['initialize',['initialize',['../class_graph_viewer.html#a1ce9dff4903c650d3b2d33a3ef1d1f61',1,'GraphViewer']]],
-  ['isdynamic',['isDynamic',['../class_graph_viewer.html#a9d9947154bc63354c6d02a0680aad952',1,'GraphViewer']]]
+  ['operator_3c_3c',['operator&lt;&lt;',['../class_c_point.html#a5a4105615f0c6bfac1c52a3430469f7e',1,'CPoint::operator&lt;&lt;()'],['../class_user.html#ad4742ef90fc755261716bd69ba600a97',1,'User::operator&lt;&lt;()']]],
+  ['operator_3d_3d',['operator==',['../class_node.html#a2a6dbf376d3b18a14fc133462ddd2327',1,'Node']]]
 ];

@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['black',['BLACK',['../graphviewer_8h.html#a7b3b25cba33b07c303f3060fe41887f6',1,'graphviewer.h']]],
-  ['blue',['BLUE',['../graphviewer_8h.html#a79d10e672abb49ad63eeaa8aaef57c38',1,'graphviewer.h']]]
+  ['closewindow',['closeWindow',['../class_graph_viewer.html#a85990c1eaac7feed3950960d4bd2fd4c',1,'GraphViewer']]],
+  ['connection',['Connection',['../class_connection.html',1,'']]],
+  ['cpoint',['CPoint',['../class_c_point.html',1,'CPoint'],['../class_c_point.html#a6ecad57cb56de0e8c75e586083491a3f',1,'CPoint::CPoint()']]],
+  ['createwindow',['createWindow',['../class_graph_viewer.html#ae5247dc66449dcd21fc5d531bbbaddfa',1,'GraphViewer']]]
 ];

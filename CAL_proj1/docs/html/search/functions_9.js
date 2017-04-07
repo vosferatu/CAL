@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['what',['what',['../struct_graph_viewer_1_1_custom_exception.html#ac77a0d6a0e775e10b12929816b32f757',1,'GraphViewer::CustomException']]]
+  ['user',['User',['../class_user.html#ade0c4b4711b3b2edb5218dc71977f2db',1,'User']]]
 ];

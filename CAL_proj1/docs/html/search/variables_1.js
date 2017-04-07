@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['directed',['DIRECTED',['../class_edge_type.html#a903017a534f2818c2d17145e4ae0321c',1,'EdgeType']]]
+  ['port',['port',['../class_graph_viewer.html#a89d0abe75f41feededc49497cc514342',1,'GraphViewer']]]
 ];

@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['graphviewer',['GraphViewer',['../class_graph_viewer.html',1,'GraphViewer'],['../class_graph_viewer.html#a8adc614f4fc290a3efcec7d7ceb1c58a',1,'GraphViewer::GraphViewer(int width, int height, bool dynamic)'],['../class_graph_viewer.html#ad9d7b1d8b4ba8ef18517eae0e68568a2',1,'GraphViewer::GraphViewer(int width, int height, bool dynamic, int port_n)']]],
-  ['graphviewer_2ecpp',['graphviewer.cpp',['../graphviewer_8cpp.html',1,'']]],
-  ['graphviewer_2eh',['graphviewer.h',['../graphviewer_8h.html',1,'']]],
-  ['gray',['GRAY',['../graphviewer_8h.html#ae5f70677050eecd8909e0248e07b9e73',1,'graphviewer.h']]],
-  ['green',['GREEN',['../graphviewer_8h.html#acfbc006ea433ad708fdee3e82996e721',1,'graphviewer.h']]]
+  ['latmax',['latMax',['../class_geo_coordinate.html#a5e3f18a87110a31135920aafc91593c1',1,'GeoCoordinate']]],
+  ['latmin',['latMin',['../class_geo_coordinate.html#aa62bc0adea4c9fe3fded70b59223bc78',1,'GeoCoordinate']]],
+  ['lonmax',['lonMax',['../class_geo_coordinate.html#a29c3d176bf5e3dc24eb0357d509c4f79',1,'GeoCoordinate']]],
+  ['lonmin',['lonMin',['../class_geo_coordinate.html#a8596a5c925369e5de5f35f3aee2e69d2',1,'GeoCoordinate']]]
 ];

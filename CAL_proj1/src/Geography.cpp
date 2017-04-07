@@ -9,9 +9,9 @@
 
 GeoCoordinate::GeoCoordinate() : lat {0}, lon {0} {};
 
-GeoCoordinate::GeoCoordinate(float latitude, float floatitude){
+GeoCoordinate::GeoCoordinate(float latitude, float longitude){
 	lat=latitude;
-	lon=floatitude;
+	lon=longitude;
 }
 
 float GeoCoordinate::getLon() const {

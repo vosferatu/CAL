@@ -25,32 +25,32 @@ using namespace std;
 
 int main(){
 
-	/*
+	/**
 	* @brief Graph representing the map
 	*/
 	Graph<Node> grafo { };
 
-	/*
+	/**
 	* @brief Roads vector
 	*/
 	vector<Road*> estradas;
 
-	/*
+	/**
 	* @brief CPoints vector
 	*/
 	vector<CPoint> pontos;
 
-	/*
+	/**
 	* @brief Users vector
 	*/
 	vector<User*> utils;
 
-	/*
+	/**
 	* @brief Current user
 	*/
 	User* current_user { };
 
-	/*
+	/**
 	* @brief Current user
 	*/
 	size_t origin_ind { };
@@ -66,7 +66,7 @@ int main(){
 	cout << "\n	   BIKE SHARING	   \n";
 	printf("Percentage %f\n", grafo.conetivity());
 
-	/* Shows full graph */
+	/** Shows full graph */
 	//showGraph(&grafo,&pontos);
 
 	clientInit(origin_ind, utils, pontos, current_user);

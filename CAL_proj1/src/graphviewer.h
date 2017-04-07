@@ -297,7 +297,7 @@ public:
 	 */
 	bool defineVertexIcon(string filepath);
 
-	/**
+	/*
 	 * Função que altera a imagem de fundo do grafo.
 	 * Exemplo, para um apontador gv onde foi instanciada a classe GraphViewer:
 	 * gv->setBackGround("fundo.png"); faz com que o fundo da janela seja a imagem fundo.png,
@@ -307,7 +307,7 @@ public:
 	 */
 	bool setBackground(string path);
 
-	/**
+	/*
 	 * Função que actualiza a visualização do grafo.
 	 */
 	bool rearrange();

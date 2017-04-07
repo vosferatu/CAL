@@ -7,6 +7,9 @@
 
 #include "User.h"
 
+User::User(){
+}
+
 User::User(std::string cli_name, std::string cli_password, int cli_pay_method, int cli_pay_no, size_t cli_last){
 	name=cli_name;
 	password=cli_password;

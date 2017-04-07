@@ -20,9 +20,9 @@
 
 #define CPOINTS_TXT "espinho_cpoints.txt"
 #define USERS_TXT "users.txt"
-#define ROADS_TXT "./maps/espinho_roads7.txt"
-#define SUBROADS_TXT "./maps/espinho_subroads7.txt"
-#define NODES_TXT "./maps/espinho_nodes7.txt"
+#define ROADS_TXT "./maps/espinho_roads.txt"
+#define SUBROADS_TXT "./maps/espinho_subroads.txt"
+#define NODES_TXT "./maps/espinho_nodes.txt"
 
 /**
  * @brief Stores the CPoints in the text file

@@ -155,7 +155,7 @@ void loadNodes(Graph<Node> &grafo) {
 	if (ifs.is_open()) {
 		string line;
 		while (!ifs.eof()) {
-			User a;
+			User a {};
 			//cout << a;
 		//	cout << a;
 			getline(ifs, line, ';');

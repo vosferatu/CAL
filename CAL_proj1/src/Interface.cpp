@@ -120,7 +120,7 @@ void showGraph(Graph<Node> *grafo, vector<CPoint> *pontos) {
 
 		{
 			gv->addNode(id, x, y);
-			gv->setVertexLabel(id, ".");
+			gv->setVertexLabel(id, "			");
 		}
 	}
 

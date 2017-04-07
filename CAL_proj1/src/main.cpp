@@ -67,7 +67,7 @@ int main(){
 	printf("Percentage %f\n", grafo.conetivity());
 
 	/** Shows full graph */
-	//showGraph(&grafo,&pontos);
+	showGraph(&grafo,&pontos);
 
 	clientInit(origin_ind, utils, pontos, current_user);
 

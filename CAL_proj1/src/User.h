@@ -42,6 +42,7 @@ class User{
 	size_t last;
 public:
 
+	User();
 	
 	/**
 	 * @brief User constructor

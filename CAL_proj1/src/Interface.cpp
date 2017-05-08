@@ -11,8 +11,10 @@ auto t1 = std::chrono::high_resolution_clock::now();
 void searchExact(vector<CPoint> &pontos) {
 	string ans;
 
+	cin.ignore();
+
 	cout << "\nWhat street you want to search for?\n";
-	cin >> ans;
+	getline(cin,ans);
 
 	int result = indStringMatching(pontos, ans);
 
@@ -31,8 +33,10 @@ void searchExact(vector<CPoint> &pontos) {
 void searchApproximate(vector<CPoint> &pontos) {
 	string ans;
 
+	cin.ignore();
+
 	cout << "\nWhat street you want to search for?\n";
-	cin >> ans;
+	getline(cin,ans);
 
 	vector<CPoint> result = ordApproximateStringMatching(pontos, ans);
 
@@ -40,6 +44,8 @@ void searchApproximate(vector<CPoint> &pontos) {
 		cout << endl;
 		cout << i + 1 << " - " << result.at(i).getDistance() << " - " << result.at(i).getName();
 	}
+
+	cout << endl;
 
 	return;
 }
@@ -385,10 +391,12 @@ void clientInit(size_t &origin_ind, vector<User*> &utils,
 	}
 }
 void menu(size_t &origin_ind, vector<CPoint> &pontos, Graph<Node> &grafo) {
-	size_t ans = -1;
 	originCPoint(pontos, origin_ind);
+	size_t ans;
+	char exit;
 
 	while (1) {
+		ans = -1;
 
 		cout << "\nWhat do you want to do?";
 		while (ans < 1 || ans > 4) {
@@ -416,12 +424,12 @@ void menu(size_t &origin_ind, vector<CPoint> &pontos, Graph<Node> &grafo) {
 			break;
 		}
 
-		char exit = 'a';
+		exit = 'a';
 
 		while (exit != 'Y' && exit != 'N') {
+
 			cout << "\nDo you want to exit? (Y/N)\n";
-			cin.ignore();
-			exit = getchar();
+			cin >> exit;
 			exit = toupper(exit);
 
 			if (exit == 'Y')

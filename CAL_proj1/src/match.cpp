@@ -36,10 +36,11 @@ int indStringMatching(vector<CPoint> &pontos, string toSearch) {
 	return -1;
 }
 bool compareDistanceToPattern (CPoint i,CPoint j) { return (i.getDistance()<j.getDistance()); }
-float ordApproximateStringMatching(vector<CPoint> &pontos, string toSearch) {
+vector<CPoint> ordApproximateStringMatching(vector<CPoint> &pontos, string toSearch) {
+	vector<CPoint> res=pontos;
 	string line;
-	for(int a=0;a<pontos.size();a++){
-		line=pontos.at(a).getName();
+	for(int a=0;a<res.size();a++){
+		line=res.at(a).getName();
 		vector<vector<int>> matrix;
 		matrix.resize(line.size() + 1);
 		for (int i = 0; i < line.size() + 1; i++) {
@@ -70,12 +71,12 @@ float ordApproximateStringMatching(vector<CPoint> &pontos, string toSearch) {
 				}
 			}
 		}
-		pontos.at(a).setDistance(matrix.at(line.size()).at(toSearch.size()));
+		res.at(a).setDistance(matrix.at(line.size()).at(toSearch.size()));
 
 	}
 
-	sort(pontos.begin(),pontos.end(),compareDistanceToPattern);
-	return 0;
+	sort(res.begin(),res.end(),compareDistanceToPattern);
+	return res;
 
 }
 

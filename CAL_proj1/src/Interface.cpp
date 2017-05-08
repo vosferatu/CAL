@@ -7,6 +7,42 @@
 auto t0 = std::chrono::high_resolution_clock::now();
 auto t1 = std::chrono::high_resolution_clock::now();
 
+void searchExact(vector<CPoint> &pontos) {
+	string ans;
+
+	cout << "\nWhat street you want to search for?\n";
+	cin >> ans;
+
+	int result = numStringMatching(pontos, ans);
+
+	switch(result){
+	case -1:
+		cout << "\nUnknown place!\n";
+		break;
+	default:
+		cout << "\nThere's a collection point on that street!\n";
+		break;
+	}
+
+	return;
+}
+
+void searchApproximate(vector<CPoint> &pontos) {
+	string ans;
+
+	cout << "\nWhat street you want to search for?\n";
+	cin >> ans;
+
+	vector<CPoint> result = numApproximateStringMatching(pontos, ans);
+
+	for (size_t i = 0; i < result.size(); i++) {
+		cout << endl;
+		cout << i + 1 << " - " << result.at(i).getDistance() << " - " << result.at(i).getName();
+	}
+
+	return;
+}
+
 int originCPoint(vector<CPoint> &pontos, size_t &origin_ind) {
 	size_t ans = -1;
 
@@ -113,10 +149,10 @@ void showGraph(Graph<Node> *grafo, vector<CPoint> *pontos) {
 
 		int y = 600
 				- (lon - GeoCoordinate::lonMin) * 600.0
-						/ (GeoCoordinate::lonMax - GeoCoordinate::lonMin);
+				/ (GeoCoordinate::lonMax - GeoCoordinate::lonMin);
 		int x = 450
 				- (lat + GeoCoordinate::latMax) * 450.0
-						/ (GeoCoordinate::latMax - GeoCoordinate::latMin);
+				/ (GeoCoordinate::latMax - GeoCoordinate::latMin);
 
 		{
 			gv->addNode(id, x, y);
@@ -131,10 +167,10 @@ void showGraph(Graph<Node> *grafo, vector<CPoint> *pontos) {
 
 		int y = 600
 				- (lon - GeoCoordinate::lonMin) * 600.0
-						/ (GeoCoordinate::lonMax - GeoCoordinate::lonMin);
+				/ (GeoCoordinate::lonMax - GeoCoordinate::lonMin);
 		int x = 450
 				- (lat + GeoCoordinate::latMax) * 450.0
-						/ (GeoCoordinate::latMax - GeoCoordinate::latMin);
+				/ (GeoCoordinate::latMax - GeoCoordinate::latMin);
 
 		gv->addNode(id, x, y);
 		gv->setVertexColor(id, RED);
@@ -169,10 +205,10 @@ void searchForRent(size_t &origin_ind, vector<CPoint> &pontos,
 		}
 	}
 
-	t1 = std::chrono::high_resolution_clock::now();
+	//	t1 = std::chrono::high_resolution_clock::now();
 
-	cout << "RESULT: ";
-	cout << chrono::duration_cast<std::chrono::nanoseconds>(t1-t0).count()*1e-6 << endl;
+	//	cout << "RESULT: ";
+	//	cout << chrono::duration_cast<std::chrono::nanoseconds>(t1-t0).count()*1e-6 << endl;
 
 	cout << "\nThe nearest point ("
 			<< grafo.getVertex(ponto->getColNode())->getDist()
@@ -234,10 +270,10 @@ void searchForReturn(size_t &origin_ind, vector<CPoint> &pontos,
 		}
 	}
 
-	t1 = std::chrono::high_resolution_clock::now();
+	//	t1 = std::chrono::high_resolution_clock::now();
 
-	cout << "RESULT: ";
-	cout << chrono::duration_cast<std::chrono::nanoseconds>(t1-t0).count()*1e-6 << endl;
+	//	cout << "RESULT: ";
+	//	cout << chrono::duration_cast<std::chrono::nanoseconds>(t1-t0).count()*1e-6 << endl;
 
 	cout << "\nThe nearest point with places for return is ("
 			<< grafo.getVertex(ponto->getColNode())->getDist() << " m | "
@@ -350,24 +386,33 @@ void clientInit(size_t &origin_ind, vector<User*> &utils,
 void menu(size_t &origin_ind, vector<CPoint> &pontos, Graph<Node> &grafo) {
 	size_t ans = -1;
 	originCPoint(pontos, origin_ind);
-	cout << "\nWhat do you want to do?";
-	while (ans != 1 && ans != 2) {
-		cout << "\n1 - Rent\n2 - Return\n";
-		cin >> ans;
-	}
 
 	while (1) {
 
-		t0 = std::chrono::high_resolution_clock::now();
+		cout << "\nWhat do you want to do?";
+		while (ans < 1 || ans > 4) {
+			cout << "\n1 - Rent\n2 - Return\n3 - Exact search\n4 - Approximate search\n";
+			cin >> ans;
+		}
 
 		grafo.dijkstraShortestPath(pontos.at(origin_ind).getColNode());
 
-		if (ans == 1) {
+//		t0 = std::chrono::high_resolution_clock::now();
+
+		switch(ans)
+		{
+		case 1:
 			searchForRent(origin_ind, pontos, grafo);
-			ans = 2;
-		} else {
+			break;
+		case 2:
 			searchForReturn(origin_ind, pontos, grafo);
-			ans = 1;
+			break;
+		case 3:
+			searchExact(pontos);
+			break;
+		case 4:
+			searchApproximate(pontos);
+			break;
 		}
 
 		char exit = 'a';

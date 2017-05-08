@@ -1,3 +1,7 @@
+# 2ª Parte
+## Tema 5: Bike sharing - sistema de partilha de bicicletas
+Para a segunda parte deste trabalho, considere que as ruas têm nomes, por exemplo “Rua de Dr Roberto Frias” ou “A1”, e que pertencem a um dado distrito, por exemplo, “Porto”. Considerando que os pontos de recolha e entrega de bicicletas estão localizados em esquinas de cruzamentos entre ruas, estenda o trabalho realizado com funcionalidades apropriadas que permitem a consulta da existência ou não de um ponto (recolha ou entrega) num determinado cruzamento entre ruas. Implemente esta funcionalidade, considerando tanto pesquisa exata, assim como pesquisa aproximada, das strings identificativas dos nomes das ruas fornecidas. Para pesquisa exata, caso os nomes de rua não existam, deverá retornar mensagem de lugar desconhecido. Para a pesquisa aproximada, deverá retornar os nomes de ruas mais próximos, ordenados por similaridade, onde poderá haver um ponto (recolha ou entrega).
+
 # CAL
 ## Bike sharing - sistema de partilha de bicicletas
 

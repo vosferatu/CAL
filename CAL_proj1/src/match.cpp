@@ -1,8 +1,8 @@
 #include "match.h"
-
+#include <vector>
 using namespace std;
 
-int numStringMatching(string filename, string toSearch) {
+int indStringMatching(vector<CPoint> &pontos, string toSearch) {
 	int k = 0;
 	vector<int> pi;
 	pi.resize(toSearch.length());
@@ -14,11 +14,10 @@ int numStringMatching(string filename, string toSearch) {
 			k++;
 		pi.at(q) = k;
 	}
-	int res = 0;
-	ifstream myfile;
-	myfile.open(filename);
+	int res=0;
 	string line;
-	while (getline(myfile, line)) {
+	for(int a=0;a<pontos.size();a++){
+		line=pontos.at(a).getName();
 		int q = 0;
 		for (int i = 0; i < line.length(); i++) {
 			while (q > 0 && toSearch.at(q) != line.at(i))
@@ -26,23 +25,21 @@ int numStringMatching(string filename, string toSearch) {
 			if (toSearch.at(q) == line.at(i))
 				q++;
 			if (q == (toSearch.length())) {
+
+				return a;
 				res++;
 				q = pi.at(q - 1);
 			}
 		}
 	}
-	myfile.close();
-	return res;
+//	printf("Lugar Desconhecido\n");
+	return -1;
 }
-
-float numApproximateStringMatching(string filename, string toSearch) {
-	int res = 0;
-	ifstream myfile;
-	myfile.open(filename);
+bool compareDistanceToPattern (CPoint i,CPoint j) { return (i.getDistance()<j.getDistance()); }
+float ordApproximateStringMatching(vector<CPoint> &pontos, string toSearch) {
 	string line;
-	int nPalavras = 0;
-	while (myfile >> line) {
-		nPalavras++;
+	for(int a=0;a<pontos.size();a++){
+		line=pontos.at(a).getName();
 		vector<vector<int>> matrix;
 		matrix.resize(line.size() + 1);
 		for (int i = 0; i < line.size() + 1; i++) {
@@ -73,10 +70,15 @@ float numApproximateStringMatching(string filename, string toSearch) {
 				}
 			}
 		}
-		res += matrix.at(line.size()).at(toSearch.size());
+		pontos.at(a).setDistance(matrix.at(line.size()).at(toSearch.size()));
 
 	}
-	myfile.close();
-	return (float) res / nPalavras;
+
+	sort(pontos.begin(),pontos.end(),compareDistanceToPattern);
+	return 0;
 
 }
+
+
+
+

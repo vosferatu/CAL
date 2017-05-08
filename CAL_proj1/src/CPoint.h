@@ -33,6 +33,10 @@ class CPoint{
 	 * @brief CPoint's altitude
 	 */
 	double altitude;
+	/**
+	 * @brief CPoint's distance
+	 */
+	int distance;
 public:
 	CPoint();
 	/**
@@ -63,6 +67,17 @@ public:
 	 */
 	const std::string& getName() const;
 
+	/**
+	 * @brief Gets CPoint's distance
+	 * @return CPoint's distance
+	 */
+	int getDistance() const;
+
+	/**
+	 * @brief Alters CPoint's distance to a new distance
+	 * @param nDistance new distance
+	 */
+	void setDistance(int nDistance);
 	/**
 	 * @brief Gets CPoint's altitude
 	 * @return CPoint's altitude

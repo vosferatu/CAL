@@ -26,6 +26,14 @@ int CPoint::getBikes() const {
 	return bikes;
 }
 
+int CPoint::getDistance() const {
+	return distance;
+}
+
+void CPoint::setDistance(int nDistance) {
+	distance=nDistance;
+}
+
 Node* CPoint::getColNode() const {
 	return col_node;
 }

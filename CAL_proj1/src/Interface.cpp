@@ -1,5 +1,6 @@
 #include "Interface.h"
 #include "FileHandlers.h"
+#include "match.h"
 
 #define RENT false
 #define RETURN true
@@ -13,7 +14,7 @@ void searchExact(vector<CPoint> &pontos) {
 	cout << "\nWhat street you want to search for?\n";
 	cin >> ans;
 
-	int result = numStringMatching(pontos, ans);
+	int result = indStringMatching(pontos, ans);
 
 	switch(result){
 	case -1:
@@ -33,7 +34,7 @@ void searchApproximate(vector<CPoint> &pontos) {
 	cout << "\nWhat street you want to search for?\n";
 	cin >> ans;
 
-	vector<CPoint> result = numApproximateStringMatching(pontos, ans);
+	vector<CPoint> result = ordApproximateStringMatching(pontos, ans);
 
 	for (size_t i = 0; i < result.size(); i++) {
 		cout << endl;

@@ -1,5 +1,5 @@
 #include "match.h"
-#include <vector>
+
 using namespace std;
 
 int indStringMatching(vector<CPoint> &pontos, string toSearch) {
@@ -32,10 +32,12 @@ int indStringMatching(vector<CPoint> &pontos, string toSearch) {
 			}
 		}
 	}
-//	printf("Lugar Desconhecido\n");
+
 	return -1;
 }
+
 bool compareDistanceToPattern (CPoint i,CPoint j) { return (i.getDistance()<j.getDistance()); }
+
 vector<CPoint> ordApproximateStringMatching(vector<CPoint> &pontos, string toSearch) {
 	vector<CPoint> res=pontos;
 	string line;

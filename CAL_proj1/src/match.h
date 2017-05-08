@@ -1,6 +1,8 @@
 #include <fstream>
+#include <vector>
+#include <algorithm>
 
-using namespace std;
+#include "CPoint.h"
 
-int numStringMatching(string filename, string toSearch);
-float numApproximateStringMatching(string filename, string toSearch);
+int indStringMatching(std::vector<CPoint> &pontos, std::string toSearch);
+std::vector<CPoint> ordApproximateStringMatching(std::vector<CPoint> &pontos, std::string toSearch);

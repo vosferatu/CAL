@@ -64,7 +64,6 @@ int main(){
 	loadUsers(utils);
 
 	cout << "\n	   BIKE SHARING	   \n";
-	printf("Percentage %f\n", grafo.conetivity());
 
 	/** Shows full graph */
 	showGraph(&grafo,&pontos);

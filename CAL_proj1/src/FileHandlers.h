@@ -18,7 +18,7 @@
 #include "Node.h"
 #include "Graph.h"
 
-#define CPOINTS_TXT "espinho_cpoints.txt"
+#define CPOINTS_TXT "MOCK_DATA100.txt"
 #define USERS_TXT "users.txt"
 #define ROADS_TXT "./maps/espinho_roads.txt"
 #define SUBROADS_TXT "./maps/espinho_subroads.txt"

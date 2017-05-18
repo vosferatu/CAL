@@ -5,6 +5,7 @@ var searchData=
   ['getbikes',['getBikes',['../class_c_point.html#a9fcb1350c76b9e29fa7050ece90bac4f',1,'CPoint']]],
   ['getcolnode',['getColNode',['../class_c_point.html#ac9aa5f6b633abed0ab8ff5de7e7a4265',1,'CPoint']]],
   ['getdegcoords',['getDegCoords',['../class_node.html#a8d349abcaf67f57c8159a11e151fb44b',1,'Node']]],
+  ['getdistance',['getDistance',['../class_c_point.html#a33ea50f62bb882443e1d5e4c79d9d15a',1,'CPoint']]],
   ['getdistancefromlatlon',['getDistanceFromLatLon',['../class_geo_coordinate.html#a5bb47f767674f208cf3f8e996d0eb76a',1,'GeoCoordinate']]],
   ['getid',['getId',['../class_node.html#a91441a6496516382ae1f36db8ea07bd0',1,'Node::getId()'],['../class_road.html#ac8b71a10f5f4c48ff3cada5993ef577d',1,'Road::getId()']]],
   ['getlast',['getLast',['../class_user.html#adeb3b2cf634b298b163d57be6d7b69bf',1,'User']]],

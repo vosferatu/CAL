@@ -47,6 +47,11 @@ public:
 	bool isTwoWay() const;
 };
 
+/**
+ * @brief search a specific road by it's id
+ * @param estradas existent roads
+ * @param id road's id to be searched
+ */
 Road* searchRoad(int id, std::vector<Road*> &estradas);
 
 #endif /* ROAD_H_ */

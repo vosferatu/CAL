@@ -16,16 +16,11 @@ void searchExact(vector<CPoint> &pontos) {
 	cout << "\nWhat street you want to search for?\n";
 	getline(cin,ans);
 
-	int result = indStringMatching(pontos, ans);
-
-	switch(result){
-	case -1:
-		cout << "\nUnknown place!\n";
-		break;
-	default:
-		cout << "\nThere's a collection point on that street!\n";
-		break;
-	}
+	vector<CPoint> result = indStringMatching(pontos, ans);
+	int i=0;
+	for(i;i<result.size();i++){
+		cout <<endl<< i+1 << result.at(i).getName();
+	}if(i==0)cout<<"Logar deconhecido!\n";
 
 	return;
 }

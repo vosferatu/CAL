@@ -2,7 +2,8 @@
 
 using namespace std;
 
-int indStringMatching(vector<CPoint> &pontos, string toSearch) {
+vector<CPoint> indStringMatching(vector<CPoint> &pontos, string toSearch) {
+	vector<CPoint> res;
 	int k = 0;
 	vector<int> pi;
 	pi.resize(toSearch.length());
@@ -14,7 +15,7 @@ int indStringMatching(vector<CPoint> &pontos, string toSearch) {
 			k++;
 		pi.at(q) = k;
 	}
-	int res = 0;
+	int aux = 0;
 	string line;
 	for (int a = 0; a < pontos.size(); a++) {
 		line = pontos.at(a).getName();
@@ -26,18 +27,13 @@ int indStringMatching(vector<CPoint> &pontos, string toSearch) {
 				q++;
 			if (q == toSearch.length())
 			{
-				if(q == line.length())
-					return a;
-				res++;
+				res.push_back(pontos.at(a));
 				q = pi.at(q - 1);
 			}
-			else
-				if(q == line.length())
-					return -1;
 		}
 	}
 
-	return -1;
+	return res;
 }
 
 bool compareDistanceToPattern (CPoint i,CPoint j) { return (i.getDistance()<j.getDistance()); }

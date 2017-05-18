@@ -16,14 +16,14 @@ void searchExact(vector<CPoint> &pontos) {
 	cout << "\nWhat street you want to search for?\n";
 	getline(cin,ans);
 
-	t0 = std::chrono::high_resolution_clock::now();
+//	t0 = std::chrono::high_resolution_clock::now();
 
 	int result = indStringMatching(pontos, ans);
 
-	t1 = std::chrono::high_resolution_clock::now();
+//	t1 = std::chrono::high_resolution_clock::now();
 
-	cout << "RESULT: ";
-	cout << chrono::duration_cast<std::chrono::nanoseconds>(t1-t0).count()*1e-6 << endl;
+//	cout << "RESULT: ";
+//	cout << chrono::duration_cast<std::chrono::nanoseconds>(t1-t0).count()*1e-6 << endl;
 
 	switch(result){
 	case -1:
@@ -45,18 +45,18 @@ void searchApproximate(vector<CPoint> &pontos) {
 	cout << "\nWhat street you want to search for?\n";
 	getline(cin,ans);
 
-	t0 = std::chrono::high_resolution_clock::now();
+	//t0 = std::chrono::high_resolution_clock::now();
 
 	vector<CPoint> result = ordApproximateStringMatching(pontos, ans);
 
-	t1 = std::chrono::high_resolution_clock::now();
+	//t1 = std::chrono::high_resolution_clock::now();
 
-	cout << "RESULT: ";
-	cout << chrono::duration_cast<std::chrono::nanoseconds>(t1-t0).count()*1e-6 << endl;
+	//cout << "RESULT: ";
+	//cout << chrono::duration_cast<std::chrono::nanoseconds>(t1-t0).count()*1e-6 << endl;
 
 	for (size_t i = 0; i < result.size(); i++) {
-		//cout << endl;
-		//cout << i + 1 << " - " << result.at(i).getDistance() << " - " << result.at(i).getName();
+		cout << endl;
+		cout << i + 1 << " - " << result.at(i).getDistance() << " - " << result.at(i).getName();
 	}
 
 	cout << endl;

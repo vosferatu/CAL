@@ -42,21 +42,20 @@ void searchApproximate(vector<CPoint> &pontos) {
 	cin.ignore();
 
 	cout << "\nWhat street you want to search for?\n";
-	getline(cin, ans);
+	getline(cin,ans);
 
-	t0 = std::chrono::high_resolution_clock::now();
+	//t0 = std::chrono::high_resolution_clock::now();
 
 	vector<CPoint> result = ordApproximateStringMatching(pontos, ans);
 
-	t1 = std::chrono::high_resolution_clock::now();
+	//t1 = std::chrono::high_resolution_clock::now();
 
-	cout << "RESULT: ";
-	cout << chrono::duration_cast < std::chrono::nanoseconds
-			> (t1 - t0).count() * 1e-6 << endl;
+	//cout << "RESULT: ";
+	//cout << chrono::duration_cast<std::chrono::nanoseconds>(t1-t0).count()*1e-6 << endl;
 
 	for (size_t i = 0; i < result.size(); i++) {
-		//cout << endl;
-		//cout << i + 1 << " - " << result.at(i).getDistance() << " - " << result.at(i).getName();
+		cout << endl;
+		cout << i + 1 << " - " << result.at(i).getDistance() << " - " << result.at(i).getName();
 	}
 
 	cout << endl;
@@ -82,8 +81,8 @@ int originCPoint(vector<CPoint> &pontos, size_t &origin_ind) {
 	return ans - 1;
 }
 
-void showRoute(Graph<Node> *grafo, vector<CPoint> *pontos, vector<Node> *path,
-		bool type) {
+void showRoute(Graph<Node> *grafo, vector<CPoint> *pontos, vector<Node> *path, bool type)
+{
 	GraphViewer *gv = new GraphViewer(450, 600, false);
 
 	gv->setBackground("Limits.PNG");
@@ -92,19 +91,16 @@ void showRoute(Graph<Node> *grafo, vector<CPoint> *pontos, vector<Node> *path,
 	gv->defineVertexColor("yellow");
 	gv->defineEdgeCurved(false);
 
-	for (size_t i = 0; i < path->size(); i++) {
-		long id = path->at(i).getId();
-		float lat = 0 - path->at(i).getRadCoords().getLat();
-		float lon = path->at(i).getRadCoords().getLon();
+	for(size_t i=0; i<path->size(); i++)
+	{
+		long id=path->at(i).getId();
+		float lat=0-path->at(i).getRadCoords().getLat();
+		float lon=path->at(i).getRadCoords().getLon();
 
-		int y = 600
-				- (lon - GeoCoordinate::lonMin) * 600.0
-						/ (GeoCoordinate::lonMax - GeoCoordinate::lonMin);
-		int x = 450
-				- (lat + GeoCoordinate::latMax) * 450.0
-						/ (GeoCoordinate::latMax - GeoCoordinate::latMin);
+		int y = 600-(lon-GeoCoordinate::lonMin)*600.0/(GeoCoordinate::lonMax-GeoCoordinate::lonMin);
+		int x = 450-(lat+GeoCoordinate::latMax)*450.0/(GeoCoordinate::latMax-GeoCoordinate::latMin);
 
-		gv->setVertexColor(id, BLUE);
+		gv->setVertexColor(id,BLUE);
 
 		{
 			gv->addNode(id, x, y);
@@ -112,30 +108,28 @@ void showRoute(Graph<Node> *grafo, vector<CPoint> *pontos, vector<Node> *path,
 		}
 	}
 
-	for (size_t a = 0; a < pontos->size(); a++) {
-		long id = pontos->at(a).getColNode()->getId();
-		float lat = 0 - pontos->at(a).getColNode()->getRadCoords().getLat();
-		float lon = pontos->at(a).getColNode()->getRadCoords().getLon();
+	for(size_t a=0; a<pontos->size(); a++)
+	{
+		long id=pontos->at(a).getColNode()->getId();
+		float lat=0-pontos->at(a).getColNode()->getRadCoords().getLat();
+		float lon=pontos->at(a).getColNode()->getRadCoords().getLon();
 
-		int y = 600
-				- (lon - GeoCoordinate::lonMin) * 600.0
-						/ (GeoCoordinate::lonMax - GeoCoordinate::lonMin);
-		int x = 450
-				- (lat + GeoCoordinate::latMax) * 450.0
-						/ (GeoCoordinate::latMax - GeoCoordinate::latMin);
+		int y = 600-(lon-GeoCoordinate::lonMin)*600.0/(GeoCoordinate::lonMax-GeoCoordinate::lonMin);
+		int x = 450-(lat+GeoCoordinate::latMax)*450.0/(GeoCoordinate::latMax-GeoCoordinate::latMin);
 
-		switch (type) {
+		switch(type)
+		{
 		case RENT:
-			if (pontos->at(a).getBikes() == 0)
-				gv->setVertexColor(id, RED);
+			if(pontos->at(a).getBikes()==0)
+				gv->setVertexColor(id,RED);
 			else
-				gv->setVertexColor(id, GREEN);
+				gv->setVertexColor(id,GREEN);
 			break;
 		case RETURN:
-			if (pontos->at(a).getPlaces() == 0)
-				gv->setVertexColor(id, RED);
+			if(pontos->at(a).getPlaces()==0)
+				gv->setVertexColor(id,RED);
 			else
-				gv->setVertexColor(id, GREEN);
+				gv->setVertexColor(id,GREEN);
 			break;
 		}
 
@@ -143,13 +137,13 @@ void showRoute(Graph<Node> *grafo, vector<CPoint> *pontos, vector<Node> *path,
 		gv->setVertexLabel(id, ".");
 	}
 
-	int a = 0;
+	int a=0;
 
-	for (size_t i = 0; i < path->size() - 1; i++) {
+	for(size_t i=0; i<path->size()-1; i++)
+	{
 		gv->defineEdgeColor("pink");
-		gv->addEdge(a, path->at(i).getId(), path->at(i + 1).getId(),
-				EdgeType::DIRECTED);
-		gv->setEdgeThickness(a, 8);
+		gv->addEdge(a, path->at(i).getId(), path->at(i+1).getId(), EdgeType::DIRECTED);
+		gv->setEdgeThickness(a,8);
 		a++;
 	}
 
@@ -175,10 +169,10 @@ void showGraph(Graph<Node> *grafo, vector<CPoint> *pontos) {
 
 		int y = 600
 				- (lon - GeoCoordinate::lonMin) * 600.0
-						/ (GeoCoordinate::lonMax - GeoCoordinate::lonMin);
+				/ (GeoCoordinate::lonMax - GeoCoordinate::lonMin);
 		int x = 450
 				- (lat + GeoCoordinate::latMax) * 450.0
-						/ (GeoCoordinate::latMax - GeoCoordinate::latMin);
+				/ (GeoCoordinate::latMax - GeoCoordinate::latMin);
 
 		{
 			gv->addNode(id, x, y);
@@ -193,10 +187,10 @@ void showGraph(Graph<Node> *grafo, vector<CPoint> *pontos) {
 
 		int y = 600
 				- (lon - GeoCoordinate::lonMin) * 600.0
-						/ (GeoCoordinate::lonMax - GeoCoordinate::lonMin);
+				/ (GeoCoordinate::lonMax - GeoCoordinate::lonMin);
 		int x = 450
 				- (lat + GeoCoordinate::latMax) * 450.0
-						/ (GeoCoordinate::latMax - GeoCoordinate::latMin);
+				/ (GeoCoordinate::latMax - GeoCoordinate::latMin);
 
 		gv->addNode(id, x, y);
 		gv->setVertexColor(id, RED);
@@ -247,29 +241,26 @@ void searchForRent(size_t &origin_ind, vector<CPoint> &pontos,
 	case 1:
 		path = grafo.getPath(*pontos.at(origin_ind).getColNode(),
 				*pontos.at(new_ind).getColNode());
-		showRoute(&grafo, &pontos, &path, RENT);
+		showRoute(&grafo,&pontos,&path,RENT);
 		ponto->rentBike();
 		origin_ind = new_ind;
 		break;
 	case 2:
 		cout << "\nSo where do you want to do it?\n";
-		for (unsigned int i = 0; i < pontos.size(); i++) {
-			if (i != origin_ind && pontos.at(i).getBikes() > 0)
-				cout << i + 1 << " - " << pontos.at(i).getName() << " ("
-						<< grafo.getVertex(pontos.at(i).getColNode())->getDist()
-						<< " m)" << endl;
+		for (unsigned int i = 0; i < pontos.size(); i++)
+		{
+			if(i!=origin_ind && pontos.at(i).getBikes()>0)
+				cout << i+1 << " - " << pontos.at(i).getName() << " ("<< grafo.getVertex(pontos.at(i).getColNode())->getDist() <<" m)"<< endl;
 		}
 		cin.ignore();
-		ans = 0;
-		while (ans < 1 || ans > pontos.size() || ans == (origin_ind + 1)
-				|| pontos.at(ans - 1).getBikes() == 0) {
+		ans=0;
+		while(ans < 1 || ans > pontos.size() || ans==(origin_ind+1) || pontos.at(ans-1).getBikes()==0){
 			cin >> ans;
 		}
-		pontos.at(ans - 1).rentBike();
-		path = grafo.getPath(*pontos.at(origin_ind).getColNode(),
-				*pontos.at(ans - 1).getColNode());
-		showRoute(&grafo, &pontos, &path, RENT);
-		origin_ind = ans - 1;
+		pontos.at(ans-1).rentBike();
+		path=grafo.getPath(*pontos.at(origin_ind).getColNode(), *pontos.at(ans-1).getColNode());
+		showRoute(&grafo,&pontos,&path,RENT);
+		origin_ind=ans-1;
 		break;
 	default:
 		break;
@@ -307,34 +298,32 @@ void searchForReturn(size_t &origin_ind, vector<CPoint> &pontos,
 
 	vector<Node> path;
 
-	switch (ans) {
+	switch(ans)
+	{
 	case 1:
-		path = grafo.getPath(*pontos.at(origin_ind).getColNode(),
-				*pontos.at(new_ind).getColNode());
-		showRoute(&grafo, &pontos, &path, RETURN);
+		path=grafo.getPath(*pontos.at(origin_ind).getColNode(), *pontos.at(new_ind).getColNode());
+		showRoute(&grafo,&pontos,&path,RETURN);
 		ponto->returnBike();
 		origin_ind = new_ind;
 		break;
 	case 2:
 		cout << "\nSo where do you want to do it?\n";
 		for (unsigned int i = 0; i < pontos.size(); i++) {
-			if (i != origin_ind && pontos.at(i).getPlaces() != 0)
+			if (i != origin_ind && pontos.at(i).getPlaces()!=0)
 				cout << i + 1 << " - " << pontos.at(i).getName() << " ("
-						<< grafo.getVertex(pontos.at(i).getColNode())->getDist()
-						<< " m | " << 8 - 0.11 * pontos.at(i).getAltitude()
-						<< " euros)" << endl;
+				<< grafo.getVertex(pontos.at(i).getColNode())->getDist()
+				<< " m | " << 8 - 0.11 * pontos.at(i).getAltitude()
+				<< " euros)" << endl;
 		}
 		cin.ignore();
 		ans = 0;
-		while (ans < 1 || ans > pontos.size() || ans == (origin_ind + 1)
-				|| pontos.at(ans - 1).getPlaces() == 0) {
+		while (ans < 1 || ans > pontos.size() || ans == (origin_ind + 1) || pontos.at(ans-1).getPlaces()==0) {
 			cin >> ans;
 		}
 		pontos.at(ans - 1).returnBike();
-		path = grafo.getPath(*pontos.at(origin_ind).getColNode(),
-				*pontos.at(ans - 1).getColNode());
-		showRoute(&grafo, &pontos, &path, RETURN);
-		origin_ind = ans - 1;
+		path=grafo.getPath(*pontos.at(origin_ind).getColNode(), *pontos.at(ans-1).getColNode());
+		showRoute(&grafo,&pontos,&path,RETURN);
+		origin_ind = ans-1;
 		break;
 	default:
 		break;
@@ -348,7 +337,7 @@ void clientInit(size_t &origin_ind, vector<User*> &utils,
 		vector<CPoint> &pontos, User* current_user) {
 
 	int ans { 0 };
-	string name = "";
+	string name="";
 	string password;
 	fstream file { };
 	bool exists { false };
@@ -362,18 +351,18 @@ void clientInit(size_t &origin_ind, vector<User*> &utils,
 	if (ans == 1) {
 		cout << "\nLOGIN\n";
 		cout << "Username: ";
-		while (name == "" || name == "\n") {
+		while (name == "" || name == "\n"){
 			getline(cin, name);
 		}
 
 		cin.clear();
 
-		for (size_t i = 0; i < utils.size(); i++) {
-			if (utils[i]->getName() == name) {
+		for(size_t i = 0; i < utils.size() ; i++){
+			if(utils[i]->getName() == name){
 				cout << "Password: ";
-				while (!valid) {
+				while (!valid){
 					cin >> password;
-					if (utils[i]->getPassword() == password) {
+					if(utils[i]->getPassword() == password){
 						exists = true;
 						valid = true;
 						current_user = utils[i];
@@ -414,14 +403,14 @@ void menu(size_t &origin_ind, vector<CPoint> &pontos, Graph<Node> &grafo) {
 
 		cout << "\nWhat do you want to do?";
 		while (ans < 1 || ans > 4) {
-			cout
-					<< "\n1 - Rent\n2 - Return\n3 - Exact search\n4 - Approximate search\n";
+			cout << "\n1 - Rent\n2 - Return\n3 - Exact search\n4 - Approximate search\n";
 			cin >> ans;
 		}
 
 		grafo.dijkstraShortestPath(pontos.at(origin_ind).getColNode());
 
-		switch (ans) {
+		switch(ans)
+		{
 		case 1:
 			searchForRent(origin_ind, pontos, grafo);
 			break;
@@ -451,4 +440,3 @@ void menu(size_t &origin_ind, vector<CPoint> &pontos, Graph<Node> &grafo) {
 		}
 	}
 }
-
